@@ -1,0 +1,98 @@
+{
+  "ok": true,
+  "status_code": 200,
+  "response_json": {
+    "id": "7fe99023-0fd5-4d7c-b374-a17eb415e650",
+    "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+    "runtime_version": "v13",
+    "compile_status": "dispatched",
+    "runtime_payload": {
+      "sequences": [
+        {
+          "spus": [
+            {
+              "spu_id": "31431873-86b2-4adb-aeaf-78f6067335d8",
+              "status": "draft",
+              "spu_code": "SPU-001",
+              "asset_role": "primary_visual",
+              "duration_ms": 5000,
+              "prompt_text": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.",
+              "display_name": "Beauty serum hero shot",
+              "generation_mode": "veo_segment",
+              "visual_constraints": {
+                "style": "studio_clean",
+                "platform": "tiktok_9_16",
+                "background": "#FFFFFF"
+              },
+              "negative_prompt_text": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+            }
+          ],
+          "vbus": [],
+          "bridges": [],
+          "sequence_id": "7226dad0-a05f-411b-9acf-ac15a3128f4c",
+          "sequence_type": "hook",
+          "sequence_index": 1,
+          "persuasive_goal": "Introduce the beauty product with a clean premium visual"
+        }
+      ],
+      "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+      "bridge_count": 0,
+      "compile_reason": "authoritative_min_case_case-001",
+      "compile_options": {
+        "proof_case_id": "case-001",
+        "input_manifest_path": "/mnt/user-data/outputs/case_001_01_input_manifest_v0.json"
+      },
+      "runtime_version": "v13",
+      "audio_track_count": 0,
+      "visual_track_count": 1
+    },
+    "dispatch_status": "fully_dispatched",
+    "dispatch_summary": {
+      "jobs": [
+        {
+          "job_id": "e542f3e0-ab4d-4bfa-b396-611e13f50513",
+          "status": "dispatched",
+          "job_type": "compile",
+          "external_task_id": "9fa5dcaf-e21a-49d0-92da-4470a2eb5e0e"
+        },
+        {
+          "job_id": "29a03de3-6a9a-4dc2-a3a2-d0224d69178c",
+          "status": "dispatched",
+          "job_type": "render_image",
+          "external_task_id": "1fdda105-7884-49cd-a88b-b6dca356ab02"
+        },
+        {
+          "job_id": "d0d7dc0b-e115-4def-a4b2-67022bbe200c",
+          "status": "dispatched",
+          "job_type": "render_video",
+          "external_task_id": "b28a7f45-b052-48a2-b486-826a8cb4c0ed"
+        },
+        {
+          "job_id": "0f9fe2ea-8ddb-465c-8290-08c6883c942e",
+          "status": "dispatched",
+          "job_type": "render_voice",
+          "external_task_id": "3e6cf341-2141-467d-8a11-731fe5bff0e7"
+        },
+        {
+          "job_id": "3231ef78-d161-4b21-9a7a-f581c6167653",
+          "status": "dispatched",
+          "job_type": "merge",
+          "external_task_id": "23f9539b-342f-4123-8826-d54370a8a029"
+        }
+      ],
+      "job_count": 5,
+      "dispatch_status": "fully_dispatched",
+      "runtime_version": "v13",
+      "queued_job_count": 0,
+      "dispatched_job_count": 5,
+      "undispatched_job_count": 0
+    },
+    "last_error_code": null,
+    "last_error_message": null,
+    "compile_started_at": "2026-04-15T08:03:08.404351Z",
+    "compile_finished_at": "2026-04-15T08:03:08.420952Z",
+    "created_at": "2026-04-15T08:03:08.437785Z"
+  },
+  "raw_body": "{\"id\":\"7fe99023-0fd5-4d7c-b374-a17eb415e650\",\"project_id\":\"656ac6b1-ecb8-4f45-9f45-556be5915168\",\"runtime_version\":\"v13\",\"compile_status\":\"dispatched\",\"runtime_payload\":{\"sequences\":[{\"spus\":[{\"spu_id\":\"31431873-86b2-4adb-aeaf-78f6067335d8\",\"status\":\"draft\",\"spu_code\":\"SPU-001\",\"asset_role\":\"primary_visual\",\"duration_ms\":5000,\"prompt_text\":\"Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\",\"display_name\":\"Beauty serum hero shot\",\"generation_mode\":\"veo_segment\",\"visual_constraints\":{\"style\":\"studio_clean\",\"platform\":\"tiktok_9_16\",\"background\":\"#FFFFFF\"},\"negative_prompt_text\":\"blurry, deformed packaging, extra objects, cropped product, watermark, text overlay\"}],\"vbus\":[],\"bridges\":[],\"sequence_id\":\"7226dad0-a05f-411b-9acf-ac15a3128f4c\",\"sequence_type\":\"hook\",\"sequence_index\":1,\"persuasive_goal\":\"Introduce the beauty product with a clean premium visual\"}],\"project_id\":\"656ac6b1-ecb8-4f45-9f45-556be5915168\",\"bridge_count\":0,\"compile_reason\":\"authoritative_min_case_case-001\",\"compile_options\":{\"proof_case_id\":\"case-001\",\"input_manifest_path\":\"/mnt/user-data/outputs/case_001_01_input_manifest_v0.json\"},\"runtime_version\":\"v13\",\"audio_track_count\":0,\"visual_track_count\":1},\"dispatch_status\":\"fully_dispatched\",\"dispatch_summary\":{\"jobs\":[{\"job_id\":\"e542f3e0-ab4d-4bfa-b396-611e13f50513\",\"status\":\"dispatched\",\"job_type\":\"compile\",\"external_task_id\":\"9fa5dcaf-e21a-49d0-92da-4470a2eb5e0e\"},{\"job_id\":\"29a03de3-6a9a-4dc2-a3a2-d0224d69178c\",\"status\":\"dispatched\",\"job_type\":\"render_image\",\"external_task_id\":\"1fdda105-7884-49cd-a88b-b6dca356ab02\"},{\"job_id\":\"d0d7dc0b-e115-4def-a4b2-67022bbe200c\",\"status\":\"dispatched\",\"job_type\":\"render_video\",\"external_task_id\":\"b28a7f45-b052-48a2-b486-826a8cb4c0ed\"},{\"job_id\":\"0f9fe2ea-8ddb-465c-8290-08c6883c942e\",\"status\":\"dispatched\",\"job_type\":\"render_voice\",\"external_task_id\":\"3e6cf341-2141-467d-8a11-731fe5bff0e7\"},{\"job_id\":\"3231ef78-d161-4b21-9a7a-f581c6167653\",\"status\":\"dispatched\",\"job_type\":\"merge\",\"external_task_id\":\"23f9539b-342f-4123-8826-d54370a8a029\"}],\"job_count\":5,\"dispatch_status\":\"fully_dispatched\",\"runtime_version\":\"v13\",\"queued_job_count\":0,\"dispatched_job_count\":5,\"undispatched_job_count\":0},\"last_error_code\":null,\"last_error_message\":null,\"compile_started_at\":\"2026-04-15T08:03:08.404351Z\",\"compile_finished_at\":\"2026-04-15T08:03:08.420952Z\",\"created_at\":\"2026-04-15T08:03:08.437785Z\"}",
+  "collected_at": "2026-04-15T08:03:08Z"
+}

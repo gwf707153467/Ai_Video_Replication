@@ -1,0 +1,223 @@
+services:
+  app:
+    build:
+      context: /app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication
+      dockerfile: docker/app.Dockerfile
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    container_name: avr_app
+    depends_on:
+      minio:
+        condition: service_started
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      API_V1_PREFIX: api_v1
+      APP_ENV: development
+      APP_NAME: ai_videos_replication
+      APP_PORT: '8000'
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/ai_videos_replication
+      DEFAULT_EXPORT_ASPECT_RATIO: 9x16
+      DEFAULT_EXPORT_CONTAINER: mp4
+      DEFAULT_LIP_SYNC_POLICY: none
+      DEFAULT_TARGET_LANGUAGE: en-US
+      DEFAULT_TARGET_MARKET: US
+      DEFAULT_VOICE_MODE: voiceover
+      GOOGLE_API_KEY: AIzaSyDpDM_FdLSKpbbJZZCOp992vXlNXnSJ8Dw
+      GOOGLE_IMAGE_MODEL: imagen-3.0-generate-002
+      GOOGLE_TTS_MODEL: replace_with_tts_model
+      GOOGLE_VIDEO_MODEL: replace_with_video_model
+      LOG_LEVEL: INFO
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_BUCKET_AUDIO: audio-assets
+      MINIO_BUCKET_EXPORTS: exports
+      MINIO_BUCKET_GENERATED_IMAGES: generated-images
+      MINIO_BUCKET_GENERATED_VIDEOS: generated-videos
+      MINIO_BUCKET_REFERENCE: reference-assets
+      MINIO_BUCKET_RUNTIME: runtime-packets
+      MINIO_ENDPOINT: minio:9000
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_SECURE: "false"
+      POSTGRES_DB: ai_videos_replication
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: postgres
+      REDIS_DB: '0'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      REDIS_URL: redis://redis:6379/0
+    ports:
+    - published: 8000
+      target: 8000
+    restart: unless-stopped
+    volumes:
+    - /app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication:/workspace:rw
+  minio:
+    command: server /data --console-address :9001
+    container_name: avr_minio
+    environment:
+      API_V1_PREFIX: api_v1
+      APP_ENV: development
+      APP_NAME: ai_videos_replication
+      APP_PORT: '8000'
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/ai_videos_replication
+      DEFAULT_EXPORT_ASPECT_RATIO: 9x16
+      DEFAULT_EXPORT_CONTAINER: mp4
+      DEFAULT_LIP_SYNC_POLICY: none
+      DEFAULT_TARGET_LANGUAGE: en-US
+      DEFAULT_TARGET_MARKET: US
+      DEFAULT_VOICE_MODE: voiceover
+      GOOGLE_API_KEY: AIzaSyDpDM_FdLSKpbbJZZCOp992vXlNXnSJ8Dw
+      GOOGLE_IMAGE_MODEL: imagen-3.0-generate-002
+      GOOGLE_TTS_MODEL: replace_with_tts_model
+      GOOGLE_VIDEO_MODEL: replace_with_video_model
+      LOG_LEVEL: INFO
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_BUCKET_AUDIO: audio-assets
+      MINIO_BUCKET_EXPORTS: exports
+      MINIO_BUCKET_GENERATED_IMAGES: generated-images
+      MINIO_BUCKET_GENERATED_VIDEOS: generated-videos
+      MINIO_BUCKET_REFERENCE: reference-assets
+      MINIO_BUCKET_RUNTIME: runtime-packets
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_SECURE: "false"
+      POSTGRES_DB: ai_videos_replication
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: postgres
+      REDIS_DB: '0'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      REDIS_URL: redis://redis:6379/0
+    image: minio/minio:latest
+    ports:
+    - published: 9000
+      target: 9000
+    - published: 9001
+      target: 9001
+    restart: unless-stopped
+    volumes:
+    - minio_data:/data:rw
+  postgres:
+    container_name: avr_postgres
+    environment:
+      API_V1_PREFIX: api_v1
+      APP_ENV: development
+      APP_NAME: ai_videos_replication
+      APP_PORT: '8000'
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/ai_videos_replication
+      DEFAULT_EXPORT_ASPECT_RATIO: 9x16
+      DEFAULT_EXPORT_CONTAINER: mp4
+      DEFAULT_LIP_SYNC_POLICY: none
+      DEFAULT_TARGET_LANGUAGE: en-US
+      DEFAULT_TARGET_MARKET: US
+      DEFAULT_VOICE_MODE: voiceover
+      GOOGLE_API_KEY: AIzaSyDpDM_FdLSKpbbJZZCOp992vXlNXnSJ8Dw
+      GOOGLE_IMAGE_MODEL: imagen-3.0-generate-002
+      GOOGLE_TTS_MODEL: replace_with_tts_model
+      GOOGLE_VIDEO_MODEL: replace_with_video_model
+      LOG_LEVEL: INFO
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_BUCKET_AUDIO: audio-assets
+      MINIO_BUCKET_EXPORTS: exports
+      MINIO_BUCKET_GENERATED_IMAGES: generated-images
+      MINIO_BUCKET_GENERATED_VIDEOS: generated-videos
+      MINIO_BUCKET_REFERENCE: reference-assets
+      MINIO_BUCKET_RUNTIME: runtime-packets
+      MINIO_ENDPOINT: minio:9000
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_SECURE: "false"
+      POSTGRES_DB: ai_videos_replication
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: postgres
+      REDIS_DB: '0'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      REDIS_URL: redis://redis:6379/0
+    image: postgres:16
+    ports:
+    - published: 5432
+      target: 5432
+    restart: unless-stopped
+    volumes:
+    - postgres_data:/var/lib/postgresql/data:rw
+  redis:
+    container_name: avr_redis
+    image: redis:7
+    ports:
+    - published: 6379
+      target: 6379
+    restart: unless-stopped
+  worker:
+    build:
+      context: /app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication
+      dockerfile: docker/worker.Dockerfile
+    command: celery -A app.workers.celery_app worker --loglevel=INFO
+    container_name: avr_worker
+    depends_on:
+      minio:
+        condition: service_started
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      API_V1_PREFIX: api_v1
+      APP_ENV: development
+      APP_NAME: ai_videos_replication
+      APP_PORT: '8000'
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/1
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@postgres:5432/ai_videos_replication
+      DEFAULT_EXPORT_ASPECT_RATIO: 9x16
+      DEFAULT_EXPORT_CONTAINER: mp4
+      DEFAULT_LIP_SYNC_POLICY: none
+      DEFAULT_TARGET_LANGUAGE: en-US
+      DEFAULT_TARGET_MARKET: US
+      DEFAULT_VOICE_MODE: voiceover
+      GOOGLE_API_KEY: AIzaSyDpDM_FdLSKpbbJZZCOp992vXlNXnSJ8Dw
+      GOOGLE_IMAGE_MODEL: imagen-3.0-generate-002
+      GOOGLE_TTS_MODEL: replace_with_tts_model
+      GOOGLE_VIDEO_MODEL: replace_with_video_model
+      LOG_LEVEL: INFO
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_BUCKET_AUDIO: audio-assets
+      MINIO_BUCKET_EXPORTS: exports
+      MINIO_BUCKET_GENERATED_IMAGES: generated-images
+      MINIO_BUCKET_GENERATED_VIDEOS: generated-videos
+      MINIO_BUCKET_REFERENCE: reference-assets
+      MINIO_BUCKET_RUNTIME: runtime-packets
+      MINIO_ENDPOINT: minio:9000
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_SECURE: "false"
+      POSTGRES_DB: ai_videos_replication
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: postgres
+      REDIS_DB: '0'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      REDIS_URL: redis://redis:6379/0
+    restart: unless-stopped
+    volumes:
+    - /app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication:/workspace:rw
+version: '3.9'
+volumes:
+  minio_data: {}
+  postgres_data: {}
+

@@ -1,0 +1,328 @@
+[
+  {
+    "exists": true,
+    "runtime_record": {
+      "runtime_id": "7fe99023-0fd5-4d7c-b374-a17eb415e650",
+      "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+      "runtime_version": "v13",
+      "compile_status": "failed",
+      "dispatch_status": "fully_dispatched",
+      "dispatch_summary": {
+        "jobs": [
+          {
+            "job_id": "e542f3e0-ab4d-4bfa-b396-611e13f50513",
+            "status": "succeeded",
+            "job_type": "compile",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "9fa5dcaf-e21a-49d0-92da-4470a2eb5e0e"
+          },
+          {
+            "job_id": "29a03de3-6a9a-4dc2-a3a2-d0224d69178c",
+            "status": "running",
+            "job_type": "render_image",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "1fdda105-7884-49cd-a88b-b6dca356ab02"
+          },
+          {
+            "job_id": "d0d7dc0b-e115-4def-a4b2-67022bbe200c",
+            "status": "failed",
+            "job_type": "render_video",
+            "error_code": "google_video_generation_failed",
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "b28a7f45-b052-48a2-b486-826a8cb4c0ed"
+          },
+          {
+            "job_id": "0f9fe2ea-8ddb-465c-8290-08c6883c942e",
+            "status": "failed",
+            "job_type": "render_voice",
+            "error_code": "runtime_vbu_missing",
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "3e6cf341-2141-467d-8a11-731fe5bff0e7"
+          },
+          {
+            "job_id": "3231ef78-d161-4b21-9a7a-f581c6167653",
+            "status": "failed",
+            "job_type": "merge",
+            "error_code": "merge_execution_not_ready",
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "23f9539b-342f-4123-8826-d54370a8a029"
+          }
+        ],
+        "job_count": 5,
+        "runtime_version": "v13",
+        "failed_job_count": 3,
+        "queued_job_count": 0,
+        "running_job_count": 1,
+        "succeeded_job_count": 1,
+        "dispatched_job_count": 0
+      },
+      "last_error_code": "merge_execution_not_ready",
+      "last_error_message": "Google video generation request failed via google-genai SDK: generate_audio parameter is not supported in Gemini API.",
+      "created_at": "2026-04-15T08:03:08.437785+00:00",
+      "compile_started_at": "2026-04-15T08:03:08.404351+00:00",
+      "compile_finished_at": "2026-04-15T08:03:08.420952+00:00"
+    },
+    "jobs": [
+      {
+        "job_id": "e542f3e0-ab4d-4bfa-b396-611e13f50513",
+        "job_type": "compile",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "9fa5dcaf-e21a-49d0-92da-4470a2eb5e0e",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v13"
+        },
+        "result_payload": {
+          "task": "compile.runtime",
+          "job_id": "e542f3e0-ab4d-4bfa-b396-611e13f50513",
+          "status": "succeeded",
+          "provider": "runtime_payload",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "runtime_version": "v13",
+          "provider_payload": {
+            "job_type": "compile",
+            "spu_count": 1,
+            "task_name": "compile.runtime",
+            "vbu_count": 0,
+            "runtime_id": "7fe99023-0fd5-4d7c-b374-a17eb415e650",
+            "provider_name": "runtime_payload",
+            "sequence_count": 1,
+            "runtime_version": "v13",
+            "payload_project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+            "compile_options_keys": [
+              "input_manifest_path",
+              "proof_case_id"
+            ],
+            "runtime_compile_status": "running",
+            "runtime_dispatch_status": "fully_dispatched"
+          },
+          "worker_finished_at": "2026-04-15T08:03:09.290766"
+        },
+        "created_at": "2026-04-15T08:03:08.465636+00:00",
+        "started_at": "2026-04-15T08:03:09.122854+00:00",
+        "finished_at": "2026-04-15T08:03:09.290992+00:00"
+      },
+      {
+        "job_id": "29a03de3-6a9a-4dc2-a3a2-d0224d69178c",
+        "job_type": "render_image",
+        "status": "running",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "1fdda105-7884-49cd-a88b-b6dca356ab02",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+          "dispatch_source": "compile_endpoint",
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "provider_inputs": {
+            "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+            "source": "compiler_minimal_render_image_prompt_v1",
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+            "runtime_version": "v13"
+          },
+          "runtime_version": "v13"
+        },
+        "result_payload": {
+          "task": "render.image",
+          "celery_task_id": "1fdda105-7884-49cd-a88b-b6dca356ab02",
+          "worker_started_at": "2026-04-15T08:03:09.117781"
+        },
+        "created_at": "2026-04-15T08:03:08.567926+00:00",
+        "started_at": "2026-04-15T08:03:09.117781+00:00",
+        "finished_at": null
+      },
+      {
+        "job_id": "d0d7dc0b-e115-4def-a4b2-67022bbe200c",
+        "job_type": "render_video",
+        "status": "failed",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "b28a7f45-b052-48a2-b486-826a8cb4c0ed",
+        "error_code": "google_video_generation_failed",
+        "error_message": "Google video generation request failed via google-genai SDK: generate_audio parameter is not supported in Gemini API.",
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v13"
+        },
+        "result_payload": {
+          "task": "render.video",
+          "error_code": "google_video_generation_failed",
+          "error_message": "Google video generation request failed via google-genai SDK: generate_audio parameter is not supported in Gemini API.",
+          "celery_task_id": "b28a7f45-b052-48a2-b486-826a8cb4c0ed",
+          "worker_started_at": "2026-04-15T08:03:09.120598",
+          "worker_finished_at": "2026-04-15T08:03:09.554030"
+        },
+        "created_at": "2026-04-15T08:03:08.577615+00:00",
+        "started_at": "2026-04-15T08:03:09.120598+00:00",
+        "finished_at": "2026-04-15T08:03:09.554030+00:00"
+      },
+      {
+        "job_id": "0f9fe2ea-8ddb-465c-8290-08c6883c942e",
+        "job_type": "render_voice",
+        "status": "failed",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "3e6cf341-2141-467d-8a11-731fe5bff0e7",
+        "error_code": "runtime_vbu_missing",
+        "error_message": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v13"
+        },
+        "result_payload": {
+          "task": "render.voice",
+          "error_code": "runtime_vbu_missing",
+          "error_message": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+          "celery_task_id": "3e6cf341-2141-467d-8a11-731fe5bff0e7",
+          "worker_started_at": "2026-04-15T08:03:09.109876",
+          "worker_finished_at": "2026-04-15T08:03:09.307674"
+        },
+        "created_at": "2026-04-15T08:03:08.580232+00:00",
+        "started_at": "2026-04-15T08:03:09.109876+00:00",
+        "finished_at": "2026-04-15T08:03:09.307674+00:00"
+      },
+      {
+        "job_id": "3231ef78-d161-4b21-9a7a-f581c6167653",
+        "job_type": "merge",
+        "status": "failed",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "23f9539b-342f-4123-8826-d54370a8a029",
+        "error_code": "merge_execution_not_ready",
+        "error_message": "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v13"
+        },
+        "result_payload": {
+          "task": "merge.runtime",
+          "error_code": "merge_execution_not_ready",
+          "error_message": "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+          "celery_task_id": "23f9539b-342f-4123-8826-d54370a8a029",
+          "worker_started_at": "2026-04-15T08:03:09.107029",
+          "worker_finished_at": "2026-04-15T08:03:09.307771"
+        },
+        "created_at": "2026-04-15T08:03:08.582655+00:00",
+        "started_at": "2026-04-15T08:03:09.107029+00:00",
+        "finished_at": "2026-04-15T08:03:09.307771+00:00"
+      }
+    ],
+    "job_summary": {
+      "job_count": 5,
+      "queued_job_count": 0,
+      "dispatched_job_count": 0,
+      "running_job_count": 1,
+      "succeeded_job_count": 1,
+      "failed_job_count": 3
+    },
+    "derived_compile_status": "failed",
+    "derived_dispatch_status": "fully_dispatched",
+    "assets": [
+      {
+        "asset_id": "9a15bb6e-9678-40a1-8366-a53f24746c05",
+        "asset_type": "audio",
+        "asset_role": "voice_output",
+        "bucket_name": "audio-assets",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v13/render_voice/0f9fe2ea-8ddb-465c-8290-08c6883c942e.wav",
+        "source_filename": "0f9fe2ea-8ddb-465c-8290-08c6883c942e.wav",
+        "content_type": "audio/wav",
+        "file_size": null,
+        "asset_metadata": {
+          "job_id": "0f9fe2ea-8ddb-465c-8290-08c6883c942e",
+          "job_type": "render_voice",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v13",
+          "external_task_id": "3e6cf341-2141-467d-8a11-731fe5bff0e7",
+          "materialization_error": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+          "materialization_status": "failed",
+          "materialization_error_code": "runtime_vbu_missing"
+        },
+        "status": "failed",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-15T08:03:09.299588+00:00"
+      },
+      {
+        "asset_id": "5cc8bfeb-b4e5-4c85-836e-568218620a6d",
+        "asset_type": "export",
+        "asset_role": "merged_output",
+        "bucket_name": "exports",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v13/merge/v13-3231ef78-d161-4b21-9a7a-f581c6167653.mp4",
+        "source_filename": "v13-3231ef78-d161-4b21-9a7a-f581c6167653.mp4",
+        "content_type": "video/mp4",
+        "file_size": null,
+        "asset_metadata": {
+          "job_id": "3231ef78-d161-4b21-9a7a-f581c6167653",
+          "job_type": "merge",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v13",
+          "external_task_id": "23f9539b-342f-4123-8826-d54370a8a029",
+          "materialization_error": "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+          "materialization_status": "failed",
+          "materialization_error_code": "merge_execution_not_ready"
+        },
+        "status": "failed",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-15T08:03:09.303435+00:00"
+      },
+      {
+        "asset_id": "769b9a0d-8827-41c7-a145-a3c59f64ed1b",
+        "asset_type": "generated_video",
+        "asset_role": "render_output",
+        "bucket_name": "generated-videos",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v13/render_video/d0d7dc0b-e115-4def-a4b2-67022bbe200c.mp4",
+        "source_filename": "d0d7dc0b-e115-4def-a4b2-67022bbe200c.mp4",
+        "content_type": "video/mp4",
+        "file_size": null,
+        "asset_metadata": {
+          "job_id": "d0d7dc0b-e115-4def-a4b2-67022bbe200c",
+          "job_type": "render_video",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v13",
+          "external_task_id": "b28a7f45-b052-48a2-b486-826a8cb4c0ed",
+          "materialization_error": "Google video generation request failed via google-genai SDK: generate_audio parameter is not supported in Gemini API.",
+          "materialization_status": "failed",
+          "materialization_error_code": "google_video_generation_failed"
+        },
+        "status": "failed",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-15T08:03:09.549214+00:00"
+      }
+    ],
+    "asset_association": {
+      "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+      "candidate_asset_count": 43,
+      "selected_asset_count": 3,
+      "selected_asset_types": [
+        "audio",
+        "export",
+        "generated_video"
+      ],
+      "selected_asset_ids": [
+        "9a15bb6e-9678-40a1-8366-a53f24746c05",
+        "5cc8bfeb-b4e5-4c85-836e-568218620a6d",
+        "769b9a0d-8827-41c7-a145-a3c59f64ed1b"
+      ]
+    },
+    "poll_index": 1,
+    "collected_at": "2026-04-15T08:03:09Z"
+  }
+]

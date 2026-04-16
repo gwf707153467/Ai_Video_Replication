@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-15T08:03:05Z",
+  "finished_at": "2026-04-15T08:03:11Z",
+  "status": "completed_evidence_collection",
+  "payload_path": ".evidence/case-001/compile_request_payload.json",
+  "pre_compile_latest_runtime_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/pre_compile_latest_runtime.json",
+  "compile_response_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/compile_response.json",
+  "runtime_poll_history_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/runtime_poll_history.json",
+  "runtime_snapshot_final_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/runtime_snapshot_final.json",
+  "object_store_probe_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/object_store_probe.json",
+  "export_pull_report_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/export_pull_report.json",
+  "runtime_id": "7fe99023-0fd5-4d7c-b374-a17eb415e650",
+  "runtime_version": "v13",
+  "terminal_compile_status": "failed",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260415T080305Z/final_output.mp4",
+  "final_output_exists": false,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

@@ -1,0 +1,637 @@
+{
+  "$defs": {
+    "BlueprintBridgeV0": {
+      "additionalProperties": false,
+      "properties": {
+        "bridge_code": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+          "title": "Bridge Code",
+          "type": "string"
+        },
+        "bridge_type": {
+          "default": "sequence_unit_binding",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Bridge Type",
+          "type": "string"
+        },
+        "execution_order": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Execution Order",
+          "type": "integer"
+        },
+        "spu_code": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 2,
+              "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spu Code"
+        },
+        "vbu_code": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 2,
+              "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vbu Code"
+        },
+        "transition_policy": {
+          "additionalProperties": true,
+          "title": "Transition Policy",
+          "type": "object"
+        },
+        "status": {
+          "default": "draft",
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bridge_code"
+      ],
+      "title": "BlueprintBridgeV0",
+      "type": "object"
+    },
+    "BlueprintCompilePreferencesV0": {
+      "additionalProperties": false,
+      "properties": {
+        "requested_runtime_version": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requested Runtime Version"
+        },
+        "compile_reason": {
+          "default": "blueprint_stub",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Compile Reason",
+          "type": "string"
+        },
+        "compile_options": {
+          "additionalProperties": true,
+          "title": "Compile Options",
+          "type": "object"
+        },
+        "dispatch_jobs": {
+          "default": false,
+          "title": "Dispatch Jobs",
+          "type": "boolean"
+        }
+      },
+      "title": "BlueprintCompilePreferencesV0",
+      "type": "object"
+    },
+    "BlueprintGlobalConstraintsV0": {
+      "additionalProperties": false,
+      "properties": {
+        "aspect_ratio": {
+          "default": "9:16",
+          "maxLength": 16,
+          "minLength": 3,
+          "title": "Aspect Ratio",
+          "type": "string"
+        },
+        "target_duration_ms": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Duration Ms"
+        },
+        "style_tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Style Tags",
+          "type": "array"
+        },
+        "banned_elements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Banned Elements",
+          "type": "array"
+        }
+      },
+      "title": "BlueprintGlobalConstraintsV0",
+      "type": "object"
+    },
+    "BlueprintProjectV0": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "source_market": {
+          "default": "US",
+          "maxLength": 32,
+          "minLength": 2,
+          "title": "Source Market",
+          "type": "string"
+        },
+        "source_language": {
+          "default": "en-US",
+          "maxLength": 32,
+          "minLength": 2,
+          "title": "Source Language",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "BlueprintProjectV0",
+      "type": "object"
+    },
+    "BlueprintReferenceBeatV0": {
+      "additionalProperties": false,
+      "properties": {
+        "beat_code": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+          "title": "Beat Code",
+          "type": "string"
+        },
+        "sequence_code": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+          "title": "Sequence Code",
+          "type": "string"
+        },
+        "structural_function": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Structural Function",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "rewrite_notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rewrite Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "beat_code",
+        "sequence_code",
+        "structural_function",
+        "summary"
+      ],
+      "title": "BlueprintReferenceBeatV0",
+      "type": "object"
+    },
+    "BlueprintReferenceMappingV0": {
+      "additionalProperties": false,
+      "properties": {
+        "source_moments": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Moments",
+          "type": "array"
+        },
+        "preserved_elements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Preserved Elements",
+          "type": "array"
+        },
+        "rewrite_axes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rewrite Axes",
+          "type": "array"
+        }
+      },
+      "title": "BlueprintReferenceMappingV0",
+      "type": "object"
+    },
+    "BlueprintReferenceV0": {
+      "additionalProperties": false,
+      "properties": {
+        "source_kind": {
+          "default": "manual_notes",
+          "enum": [
+            "uploaded_video",
+            "url",
+            "manual_notes",
+            "mixed"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Uri"
+        },
+        "structural_goal": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Structural Goal",
+          "type": "string"
+        },
+        "retained_axes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Retained Axes",
+          "type": "array"
+        },
+        "swappable_axes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Swappable Axes",
+          "type": "array"
+        },
+        "reference_beats": {
+          "items": {
+            "$ref": "#/$defs/BlueprintReferenceBeatV0"
+          },
+          "title": "Reference Beats",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "structural_goal"
+      ],
+      "title": "BlueprintReferenceV0",
+      "type": "object"
+    },
+    "BlueprintSPUV0": {
+      "additionalProperties": false,
+      "properties": {
+        "spu_code": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+          "title": "Spu Code",
+          "type": "string"
+        },
+        "display_name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "asset_role": {
+          "default": "primary_visual",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Asset Role",
+          "type": "string"
+        },
+        "duration_ms": {
+          "default": 5000,
+          "exclusiveMinimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "generation_mode": {
+          "default": "veo_segment",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Generation Mode",
+          "type": "string"
+        },
+        "prompt_text": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompt Text"
+        },
+        "negative_prompt_text": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Negative Prompt Text"
+        },
+        "visual_constraints": {
+          "additionalProperties": true,
+          "title": "Visual Constraints",
+          "type": "object"
+        },
+        "status": {
+          "default": "draft",
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Status",
+          "type": "string"
+        },
+        "reference_mapping": {
+          "$ref": "#/$defs/BlueprintReferenceMappingV0"
+        }
+      },
+      "required": [
+        "spu_code",
+        "display_name"
+      ],
+      "title": "BlueprintSPUV0",
+      "type": "object"
+    },
+    "BlueprintSequenceV0": {
+      "additionalProperties": false,
+      "properties": {
+        "sequence_code": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+          "title": "Sequence Code",
+          "type": "string"
+        },
+        "sequence_index": {
+          "minimum": 0,
+          "title": "Sequence Index",
+          "type": "integer"
+        },
+        "sequence_type": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Sequence Type",
+          "type": "string"
+        },
+        "persuasive_goal": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Persuasive Goal"
+        },
+        "target_duration_ms": {
+          "exclusiveMinimum": 0,
+          "title": "Target Duration Ms",
+          "type": "integer"
+        },
+        "structural_role": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Structural Role"
+        },
+        "spus": {
+          "items": {
+            "$ref": "#/$defs/BlueprintSPUV0"
+          },
+          "title": "Spus",
+          "type": "array"
+        },
+        "vbus": {
+          "items": {
+            "$ref": "#/$defs/BlueprintVBUV0"
+          },
+          "title": "Vbus",
+          "type": "array"
+        },
+        "bridges": {
+          "items": {
+            "$ref": "#/$defs/BlueprintBridgeV0"
+          },
+          "title": "Bridges",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sequence_code",
+        "sequence_index",
+        "sequence_type",
+        "target_duration_ms"
+      ],
+      "title": "BlueprintSequenceV0",
+      "type": "object"
+    },
+    "BlueprintVBUV0": {
+      "additionalProperties": false,
+      "properties": {
+        "vbu_code": {
+          "maxLength": 64,
+          "minLength": 2,
+          "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+          "title": "Vbu Code",
+          "type": "string"
+        },
+        "persuasive_role": {
+          "default": "benefit",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Persuasive Role",
+          "type": "string"
+        },
+        "script_text": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Script Text",
+          "type": "string"
+        },
+        "voice_profile": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voice Profile"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "maxLength": 32,
+              "minLength": 2,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "duration_ms": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duration Ms"
+        },
+        "tts_params": {
+          "additionalProperties": true,
+          "title": "Tts Params",
+          "type": "object"
+        },
+        "status": {
+          "default": "draft",
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Status",
+          "type": "string"
+        },
+        "reference_mapping": {
+          "$ref": "#/$defs/BlueprintReferenceMappingV0"
+        }
+      },
+      "required": [
+        "vbu_code",
+        "script_text"
+      ],
+      "title": "BlueprintVBUV0",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blueprint_version": {
+      "const": "blueprint.v0",
+      "default": "blueprint.v0",
+      "title": "Blueprint Version",
+      "type": "string"
+    },
+    "blueprint_id": {
+      "maxLength": 128,
+      "minLength": 3,
+      "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$",
+      "title": "Blueprint Id",
+      "type": "string"
+    },
+    "project": {
+      "$ref": "#/$defs/BlueprintProjectV0"
+    },
+    "reference": {
+      "$ref": "#/$defs/BlueprintReferenceV0"
+    },
+    "global_constraints": {
+      "$ref": "#/$defs/BlueprintGlobalConstraintsV0"
+    },
+    "compile_preferences": {
+      "$ref": "#/$defs/BlueprintCompilePreferencesV0"
+    },
+    "sequences": {
+      "items": {
+        "$ref": "#/$defs/BlueprintSequenceV0"
+      },
+      "minItems": 1,
+      "title": "Sequences",
+      "type": "array"
+    }
+  },
+  "required": [
+    "blueprint_id",
+    "project",
+    "reference",
+    "sequences"
+  ],
+  "title": "BlueprintV0",
+  "type": "object"
+}

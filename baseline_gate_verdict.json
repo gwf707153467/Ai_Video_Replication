@@ -1,0 +1,1077 @@
+{
+  "gate_name": "production_baseline_gate",
+  "gate_version": "v1",
+  "executed_at": "2026-04-08T14:52:21.005620+00:00",
+  "repo_root": "/app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication",
+  "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+  "runtime_id": "1d46d527-d090-433c-bcc7-05424e21cc0b",
+  "runtime_version": "v9",
+  "verdict": "PASS",
+  "summary": "Baseline gate passed: frozen sandbox baseline remained repeatable across baseline freeze, compile dispatch, runtime completion, asset materialization, and object store evidence.",
+  "baseline_freeze": {
+    "status": "pass",
+    "checks": {
+      "repo_root_correct": true,
+      "docker_compose_available": true,
+      "compose_baseline_locked": true,
+      "services_running": true,
+      "migration_at_head": true,
+      "google_image_model_locked": true,
+      "runtime_buckets_locked": true,
+      "smoke_project_exists": true
+    },
+    "expected_runtime_buckets": {
+      "minio_bucket_reference": "reference-assets",
+      "minio_bucket_generated_images": "generated-images",
+      "minio_bucket_generated_videos": "generated-videos",
+      "minio_bucket_audio": "audio-assets",
+      "minio_bucket_exports": "exports",
+      "minio_bucket_runtime": "runtime-packets"
+    },
+    "actual_runtime_buckets": {
+      "minio_bucket_reference": "reference-assets",
+      "minio_bucket_generated_images": "generated-images",
+      "minio_bucket_generated_videos": "generated-videos",
+      "minio_bucket_audio": "audio-assets",
+      "minio_bucket_exports": "exports",
+      "minio_bucket_runtime": "runtime-packets"
+    }
+  },
+  "compile_dispatch": {
+    "status": "pass",
+    "compile_validate_passed": true,
+    "compile_request_passed": true,
+    "job_count": 5,
+    "job_types": [
+      "compile",
+      "render_image",
+      "render_video",
+      "render_voice",
+      "merge"
+    ],
+    "initial_dispatch_status": "fully_dispatched"
+  },
+  "runtime_completion": {
+    "status": "pass",
+    "compile_status": "succeeded",
+    "dispatch_status": "fully_dispatched",
+    "stored_compile_status": "succeeded",
+    "stored_dispatch_status": "fully_dispatched",
+    "job_count": 5,
+    "queued_job_count": 0,
+    "dispatched_job_count": 0,
+    "running_job_count": 0,
+    "succeeded_job_count": 5,
+    "failed_job_count": 0,
+    "last_error_code": null
+  },
+  "asset_materialization": {
+    "status": "pass",
+    "required_asset_types": [
+      "generated_image",
+      "generated_video",
+      "audio",
+      "export"
+    ],
+    "materialized_asset_count": 4,
+    "assets": [
+      {
+        "asset_id": "20de2619-45bf-4f97-93de-a5ec4f9a5381",
+        "asset_type": "export",
+        "asset_role": "merged_output",
+        "bucket_name": "exports",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/merge/v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+        "source_filename": "v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+        "content_type": "video/mp4",
+        "file_size": 196,
+        "asset_metadata": {
+          "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+          "job_type": "merge",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146",
+          "materialized_etag": "a89daab701618132e84fe8da9f34ffce",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:10.454576+00:00"
+      },
+      {
+        "asset_id": "a068128b-5839-4c43-97c5-a31284ffde4e",
+        "asset_type": "audio",
+        "asset_role": "voice_output",
+        "bucket_name": "audio-assets",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_voice/0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+        "source_filename": "0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+        "content_type": "audio/wav",
+        "file_size": 202,
+        "asset_metadata": {
+          "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+          "job_type": "render_voice",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05",
+          "materialized_etag": "67d0d1f3e9748a93a91a7f0dde9172e3",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:10.457501+00:00"
+      },
+      {
+        "asset_id": "42fb5603-f4b2-491c-8d46-3f46fdd8e4f7",
+        "asset_type": "generated_video",
+        "asset_role": "render_output",
+        "bucket_name": "generated-videos",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_video/5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+        "source_filename": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+        "content_type": "video/mp4",
+        "file_size": 202,
+        "asset_metadata": {
+          "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+          "job_type": "render_video",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f",
+          "materialized_etag": "55fdea0a09b8dad2977f40131753b42c",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:10.475531+00:00"
+      },
+      {
+        "asset_id": "f4b7c8e9-b729-44cb-b797-fac9aec02216",
+        "asset_type": "generated_image",
+        "asset_role": "render_output",
+        "bucket_name": "generated-images",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_image/b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+        "source_filename": "b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+        "content_type": "image/png",
+        "file_size": 546635,
+        "asset_metadata": {
+          "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+          "job_type": "render_image",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339",
+          "materialized_etag": "6cd934099b977d3d891def2334674bb4",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:16.175124+00:00"
+      }
+    ]
+  },
+  "object_store": {
+    "status": "pass",
+    "probe_method": "app_container_minio_python_probe",
+    "checked_object_count": 4,
+    "existing_object_count": 4,
+    "objects": [
+      {
+        "bucket_name": "exports",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/merge/v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+        "exists": true,
+        "size": 196,
+        "content_type": "video/mp4"
+      },
+      {
+        "bucket_name": "audio-assets",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_voice/0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+        "exists": true,
+        "size": 202,
+        "content_type": "audio/wav"
+      },
+      {
+        "bucket_name": "generated-videos",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_video/5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+        "exists": true,
+        "size": 202,
+        "content_type": "video/mp4"
+      },
+      {
+        "bucket_name": "generated-images",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_image/b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+        "exists": true,
+        "size": 546635,
+        "content_type": "image/png"
+      }
+    ]
+  },
+  "evidence": {
+    "health_response": {
+      "status": "ok",
+      "app_env": "development",
+      "target_market": "US",
+      "target_language": "en-US"
+    },
+    "compile_validate_response": {
+      "http_status": 200,
+      "payload": {
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "is_valid": true,
+        "errors": [],
+        "warnings": [
+          "missing_vbus",
+          "missing_bridges"
+        ],
+        "counts": {
+          "sequences": 1,
+          "spus": 1,
+          "vbus": 0,
+          "bridges": 0
+        }
+      }
+    },
+    "compile_dispatch_response": {
+      "http_status": 200,
+      "payload": {
+        "id": "1d46d527-d090-433c-bcc7-05424e21cc0b",
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "runtime_version": "v9",
+        "compile_status": "dispatched",
+        "runtime_payload": {
+          "sequences": [
+            {
+              "spus": [
+                {
+                  "spu_id": "31431873-86b2-4adb-aeaf-78f6067335d8",
+                  "status": "draft",
+                  "spu_code": "SPU-001",
+                  "asset_role": "primary_visual",
+                  "duration_ms": 5000,
+                  "prompt_text": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.",
+                  "display_name": "Beauty serum hero shot",
+                  "generation_mode": "veo_segment",
+                  "visual_constraints": {
+                    "style": "studio_clean",
+                    "platform": "tiktok_9_16",
+                    "background": "#FFFFFF"
+                  },
+                  "negative_prompt_text": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+                }
+              ],
+              "vbus": [],
+              "bridges": [],
+              "sequence_id": "7226dad0-a05f-411b-9acf-ac15a3128f4c",
+              "sequence_type": "hook",
+              "sequence_index": 1,
+              "persuasive_goal": "Introduce the beauty product with a clean premium visual"
+            }
+          ],
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "bridge_count": 0,
+          "compile_reason": "manual_runtime_validation",
+          "compile_options": {
+            "mode": "manual_runtime_validation"
+          },
+          "runtime_version": "v9",
+          "audio_track_count": 0,
+          "visual_track_count": 1
+        },
+        "dispatch_status": "fully_dispatched",
+        "dispatch_summary": {
+          "jobs": [
+            {
+              "job_id": "8fb2a303-e904-44e4-82fd-674fc6542264",
+              "status": "dispatched",
+              "job_type": "compile",
+              "external_task_id": "333adafe-f427-4ca7-bb82-a5d3e2c94075"
+            },
+            {
+              "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+              "status": "dispatched",
+              "job_type": "render_image",
+              "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339"
+            },
+            {
+              "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+              "status": "dispatched",
+              "job_type": "render_video",
+              "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f"
+            },
+            {
+              "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+              "status": "dispatched",
+              "job_type": "render_voice",
+              "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05"
+            },
+            {
+              "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+              "status": "dispatched",
+              "job_type": "merge",
+              "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146"
+            }
+          ],
+          "job_count": 5,
+          "dispatch_status": "fully_dispatched",
+          "runtime_version": "v9",
+          "queued_job_count": 0,
+          "dispatched_job_count": 5,
+          "undispatched_job_count": 0
+        },
+        "last_error_code": null,
+        "last_error_message": null,
+        "compile_started_at": "2026-04-08T14:52:10.058906Z",
+        "compile_finished_at": "2026-04-08T14:52:10.064301Z",
+        "created_at": "2026-04-08T14:52:10.067881Z"
+      }
+    },
+    "alembic_version": "20260330_0004",
+    "settings_snapshot": {
+      "app_env": "development",
+      "google_image_model": "imagen-4.0-fast-generate-001",
+      "minio_endpoint": "minio:9000",
+      "minio_secure": false,
+      "minio_bucket_reference": "reference-assets",
+      "minio_bucket_generated_images": "generated-images",
+      "minio_bucket_generated_videos": "generated-videos",
+      "minio_bucket_audio": "audio-assets",
+      "minio_bucket_exports": "exports",
+      "minio_bucket_runtime": "runtime-packets"
+    },
+    "runtime_record": {
+      "runtime_id": "1d46d527-d090-433c-bcc7-05424e21cc0b",
+      "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+      "runtime_version": "v9",
+      "compile_status": "succeeded",
+      "runtime_payload": {
+        "sequences": [
+          {
+            "spus": [
+              {
+                "spu_id": "31431873-86b2-4adb-aeaf-78f6067335d8",
+                "status": "draft",
+                "spu_code": "SPU-001",
+                "asset_role": "primary_visual",
+                "duration_ms": 5000,
+                "prompt_text": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.",
+                "display_name": "Beauty serum hero shot",
+                "generation_mode": "veo_segment",
+                "visual_constraints": {
+                  "style": "studio_clean",
+                  "platform": "tiktok_9_16",
+                  "background": "#FFFFFF"
+                },
+                "negative_prompt_text": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+              }
+            ],
+            "vbus": [],
+            "bridges": [],
+            "sequence_id": "7226dad0-a05f-411b-9acf-ac15a3128f4c",
+            "sequence_type": "hook",
+            "sequence_index": 1,
+            "persuasive_goal": "Introduce the beauty product with a clean premium visual"
+          }
+        ],
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "bridge_count": 0,
+        "compile_reason": "manual_runtime_validation",
+        "compile_options": {
+          "mode": "manual_runtime_validation"
+        },
+        "runtime_version": "v9",
+        "audio_track_count": 0,
+        "visual_track_count": 1
+      },
+      "dispatch_status": "fully_dispatched",
+      "dispatch_summary": {
+        "jobs": [
+          {
+            "job_id": "8fb2a303-e904-44e4-82fd-674fc6542264",
+            "status": "succeeded",
+            "job_type": "compile",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "333adafe-f427-4ca7-bb82-a5d3e2c94075"
+          },
+          {
+            "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+            "status": "succeeded",
+            "job_type": "render_image",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339"
+          },
+          {
+            "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+            "status": "succeeded",
+            "job_type": "render_video",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f"
+          },
+          {
+            "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+            "status": "succeeded",
+            "job_type": "render_voice",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05"
+          },
+          {
+            "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+            "status": "succeeded",
+            "job_type": "merge",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146"
+          }
+        ],
+        "job_count": 5,
+        "runtime_version": "v9",
+        "failed_job_count": 0,
+        "queued_job_count": 0,
+        "running_job_count": 0,
+        "succeeded_job_count": 5,
+        "dispatched_job_count": 0
+      },
+      "last_error_code": null,
+      "last_error_message": null,
+      "compile_started_at": "2026-04-08T14:52:10.058906+00:00",
+      "compile_finished_at": "2026-04-08T14:52:10.064301+00:00",
+      "created_at": "2026-04-08T14:52:10.067881+00:00"
+    },
+    "runtime_dispatch_summary": {
+      "runtime_version": "v9",
+      "job_count": 5,
+      "queued_job_count": 0,
+      "dispatched_job_count": 0,
+      "running_job_count": 0,
+      "succeeded_job_count": 5,
+      "failed_job_count": 0,
+      "jobs": [
+        {
+          "job_id": "8fb2a303-e904-44e4-82fd-674fc6542264",
+          "job_type": "compile",
+          "status": "succeeded",
+          "external_task_id": "333adafe-f427-4ca7-bb82-a5d3e2c94075",
+          "error_code": null
+        },
+        {
+          "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+          "job_type": "render_image",
+          "status": "succeeded",
+          "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339",
+          "error_code": null
+        },
+        {
+          "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+          "job_type": "render_video",
+          "status": "succeeded",
+          "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f",
+          "error_code": null
+        },
+        {
+          "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+          "job_type": "render_voice",
+          "status": "succeeded",
+          "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05",
+          "error_code": null
+        },
+        {
+          "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+          "job_type": "merge",
+          "status": "succeeded",
+          "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146",
+          "error_code": null
+        }
+      ]
+    },
+    "runtime_asset_association": {
+      "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+      "runtime_version_filter_status": "tentative_confirmed_by_data",
+      "association_strength": "tentative_metadata_backed",
+      "selected_runtime_version": "v9",
+      "candidate_asset_count": 28,
+      "selected_asset_count": 4,
+      "selected_asset_ids": [
+        "20de2619-45bf-4f97-93de-a5ec4f9a5381",
+        "a068128b-5839-4c43-97c5-a31284ffde4e",
+        "42fb5603-f4b2-491c-8d46-3f46fdd8e4f7",
+        "f4b7c8e9-b729-44cb-b797-fac9aec02216"
+      ],
+      "selected_asset_types": [
+        "export",
+        "audio",
+        "generated_video",
+        "generated_image"
+      ],
+      "metadata_signal_counts": {
+        "selected_assets_with_runtime_version": 4,
+        "selected_assets_with_job_id": 4,
+        "selected_assets_with_job_type": 4,
+        "selected_assets_with_external_task_id": 4,
+        "selected_assets_with_materialization_status": 4,
+        "selected_metadata_job_types": [
+          "merge",
+          "render_image",
+          "render_video",
+          "render_voice"
+        ]
+      },
+      "fallback_used": false
+    },
+    "jobs": [
+      {
+        "job_id": "8fb2a303-e904-44e4-82fd-674fc6542264",
+        "job_type": "compile",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "333adafe-f427-4ca7-bb82-a5d3e2c94075",
+        "error_code": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v9"
+        },
+        "result_payload": {
+          "task": "compile.runtime",
+          "job_id": "8fb2a303-e904-44e4-82fd-674fc6542264",
+          "status": "succeeded_stub",
+          "provider": "stub",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "runtime_version": "v9",
+          "provider_payload": {
+            "job_type": "compile",
+            "task_name": "compile.runtime",
+            "provider_name": "stub",
+            "runtime_version": "v9"
+          },
+          "worker_finished_at": "2026-04-08T14:52:10.437599"
+        },
+        "created_at": "2026-04-08T14:52:10.076882+00:00",
+        "started_at": "2026-04-08T14:52:10.404635+00:00",
+        "finished_at": "2026-04-08T14:52:10.437654+00:00"
+      },
+      {
+        "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+        "job_type": "render_image",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339",
+        "error_code": null,
+        "provider_name": null,
+        "payload": {
+          "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+          "dispatch_source": "compile_endpoint",
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "provider_inputs": {
+            "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+            "source": "compiler_minimal_render_image_prompt_v1",
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+            "runtime_version": "v9"
+          },
+          "runtime_version": "v9"
+        },
+        "result_payload": {
+          "task": "render.image",
+          "asset": {
+            "status": "materialized",
+            "asset_id": "f4b7c8e9-b729-44cb-b797-fac9aec02216",
+            "file_size": 546635,
+            "asset_role": "render_output",
+            "asset_type": "generated_image",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_image/b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+            "bucket_name": "generated-images",
+            "content_type": "image/png"
+          },
+          "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+          "status": "succeeded",
+          "provider": "google",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "materialization": {
+            "etag": "6cd934099b977d3d891def2334674bb4",
+            "size": 546635,
+            "status": "materialized",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_image/b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+            "version_id": null,
+            "bucket_name": "generated-images",
+            "idempotency": "fresh_write"
+          },
+          "runtime_version": "v9",
+          "provider_payload": {
+            "google": {
+              "sdk": "google-genai",
+              "model": "imagen-4.0-fast-generate-001",
+              "request": {
+                "aspect_ratio": "9:16",
+                "sample_count": 1,
+                "safety_setting": null,
+                "person_generation": null,
+                "negative_prompt_present": true,
+                "negative_prompt_forwarded": false
+              },
+              "response": {
+                "response_type": "GenerateImagesResponse",
+                "generated_images_count": 1
+              }
+            },
+            "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+            "job_type": "render_image",
+            "task_name": "render.image",
+            "provider_name": "google",
+            "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+            "runtime_version": "v9",
+            "generation_options": {
+              "aspect_ratio": "9:16",
+              "sample_count": 1,
+              "safety_setting": null,
+              "person_generation": null
+            }
+          },
+          "worker_finished_at": "2026-04-08T14:52:16.268338"
+        },
+        "created_at": "2026-04-08T14:52:10.216794+00:00",
+        "started_at": "2026-04-08T14:52:10.836137+00:00",
+        "finished_at": "2026-04-08T14:52:16.268615+00:00"
+      },
+      {
+        "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+        "job_type": "render_video",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f",
+        "error_code": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v9"
+        },
+        "result_payload": {
+          "task": "render.video",
+          "asset": {
+            "status": "materialized",
+            "asset_id": "42fb5603-f4b2-491c-8d46-3f46fdd8e4f7",
+            "file_size": 202,
+            "asset_role": "render_output",
+            "asset_type": "generated_video",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_video/5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+            "bucket_name": "generated-videos",
+            "content_type": "video/mp4"
+          },
+          "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+          "status": "succeeded_stub",
+          "provider": "stub",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "materialization": {
+            "etag": "55fdea0a09b8dad2977f40131753b42c",
+            "size": 202,
+            "status": "materialized",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_video/5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+            "version_id": null,
+            "bucket_name": "generated-videos",
+            "idempotency": "fresh_write"
+          },
+          "runtime_version": "v9",
+          "provider_payload": {
+            "job_type": "render_video",
+            "task_name": "render.video",
+            "provider_name": "stub",
+            "runtime_version": "v9"
+          },
+          "worker_finished_at": "2026-04-08T14:52:10.510434"
+        },
+        "created_at": "2026-04-08T14:52:10.219882+00:00",
+        "started_at": "2026-04-08T14:52:10.427415+00:00",
+        "finished_at": "2026-04-08T14:52:10.510540+00:00"
+      },
+      {
+        "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+        "job_type": "render_voice",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05",
+        "error_code": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v9"
+        },
+        "result_payload": {
+          "task": "render.voice",
+          "asset": {
+            "status": "materialized",
+            "asset_id": "a068128b-5839-4c43-97c5-a31284ffde4e",
+            "file_size": 202,
+            "asset_role": "voice_output",
+            "asset_type": "audio",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_voice/0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+            "bucket_name": "audio-assets",
+            "content_type": "audio/wav"
+          },
+          "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+          "status": "succeeded_stub",
+          "provider": "stub",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "materialization": {
+            "etag": "67d0d1f3e9748a93a91a7f0dde9172e3",
+            "size": 202,
+            "status": "materialized",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_voice/0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+            "version_id": null,
+            "bucket_name": "audio-assets",
+            "idempotency": "fresh_write"
+          },
+          "runtime_version": "v9",
+          "provider_payload": {
+            "job_type": "render_voice",
+            "task_name": "render.voice",
+            "provider_name": "stub",
+            "runtime_version": "v9"
+          },
+          "worker_finished_at": "2026-04-08T14:52:10.502589"
+        },
+        "created_at": "2026-04-08T14:52:10.222260+00:00",
+        "started_at": "2026-04-08T14:52:10.407047+00:00",
+        "finished_at": "2026-04-08T14:52:10.502635+00:00"
+      },
+      {
+        "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+        "job_type": "merge",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146",
+        "error_code": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v9"
+        },
+        "result_payload": {
+          "task": "merge.runtime",
+          "asset": {
+            "status": "materialized",
+            "asset_id": "20de2619-45bf-4f97-93de-a5ec4f9a5381",
+            "file_size": 196,
+            "asset_role": "merged_output",
+            "asset_type": "export",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/merge/v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+            "bucket_name": "exports",
+            "content_type": "video/mp4"
+          },
+          "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+          "status": "succeeded_stub",
+          "provider": "stub",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "materialization": {
+            "etag": "a89daab701618132e84fe8da9f34ffce",
+            "size": 196,
+            "status": "materialized",
+            "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/merge/v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+            "version_id": null,
+            "bucket_name": "exports",
+            "idempotency": "fresh_write"
+          },
+          "runtime_version": "v9",
+          "provider_payload": {
+            "job_type": "merge",
+            "task_name": "merge.runtime",
+            "provider_name": "stub",
+            "runtime_version": "v9"
+          },
+          "worker_finished_at": "2026-04-08T14:52:10.503769"
+        },
+        "created_at": "2026-04-08T14:52:10.224615+00:00",
+        "started_at": "2026-04-08T14:52:10.405070+00:00",
+        "finished_at": "2026-04-08T14:52:10.503791+00:00"
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "20de2619-45bf-4f97-93de-a5ec4f9a5381",
+        "asset_type": "export",
+        "asset_role": "merged_output",
+        "bucket_name": "exports",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/merge/v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+        "source_filename": "v9-1bf13fb8-681b-4205-ac51-e4c2a3343e3e.mp4",
+        "content_type": "video/mp4",
+        "file_size": 196,
+        "asset_metadata": {
+          "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+          "job_type": "merge",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146",
+          "materialized_etag": "a89daab701618132e84fe8da9f34ffce",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:10.454576+00:00"
+      },
+      {
+        "asset_id": "a068128b-5839-4c43-97c5-a31284ffde4e",
+        "asset_type": "audio",
+        "asset_role": "voice_output",
+        "bucket_name": "audio-assets",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_voice/0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+        "source_filename": "0cace750-6b0b-40b9-b09d-94e79fbed760.wav",
+        "content_type": "audio/wav",
+        "file_size": 202,
+        "asset_metadata": {
+          "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+          "job_type": "render_voice",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05",
+          "materialized_etag": "67d0d1f3e9748a93a91a7f0dde9172e3",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:10.457501+00:00"
+      },
+      {
+        "asset_id": "42fb5603-f4b2-491c-8d46-3f46fdd8e4f7",
+        "asset_type": "generated_video",
+        "asset_role": "render_output",
+        "bucket_name": "generated-videos",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_video/5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+        "source_filename": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4.mp4",
+        "content_type": "video/mp4",
+        "file_size": 202,
+        "asset_metadata": {
+          "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+          "job_type": "render_video",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f",
+          "materialized_etag": "55fdea0a09b8dad2977f40131753b42c",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:10.475531+00:00"
+      },
+      {
+        "asset_id": "f4b7c8e9-b729-44cb-b797-fac9aec02216",
+        "asset_type": "generated_image",
+        "asset_role": "render_output",
+        "bucket_name": "generated-images",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v9/render_image/b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+        "source_filename": "b9915a0b-0646-4e79-ad5b-ed888d863b73.png",
+        "content_type": "image/png",
+        "file_size": 546635,
+        "asset_metadata": {
+          "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+          "job_type": "render_image",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v9",
+          "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339",
+          "materialized_etag": "6cd934099b977d3d891def2334674bb4",
+          "materialization_status": "uploaded_by_worker",
+          "materialized_version_id": null
+        },
+        "status": "materialized",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-08T14:52:16.175124+00:00"
+      }
+    ],
+    "stage_timings": {
+      "baseline_freeze": {
+        "started_monotonic": 103085.217006687,
+        "finished_monotonic": 103086.769544315,
+        "duration_seconds": 1.553
+      },
+      "health_probe": {
+        "started_monotonic": 103086.769554715,
+        "finished_monotonic": 103087.064707583,
+        "duration_seconds": 0.295
+      },
+      "compile_validate": {
+        "started_monotonic": 103087.064724384,
+        "finished_monotonic": 103087.4933507,
+        "duration_seconds": 0.429
+      },
+      "compile_dispatch": {
+        "started_monotonic": 103087.493361001,
+        "finished_monotonic": 103087.992255075,
+        "duration_seconds": 0.499
+      },
+      "runtime_polling": {
+        "started_monotonic": 103087.992268076,
+        "finished_monotonic": 103098.011451885,
+        "duration_seconds": 10.019
+      },
+      "db_evidence": {
+        "started_monotonic": 103098.011459985,
+        "finished_monotonic": 103098.018366119,
+        "duration_seconds": 0.007
+      },
+      "object_store": {
+        "started_monotonic": 103098.018372919,
+        "finished_monotonic": 103098.742913375,
+        "duration_seconds": 0.725
+      },
+      "verdict_render": {
+        "started_monotonic": 103098.742923476,
+        "finished_monotonic": 103098.742931577,
+        "duration_seconds": 0.0
+      }
+    },
+    "compose_snapshot": {
+      "compose_path": "/app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication/docker-compose.yml",
+      "app": {
+        "command_locked": true,
+        "forbidden_bind_present": false,
+        "block_excerpt": [
+          "  app:",
+          "    build:",
+          "      context: .",
+          "      dockerfile: docker/app.Dockerfile",
+          "    container_name: avr_app",
+          "    restart: unless-stopped",
+          "    env_file:",
+          "      - .env",
+          "    depends_on:",
+          "      - postgres",
+          "      - redis",
+          "      - minio",
+          "    ports:",
+          "      - \"8000:8000\"",
+          "    command: uvicorn app.main:app --host 0.0.0.0 --port 8000",
+          ""
+        ]
+      },
+      "worker": {
+        "command_locked": true,
+        "forbidden_bind_present": false,
+        "block_excerpt": [
+          "  worker:",
+          "    build:",
+          "      context: .",
+          "      dockerfile: docker/worker.Dockerfile",
+          "    container_name: avr_worker",
+          "    restart: unless-stopped",
+          "    env_file:",
+          "      - .env",
+          "    depends_on:",
+          "      - postgres",
+          "      - redis",
+          "      - minio",
+          "    command: celery -A app.workers.celery_app worker --loglevel=INFO",
+          "",
+          "volumes:"
+        ]
+      },
+      "all_locked": true,
+      "docker_compose": {
+        "available": true,
+        "returncode": 0,
+        "stdout": "docker-compose version 1.29.2, build unknown\ndocker-py version: 5.0.3\nCPython version: 3.11.2\nOpenSSL version: OpenSSL 3.0.18 30 Sep 2025",
+        "stderr": ""
+      }
+    },
+    "running_services": {
+      "returncode": 0,
+      "stdout": "Name                  Command               State                                         Ports                                       \n------------------------------------------------------------------------------------------------------------------------------------------\navr_app        uvicorn app.main:app --hos ...   Up      0.0.0.0:8000->8000/tcp,:::8000->8000/tcp                                          \navr_minio      /usr/bin/docker-entrypoint ...   Up      0.0.0.0:9000->9000/tcp,:::9000->9000/tcp, 0.0.0.0:9001->9001/tcp,:::9001->9001/tcp\navr_postgres   docker-entrypoint.sh postgres    Up      0.0.0.0:5432->5432/tcp,:::5432->5432/tcp                                          \navr_redis      docker-entrypoint.sh redis ...   Up      0.0.0.0:6379->6379/tcp,:::6379->6379/tcp                                          \navr_worker     celery -A app.workers.cele ...   Up",
+      "stderr": "",
+      "names": [
+        "avr_app",
+        "avr_minio",
+        "avr_postgres",
+        "avr_redis",
+        "avr_worker"
+      ],
+      "running_names": [
+        "avr_app",
+        "avr_minio",
+        "avr_postgres",
+        "avr_redis",
+        "avr_worker"
+      ]
+    },
+    "runtime_poll_snapshot": {
+      "runtime_id": "1d46d527-d090-433c-bcc7-05424e21cc0b",
+      "runtime_version": "v9",
+      "stored_compile_status": "succeeded",
+      "stored_dispatch_status": "fully_dispatched",
+      "derived_compile_status": "succeeded",
+      "derived_dispatch_status": "fully_dispatched",
+      "job_count": 5,
+      "queued_job_count": 0,
+      "dispatched_job_count": 0,
+      "running_job_count": 0,
+      "succeeded_job_count": 5,
+      "failed_job_count": 0,
+      "last_error_code": null,
+      "last_error_message": null,
+      "job_summary": {
+        "runtime_version": "v9",
+        "job_count": 5,
+        "queued_job_count": 0,
+        "dispatched_job_count": 0,
+        "running_job_count": 0,
+        "succeeded_job_count": 5,
+        "failed_job_count": 0,
+        "jobs": [
+          {
+            "job_id": "8fb2a303-e904-44e4-82fd-674fc6542264",
+            "job_type": "compile",
+            "status": "succeeded",
+            "external_task_id": "333adafe-f427-4ca7-bb82-a5d3e2c94075",
+            "error_code": null
+          },
+          {
+            "job_id": "b9915a0b-0646-4e79-ad5b-ed888d863b73",
+            "job_type": "render_image",
+            "status": "succeeded",
+            "external_task_id": "193176b3-8937-4f82-bc73-1fe8e2c50339",
+            "error_code": null
+          },
+          {
+            "job_id": "5ac14d5e-4f21-44c9-9f9f-a69d5521f9e4",
+            "job_type": "render_video",
+            "status": "succeeded",
+            "external_task_id": "7110b787-9c5c-4d54-979f-e2505e4af02f",
+            "error_code": null
+          },
+          {
+            "job_id": "0cace750-6b0b-40b9-b09d-94e79fbed760",
+            "job_type": "render_voice",
+            "status": "succeeded",
+            "external_task_id": "c01b4d65-d0b1-4001-a2ff-6804909d2e05",
+            "error_code": null
+          },
+          {
+            "job_id": "1bf13fb8-681b-4205-ac51-e4c2a3343e3e",
+            "job_type": "merge",
+            "status": "succeeded",
+            "external_task_id": "692217fa-617d-4659-a8e7-a9d35167c146",
+            "error_code": null
+          }
+        ]
+      }
+    }
+  },
+  "warnings": [
+    "compile_validate_warning:missing_vbus",
+    "compile_validate_warning:missing_bridges",
+    "terminal_runtime_dispatched_job_count_zero_is_expected_when_all_jobs_have_advanced_beyond_dispatch"
+  ],
+  "drifts": [],
+  "failures": []
+}

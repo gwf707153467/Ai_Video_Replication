@@ -1,0 +1,408 @@
+{
+  "blueprint_version": "blueprint.v0",
+  "blueprint_id": "beauty-lip-plumper-demo",
+  "project": {
+    "name": "Beauty Lip Plumper Demo",
+    "source_market": "US",
+    "source_language": "en-US",
+    "notes": "Minimal beauty/cosmetics blueprint example for P2-M1 contract landing."
+  },
+  "reference": {
+    "source_kind": "uploaded_video",
+    "source_uri": "/mnt/user-data/uploads/countik.com_1774670446913.mp4",
+    "structural_goal": "Preserve a fast TikTok beauty hook-to-demo-to-CTA structure while swapping product and copy details.",
+    "retained_axes": [
+      "short-form hook rhythm",
+      "problem-to-demo sequencing",
+      "benefit-first beauty persuasion"
+    ],
+    "swappable_axes": [
+      "product SKU",
+      "model identity",
+      "background setting",
+      "selling-point wording"
+    ],
+    "reference_beats": [
+      {
+        "beat_code": "hook-open",
+        "sequence_code": "hook",
+        "structural_function": "pattern_interrupt_hook",
+        "summary": "Open with glossy lips close-up and immediate curiosity statement.",
+        "rewrite_notes": [
+          "Replace original talent and product packaging.",
+          "Keep quick close-up reveal energy."
+        ]
+      },
+      {
+        "beat_code": "problem-pain",
+        "sequence_code": "problem",
+        "structural_function": "pain_point_frame",
+        "summary": "Call out thin, dry, flat-looking lips as the beauty problem.",
+        "rewrite_notes": [
+          "Adapt pain point wording to new product positioning."
+        ]
+      },
+      {
+        "beat_code": "demo-apply",
+        "sequence_code": "demo",
+        "structural_function": "product_application_demo",
+        "summary": "Show applicator texture and on-lip transformation during use.",
+        "rewrite_notes": [
+          "Preserve texture emphasis and product-in-hand shots."
+        ]
+      },
+      {
+        "beat_code": "cta-offer",
+        "sequence_code": "cta",
+        "structural_function": "offer_close",
+        "summary": "Close with result claim and direct purchase CTA.",
+        "rewrite_notes": [
+          "Swap offer copy and urgency details."
+        ]
+      }
+    ],
+    "notes": [
+      "Example focuses on structure, not shot-level parsing.",
+      "Designed to compile into current RuntimePacket shape only."
+    ]
+  },
+  "global_constraints": {
+    "aspect_ratio": "9:16",
+    "target_duration_ms": 32000,
+    "style_tags": [
+      "beauty",
+      "cosmetics",
+      "ugc",
+      "high-contrast closeup"
+    ],
+    "banned_elements": [
+      "medical claims",
+      "before-after split screen with unrealistic exaggeration"
+    ]
+  },
+  "compile_preferences": {
+    "requested_runtime_version": "beauty-lip-plumper-demo.v0",
+    "compile_reason": "blueprint_stub",
+    "compile_options": {
+      "campaign": "p2-m1-demo",
+      "provider_hint": "veo"
+    },
+    "dispatch_jobs": false
+  },
+  "sequences": [
+    {
+      "sequence_code": "hook",
+      "sequence_index": 0,
+      "sequence_type": "hook",
+      "persuasive_goal": "Stop scroll immediately with visual payoff promise.",
+      "target_duration_ms": 5000,
+      "structural_role": "opening_pattern_interrupt",
+      "spus": [
+        {
+          "spu_code": "hook-visual",
+          "display_name": "Glossy lips macro reveal",
+          "asset_role": "primary_visual",
+          "duration_ms": 5000,
+          "generation_mode": "veo_segment",
+          "prompt_text": "Macro beauty close-up of glossy fuller lips, premium lip plumper in hand, soft studio light, TikTok UGC energy, vertical 9:16.",
+          "negative_prompt_text": "distorted mouth, extra fingers, blurry applicator, low detail",
+          "visual_constraints": {
+            "camera": "macro closeup",
+            "motion": "quick reveal",
+            "framing": "centered lips product focus"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "hook-open"
+            ],
+            "preserved_elements": [
+              "lip close-up",
+              "fast reveal"
+            ],
+            "rewrite_axes": [
+              "talent",
+              "product pack"
+            ]
+          }
+        }
+      ],
+      "vbus": [
+        {
+          "vbu_code": "hook-voice",
+          "persuasive_role": "hook",
+          "script_text": "If your lips look flat by noon, this is the glow-up you need.",
+          "voice_profile": "confident_female_01",
+          "language": null,
+          "duration_ms": 3500,
+          "tts_params": {
+            "pace": "fast",
+            "tone": "excited"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "hook-open"
+            ],
+            "preserved_elements": [
+              "curiosity-led opening"
+            ],
+            "rewrite_axes": [
+              "copy specifics"
+            ]
+          }
+        }
+      ],
+      "bridges": [
+        {
+          "bridge_code": "hook-bind",
+          "bridge_type": "sequence_unit_binding",
+          "execution_order": 0,
+          "spu_code": "hook-visual",
+          "vbu_code": "hook-voice",
+          "transition_policy": {
+            "sync_mode": "voice_led",
+            "transition": "hard_cut"
+          },
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "sequence_code": "problem",
+      "sequence_index": 1,
+      "sequence_type": "problem",
+      "persuasive_goal": "Frame the lip concern and increase need state.",
+      "target_duration_ms": 7000,
+      "structural_role": "pain_agitation",
+      "spus": [
+        {
+          "spu_code": "problem-visual",
+          "display_name": "Dry lip concern visual",
+          "asset_role": "supporting_visual",
+          "duration_ms": 4500,
+          "generation_mode": "veo_segment",
+          "prompt_text": "Beauty creator pointing to dry uneven lips in mirror, soft bathroom lighting, relatable UGC style, vertical frame.",
+          "negative_prompt_text": "graphic injury, ugly distortion, medical scene",
+          "visual_constraints": {
+            "camera": "medium closeup",
+            "emotion": "concerned",
+            "setting": "bathroom vanity"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "problem-pain"
+            ],
+            "preserved_elements": [
+              "problem callout",
+              "mirror setup"
+            ],
+            "rewrite_axes": [
+              "line delivery",
+              "creator styling"
+            ]
+          }
+        }
+      ],
+      "vbus": [
+        {
+          "vbu_code": "problem-voice",
+          "persuasive_role": "problem",
+          "script_text": "Mine were looking dry, thin, and patchy no matter what gloss I used.",
+          "voice_profile": "confident_female_01",
+          "language": null,
+          "duration_ms": 4200,
+          "tts_params": {
+            "pace": "medium",
+            "tone": "relatable"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "problem-pain"
+            ],
+            "preserved_elements": [
+              "problem framing"
+            ],
+            "rewrite_axes": [
+              "pain point wording"
+            ]
+          }
+        }
+      ],
+      "bridges": [
+        {
+          "bridge_code": "problem-bind",
+          "bridge_type": "sequence_unit_binding",
+          "execution_order": 0,
+          "spu_code": "problem-visual",
+          "vbu_code": "problem-voice",
+          "transition_policy": {
+            "sync_mode": "parallel",
+            "transition": "cut_on_word"
+          },
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "sequence_code": "demo",
+      "sequence_index": 2,
+      "sequence_type": "demo",
+      "persuasive_goal": "Demonstrate texture, application, and visible payoff.",
+      "target_duration_ms": 13000,
+      "structural_role": "proof_and_transformation",
+      "spus": [
+        {
+          "spu_code": "demo-visual",
+          "display_name": "Applicator texture swipe",
+          "asset_role": "primary_visual",
+          "duration_ms": 8000,
+          "generation_mode": "veo_segment",
+          "prompt_text": "Close-up lip plumper applicator with glossy serum texture, swipe on lips, subtle plumping effect, premium beauty ad realism, vertical 9:16.",
+          "negative_prompt_text": "messy smear, unrealistic inflation, low-res texture",
+          "visual_constraints": {
+            "camera": "macro product demo",
+            "motion": "slow swipe",
+            "focus": "texture and shine"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "demo-apply"
+            ],
+            "preserved_elements": [
+              "applicator shot",
+              "texture emphasis",
+              "on-lip application"
+            ],
+            "rewrite_axes": [
+              "product formula visuals",
+              "packaging"
+            ]
+          }
+        }
+      ],
+      "vbus": [
+        {
+          "vbu_code": "demo-voice",
+          "persuasive_role": "benefit",
+          "script_text": "The applicator smooths everything out, and within seconds my lips look fuller, shinier, and way more defined.",
+          "voice_profile": "confident_female_01",
+          "language": null,
+          "duration_ms": 6500,
+          "tts_params": {
+            "pace": "medium_fast",
+            "tone": "impressed"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "demo-apply"
+            ],
+            "preserved_elements": [
+              "benefit narration during demo"
+            ],
+            "rewrite_axes": [
+              "benefit wording"
+            ]
+          }
+        }
+      ],
+      "bridges": [
+        {
+          "bridge_code": "demo-bind",
+          "bridge_type": "sequence_unit_binding",
+          "execution_order": 0,
+          "spu_code": "demo-visual",
+          "vbu_code": "demo-voice",
+          "transition_policy": {
+            "sync_mode": "visual_led",
+            "transition": "smooth_cut"
+          },
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "sequence_code": "cta",
+      "sequence_index": 3,
+      "sequence_type": "cta",
+      "persuasive_goal": "Convert the viewer with a direct purchase invitation.",
+      "target_duration_ms": 7000,
+      "structural_role": "offer_close",
+      "spus": [
+        {
+          "spu_code": "cta-visual",
+          "display_name": "Finished look and product hold",
+          "asset_role": "closing_visual",
+          "duration_ms": 5000,
+          "generation_mode": "veo_segment",
+          "prompt_text": "Beauty creator smiling with glossy fuller lips, holding lip plumper toward camera, bright clean background, ecommerce CTA framing, vertical 9:16.",
+          "negative_prompt_text": "awkward pose, warped product, unreadable product shot",
+          "visual_constraints": {
+            "camera": "medium product hold",
+            "motion": "steady end frame",
+            "focus": "result plus product"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "cta-offer"
+            ],
+            "preserved_elements": [
+              "result payoff",
+              "direct CTA product hold"
+            ],
+            "rewrite_axes": [
+              "offer wording",
+              "promo framing"
+            ]
+          }
+        }
+      ],
+      "vbus": [
+        {
+          "vbu_code": "cta-voice",
+          "persuasive_role": "cta",
+          "script_text": "This one is in my bag every day now, so grab yours before it sells out again.",
+          "voice_profile": "confident_female_01",
+          "language": null,
+          "duration_ms": 4200,
+          "tts_params": {
+            "pace": "medium",
+            "tone": "direct"
+          },
+          "status": "draft",
+          "reference_mapping": {
+            "source_moments": [
+              "cta-offer"
+            ],
+            "preserved_elements": [
+              "purchase close"
+            ],
+            "rewrite_axes": [
+              "urgency line",
+              "offer wording"
+            ]
+          }
+        }
+      ],
+      "bridges": [
+        {
+          "bridge_code": "cta-bind",
+          "bridge_type": "sequence_unit_binding",
+          "execution_order": 0,
+          "spu_code": "cta-visual",
+          "vbu_code": "cta-voice",
+          "transition_policy": {
+            "sync_mode": "parallel",
+            "transition": "end_card_hold"
+          },
+          "status": "draft"
+        }
+      ]
+    }
+  ]
+}

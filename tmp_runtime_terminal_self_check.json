@@ -1,0 +1,35 @@
+{
+  "report_name": "runtime_terminal_self_check",
+  "report_version": "v2",
+  "executed_at": "2026-04-06T09:42:05.666948+00:00",
+  "repo_root": "/app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication",
+  "python_bin": "/app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/.venv/bin/python",
+  "selected_checks": [
+    "sdk"
+  ],
+  "selected_result_names": [
+    "sdk_regression_suite"
+  ],
+  "overall_status": "passed",
+  "checks": [
+    {
+      "name": "sdk_regression_suite",
+      "status": "passed",
+      "duration_seconds": 0.46,
+      "command": [
+        "/app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_runtime_terminal_sdk*.py"
+      ],
+      "return_code": 0,
+      "stdout": "",
+      "stderr": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.004s\n\nOK",
+      "details": {}
+    }
+  ]
+}

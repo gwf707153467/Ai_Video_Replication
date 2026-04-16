@@ -1,0 +1,7 @@
+stub materialized artifact
+project_id=656ac6b1-ecb8-4f45-9f45-556be5915168
+runtime_version=v10
+job_id=b1c527ef-f6b4-4051-92c9-d3c5e7167134
+job_type=merge
+task_name=merge.runtime
+provider_name=stub

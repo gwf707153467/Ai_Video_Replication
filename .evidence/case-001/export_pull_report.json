@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "bucket_name": "exports",
+  "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v10/merge/v10-b1c527ef-f6b4-4051-92c9-d3c5e7167134.mp4",
+  "local_path": "/app/backend/.deer-flow/threads/f953a559-ca5a-4356-857b-b8899c94b932/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/final_output.mp4",
+  "byte_count": 197,
+  "content_type": "video/mp4",
+  "collected_at": "2026-04-13T05:17:26Z"
+}
