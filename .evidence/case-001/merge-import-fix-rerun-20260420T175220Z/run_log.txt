@@ -1,0 +1,29 @@
+[2026-04-20T09:52:20Z] starting case-001 real-run evidence collection
+[2026-04-20T09:52:20Z] payload path: .evidence\case-001\compile_request_payload.json
+[2026-04-20T09:52:21Z] latest runtime before compile: {"exists": true, "runtime_id": "3b7380b2-1387-4f7b-9dd2-fba3d9faaa60", "runtime_version": "v22", "compile_status": "failed", "dispatch_status": "fully_dispatched", "created_at": "2026-04-20T09:51:02.231276+00:00", "collected_at": "2026-04-20T09:52:21Z"}
+[2026-04-20T09:52:22Z] compile response: {"ok": true, "status_code": 200, "runtime_id": "cc6c3047-a124-4979-93d7-477c32eea431", "runtime_version": "v23"}
+[2026-04-20T09:52:23Z] runtime poll: {"poll_index": 1, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 1, "failed_job_count": 0, "selected_asset_count": 0}
+[2026-04-20T09:52:28Z] runtime poll: {"poll_index": 2, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:52:34Z] runtime poll: {"poll_index": 3, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:52:40Z] runtime poll: {"poll_index": 4, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:52:46Z] runtime poll: {"poll_index": 5, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:52:53Z] runtime poll: {"poll_index": 6, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:52:58Z] runtime poll: {"poll_index": 7, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:53:04Z] runtime poll: {"poll_index": 8, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:53:10Z] runtime poll: {"poll_index": 9, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:53:16Z] runtime poll: {"poll_index": 10, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:53:22Z] runtime poll: {"poll_index": 11, "derived_compile_status": "running", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 3, "failed_job_count": 0, "selected_asset_count": 2}
+[2026-04-20T09:53:28Z] runtime poll: {"poll_index": 12, "derived_compile_status": "failed", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 4, "failed_job_count": 1, "selected_asset_count": 4}
+[2026-04-20T09:53:29Z] object probe collected for 4 objects
+[2026-04-20T09:53:30Z] export pull failed: RuntimeError: container binary probe failed: returncode=1; stderr=Traceback (most recent call last):
+  File "<stdin>", line 17, in <module>
+  File "/usr/local/lib/python3.11/site-packages/minio/api.py", line 1257, in get_object
+    return self._execute(
+           ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/minio/api.py", line 444, in _execute
+    return self._url_open(
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/minio/api.py", line 427, in _url_open
+    raise response_error
+minio.error.S3Error: S3 operation failed; code: NoSuchKey, message: The specified key does not exist., resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/merge/v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4, request_id: 18A807F6E4FEB8C2, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/merge/v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4
+[2026-04-20T09:53:30Z] summary: {"case_id": "case-001", "started_at": "2026-04-20T09:52:20Z", "finished_at": "2026-04-20T09:53:30Z", "status": "completed_evidence_collection", "payload_path": ".evidence\\case-001\\compile_request_payload.json", "pre_compile_latest_runtime_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\pre_compile_latest_runtime.json", "compile_response_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\compile_response.json", "runtime_poll_history_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\runtime_poll_history.json", "runtime_snapshot_final_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\runtime_snapshot_final.json", "object_store_probe_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\object_store_probe.json", "export_pull_report_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\export_pull_report.json", "runtime_id": "cc6c3047-a124-4979-93d7-477c32eea431", "runtime_version": "v23", "terminal_compile_status": "failed", "terminal_dispatch_status": "fully_dispatched", "final_output_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\final_output.mp4", "final_output_exists": false, "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."}

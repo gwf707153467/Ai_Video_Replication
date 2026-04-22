@@ -1,0 +1,35 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "generated-images",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_image/3528f33d-6110-476c-a8d7-46a2f721507a.png",
+      "exists": true,
+      "size": 508851,
+      "content_type": "image/png"
+    },
+    {
+      "bucket_name": "audio-assets",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_voice/8d84a6dc-7731-4d68-9c6f-2712f254dd25.wav",
+      "exists": true,
+      "size": 169486,
+      "content_type": "audio/L16;codec=pcm;rate=24000"
+    },
+    {
+      "bucket_name": "generated-videos",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_video/e1bacd85-821a-454c-9594-5bbc39eb455a.mp4",
+      "exists": true,
+      "size": 959454,
+      "content_type": "video/mp4"
+    },
+    {
+      "bucket_name": "exports",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/merge/v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/merge/v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4, request_id: 18A807F6B9FE45E7, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/merge/v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4"
+    }
+  ],
+  "collected_at": "2026-04-20T09:53:29Z"
+}

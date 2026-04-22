@@ -1,0 +1,130 @@
+{
+  "ok": true,
+  "status_code": 200,
+  "response_json": {
+    "id": "b2ab32ff-39be-439a-9603-acb9e5d23e27",
+    "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+    "runtime_version": "v2",
+    "compile_status": "dispatched",
+    "runtime_payload": {
+      "sequences": [
+        {
+          "spus": [
+            {
+              "spu_id": "a0c765bf-6d15-4e9f-bade-651c99845a7d",
+              "status": "draft",
+              "spu_code": "CASE-002-SPU-001",
+              "asset_role": "primary_visual",
+              "duration_ms": 6000,
+              "prompt_text": "Create a 9:16 TikTok ecommerce product video segment inspired by the uploaded bag reference video. Show a premium structured handbag as the hero product, with smooth handheld push-in, zipper and stitching close-ups, clean product handling, a brief styling moment, and boutique lighting. Keep the bag centered and desirable, no text overlay, no visible brand logo, realistic materials, polished social commerce look.",
+              "display_name": "Premium structured handbag hero demo",
+              "generation_mode": "veo_segment",
+              "visual_constraints": {
+                "style": "premium_ecommerce_bag_demo",
+                "camera": "smooth handheld push-in, detail close-ups, elegant product handling",
+                "platform": "tiktok_9_16",
+                "background": "clean boutique / neutral lifestyle setting"
+              },
+              "negative_prompt_text": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands"
+            }
+          ],
+          "vbus": [
+            {
+              "status": "draft",
+              "vbu_id": "c00b50a3-dd29-4c27-aa9d-6069e9c1afce",
+              "language": "en-US",
+              "vbu_code": "CASE-002-VBU-001",
+              "tts_params": {},
+              "duration_ms": 6000,
+              "script_text": "This is the everyday bag that makes your outfit look instantly polished. Clean structure, practical space, and premium details made for workdays, weekends, and everything in between.",
+              "voice_profile": null,
+              "persuasive_role": "hook"
+            }
+          ],
+          "bridges": [],
+          "sequence_id": "7668fd33-1403-4bfc-a530-b508b8a0b283",
+          "sequence_type": "hook",
+          "sequence_index": 1,
+          "persuasive_goal": "Make the handbag feel premium, versatile, and worth clicking within the first seconds."
+        }
+      ],
+      "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+      "bridge_count": 0,
+      "compile_reason": "regression_case-002_bag_reference",
+      "compile_options": {
+        "reference": {
+          "notes": [
+            "case-002 regression payload frozen from current workspace."
+          ],
+          "source_uri": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4",
+          "source_kind": "uploaded_reference_video",
+          "retained_axes": [
+            "vertical short-form pacing",
+            "bag close-ups",
+            "product handling",
+            "premium ecommerce appeal"
+          ],
+          "swappable_axes": [
+            "bag style",
+            "market framing",
+            "voiceover copy"
+          ],
+          "structural_goal": "Replicate the ecommerce bag video skeleton while swapping in new prompt/copy details."
+        },
+        "proof_case_id": "case-002",
+        "input_manifest_path": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002/input_manifest.json"
+      },
+      "runtime_version": "v2",
+      "audio_track_count": 1,
+      "visual_track_count": 1
+    },
+    "dispatch_status": "fully_dispatched",
+    "dispatch_summary": {
+      "jobs": [
+        {
+          "job_id": "17d8658a-fd52-489d-95b0-a13a674a4d5b",
+          "status": "dispatched",
+          "job_type": "compile",
+          "external_task_id": "38295842-5cda-4fc7-8743-f84b869811a8"
+        },
+        {
+          "job_id": "f5060e2c-a2ff-433b-9018-595a665a65bc",
+          "status": "dispatched",
+          "job_type": "render_image",
+          "external_task_id": "8abc627b-efe1-4d02-be88-caf977d6e9eb"
+        },
+        {
+          "job_id": "9453aa20-1c56-4b69-b959-e599b05e845c",
+          "status": "dispatched",
+          "job_type": "render_video",
+          "external_task_id": "28e3f9f3-2901-44b8-9148-824f9f9399cd"
+        },
+        {
+          "job_id": "2b7b3951-c393-4814-bdcb-eb198268f5b0",
+          "status": "dispatched",
+          "job_type": "render_voice",
+          "external_task_id": "aa888dfa-9183-454b-939b-55f46a8458b0"
+        },
+        {
+          "job_id": "2bfaa383-708b-41ec-87c3-8a444665dffd",
+          "status": "dispatched",
+          "job_type": "merge",
+          "external_task_id": "6c356421-830b-40d5-adcc-d1097081f63c"
+        }
+      ],
+      "job_count": 5,
+      "dispatch_status": "fully_dispatched",
+      "runtime_version": "v2",
+      "queued_job_count": 0,
+      "dispatched_job_count": 5,
+      "undispatched_job_count": 0
+    },
+    "last_error_code": null,
+    "last_error_message": null,
+    "compile_started_at": "2026-04-21T04:05:11.053580Z",
+    "compile_finished_at": "2026-04-21T04:05:11.056209Z",
+    "created_at": "2026-04-21T04:05:11.056451Z"
+  },
+  "raw_body": "{\"id\":\"b2ab32ff-39be-439a-9603-acb9e5d23e27\",\"project_id\":\"28d53bc4-2262-4d5c-93df-0809de34fe97\",\"runtime_version\":\"v2\",\"compile_status\":\"dispatched\",\"runtime_payload\":{\"sequences\":[{\"spus\":[{\"spu_id\":\"a0c765bf-6d15-4e9f-bade-651c99845a7d\",\"status\":\"draft\",\"spu_code\":\"CASE-002-SPU-001\",\"asset_role\":\"primary_visual\",\"duration_ms\":6000,\"prompt_text\":\"Create a 9:16 TikTok ecommerce product video segment inspired by the uploaded bag reference video. Show a premium structured handbag as the hero product, with smooth handheld push-in, zipper and stitching close-ups, clean product handling, a brief styling moment, and boutique lighting. Keep the bag centered and desirable, no text overlay, no visible brand logo, realistic materials, polished social commerce look.\",\"display_name\":\"Premium structured handbag hero demo\",\"generation_mode\":\"veo_segment\",\"visual_constraints\":{\"style\":\"premium_ecommerce_bag_demo\",\"camera\":\"smooth handheld push-in, detail close-ups, elegant product handling\",\"platform\":\"tiktok_9_16\",\"background\":\"clean boutique / neutral lifestyle setting\"},\"negative_prompt_text\":\"blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands\"}],\"vbus\":[{\"status\":\"draft\",\"vbu_id\":\"c00b50a3-dd29-4c27-aa9d-6069e9c1afce\",\"language\":\"en-US\",\"vbu_code\":\"CASE-002-VBU-001\",\"tts_params\":{},\"duration_ms\":6000,\"script_text\":\"This is the everyday bag that makes your outfit look instantly polished. Clean structure, practical space, and premium details made for workdays, weekends, and everything in between.\",\"voice_profile\":null,\"persuasive_role\":\"hook\"}],\"bridges\":[],\"sequence_id\":\"7668fd33-1403-4bfc-a530-b508b8a0b283\",\"sequence_type\":\"hook\",\"sequence_index\":1,\"persuasive_goal\":\"Make the handbag feel premium, versatile, and worth clicking within the first seconds.\"}],\"project_id\":\"28d53bc4-2262-4d5c-93df-0809de34fe97\",\"bridge_count\":0,\"compile_reason\":\"regression_case-002_bag_reference\",\"compile_options\":{\"reference\":{\"notes\":[\"case-002 regression payload frozen from current workspace.\"],\"source_uri\":\"/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4\",\"source_kind\":\"uploaded_reference_video\",\"retained_axes\":[\"vertical short-form pacing\",\"bag close-ups\",\"product handling\",\"premium ecommerce appeal\"],\"swappable_axes\":[\"bag style\",\"market framing\",\"voiceover copy\"],\"structural_goal\":\"Replicate the ecommerce bag video skeleton while swapping in new prompt/copy details.\"},\"proof_case_id\":\"case-002\",\"input_manifest_path\":\"/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002/input_manifest.json\"},\"runtime_version\":\"v2\",\"audio_track_count\":1,\"visual_track_count\":1},\"dispatch_status\":\"fully_dispatched\",\"dispatch_summary\":{\"jobs\":[{\"job_id\":\"17d8658a-fd52-489d-95b0-a13a674a4d5b\",\"status\":\"dispatched\",\"job_type\":\"compile\",\"external_task_id\":\"38295842-5cda-4fc7-8743-f84b869811a8\"},{\"job_id\":\"f5060e2c-a2ff-433b-9018-595a665a65bc\",\"status\":\"dispatched\",\"job_type\":\"render_image\",\"external_task_id\":\"8abc627b-efe1-4d02-be88-caf977d6e9eb\"},{\"job_id\":\"9453aa20-1c56-4b69-b959-e599b05e845c\",\"status\":\"dispatched\",\"job_type\":\"render_video\",\"external_task_id\":\"28e3f9f3-2901-44b8-9148-824f9f9399cd\"},{\"job_id\":\"2b7b3951-c393-4814-bdcb-eb198268f5b0\",\"status\":\"dispatched\",\"job_type\":\"render_voice\",\"external_task_id\":\"aa888dfa-9183-454b-939b-55f46a8458b0\"},{\"job_id\":\"2bfaa383-708b-41ec-87c3-8a444665dffd\",\"status\":\"dispatched\",\"job_type\":\"merge\",\"external_task_id\":\"6c356421-830b-40d5-adcc-d1097081f63c\"}],\"job_count\":5,\"dispatch_status\":\"fully_dispatched\",\"runtime_version\":\"v2\",\"queued_job_count\":0,\"dispatched_job_count\":5,\"undispatched_job_count\":0},\"last_error_code\":null,\"last_error_message\":null,\"compile_started_at\":\"2026-04-21T04:05:11.053580Z\",\"compile_finished_at\":\"2026-04-21T04:05:11.056209Z\",\"created_at\":\"2026-04-21T04:05:11.056451Z\"}",
+  "collected_at": "2026-04-21T04:05:11Z"
+}

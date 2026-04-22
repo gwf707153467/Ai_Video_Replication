@@ -167,8 +167,8 @@ class CompilerService:
 
     def _create_and_dispatch_jobs(self, project_id: UUID, runtime_version: str) -> dict:
         job_types = ["compile", "render_image", "render_video", "render_voice", "merge"]
-        dispatched_jobs: list[dict] = []
         render_image_payload = self._build_render_image_payload(project_id, runtime_version)
+        jobs: list[Job] = []
 
         for job_type in job_types:
             payload = {
@@ -185,8 +185,16 @@ class CompilerService:
                 payload=payload,
             )
             self.db.add(job)
-            self.db.flush()
+            jobs.append(job)
 
+        # Persist runtime and queued jobs before dispatching Celery tasks.
+        # Otherwise fast workers can consume tasks before the corresponding job
+        # rows are committed and visible, which produces transient job_not_found failures.
+        self.db.commit()
+
+        dispatched_jobs: list[dict] = []
+        for job in jobs:
+            self.db.refresh(job)
             task_id = self.dispatch_service.dispatch(job, runtime_version)
             job.external_task_id = task_id
             job.result_payload = {"celery_task_id": task_id} if task_id else None

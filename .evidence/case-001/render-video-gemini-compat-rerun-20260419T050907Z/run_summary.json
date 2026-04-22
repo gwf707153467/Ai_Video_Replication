@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-19T05:09:07Z",
+  "finished_at": "2026-04-19T05:09:13Z",
+  "status": "completed_evidence_collection",
+  "payload_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/compile_request_payload.json",
+  "pre_compile_latest_runtime_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/pre_compile_latest_runtime.json",
+  "compile_response_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/compile_response.json",
+  "runtime_poll_history_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/runtime_poll_history.json",
+  "runtime_snapshot_final_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/runtime_snapshot_final.json",
+  "object_store_probe_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/object_store_probe.json",
+  "export_pull_report_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/export_pull_report.json",
+  "runtime_id": "a1baa5ad-9b0e-45f2-bdf2-a77753766b86",
+  "runtime_version": "v17",
+  "terminal_compile_status": "failed",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication/.evidence/case-001/render-video-gemini-compat-rerun-20260419T050907Z/final_output.mp4",
+  "final_output_exists": false,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

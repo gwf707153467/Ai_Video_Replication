@@ -1,0 +1,241 @@
+[
+  {
+    "exists": true,
+    "runtime_record": {
+      "runtime_id": "66d25da3-9827-42b0-9edb-48a52ec90a42",
+      "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+      "runtime_version": "v26",
+      "compile_status": "failed",
+      "dispatch_status": "fully_dispatched",
+      "dispatch_summary": {
+        "jobs": [
+          {
+            "job_id": "bd3be955-a0f8-4733-af06-f9287167c11c",
+            "status": "dispatched",
+            "job_type": "compile",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 0,
+            "external_task_id": "2eb7bfb2-f829-4b01-addb-426cba46b1cf"
+          },
+          {
+            "job_id": "e5348436-96fd-406b-8656-1ab646c6e22e",
+            "status": "dispatched",
+            "job_type": "render_image",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 0,
+            "external_task_id": "9428a3f8-2028-4cb9-a941-b4caa63cf42a"
+          },
+          {
+            "job_id": "200878f6-226b-40f2-ac08-ac498d798659",
+            "status": "dispatched",
+            "job_type": "render_video",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 0,
+            "external_task_id": "5ade66e0-3084-4419-a56e-c474ab75be85"
+          },
+          {
+            "job_id": "6661aa90-c2bf-4f99-9003-d63f2ba0393b",
+            "status": "dispatched",
+            "job_type": "render_voice",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 0,
+            "external_task_id": "f9692f4b-4367-4d6e-85d8-8ac57bd66f4c"
+          },
+          {
+            "job_id": "dc70ce12-79f4-4841-953e-067233bb9a1f",
+            "status": "failed",
+            "job_type": "merge",
+            "error_code": "worker_execution_failed",
+            "max_attempts": 3,
+            "attempt_count": 0,
+            "external_task_id": "d2b19337-750d-45d2-8277-6d821fd230d7"
+          }
+        ],
+        "job_count": 5,
+        "runtime_version": "v26",
+        "failed_job_count": 1,
+        "queued_job_count": 0,
+        "running_job_count": 0,
+        "succeeded_job_count": 0,
+        "dispatched_job_count": 4
+      },
+      "last_error_code": "worker_execution_failed",
+      "last_error_message": "job_not_found",
+      "created_at": "2026-04-20T10:07:53.315007+00:00",
+      "compile_started_at": "2026-04-20T10:07:53.312485+00:00",
+      "compile_finished_at": "2026-04-20T10:07:53.314764+00:00"
+    },
+    "jobs": [
+      {
+        "job_id": "bd3be955-a0f8-4733-af06-f9287167c11c",
+        "job_type": "compile",
+        "status": "dispatched",
+        "attempt_count": 0,
+        "max_attempts": 3,
+        "external_task_id": "2eb7bfb2-f829-4b01-addb-426cba46b1cf",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v26"
+        },
+        "result_payload": {
+          "celery_task_id": "2eb7bfb2-f829-4b01-addb-426cba46b1cf"
+        },
+        "created_at": "2026-04-20T10:07:53.317070+00:00",
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "job_id": "e5348436-96fd-406b-8656-1ab646c6e22e",
+        "job_type": "render_image",
+        "status": "dispatched",
+        "attempt_count": 0,
+        "max_attempts": 3,
+        "external_task_id": "9428a3f8-2028-4cb9-a941-b4caa63cf42a",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+          "dispatch_source": "compile_endpoint",
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "provider_inputs": {
+            "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+            "source": "compiler_minimal_render_image_prompt_v1",
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+            "runtime_version": "v26"
+          },
+          "runtime_version": "v26"
+        },
+        "result_payload": {
+          "celery_task_id": "9428a3f8-2028-4cb9-a941-b4caa63cf42a"
+        },
+        "created_at": "2026-04-20T10:07:53.319984+00:00",
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "job_id": "200878f6-226b-40f2-ac08-ac498d798659",
+        "job_type": "render_video",
+        "status": "dispatched",
+        "attempt_count": 0,
+        "max_attempts": 3,
+        "external_task_id": "5ade66e0-3084-4419-a56e-c474ab75be85",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v26"
+        },
+        "result_payload": {
+          "celery_task_id": "5ade66e0-3084-4419-a56e-c474ab75be85"
+        },
+        "created_at": "2026-04-20T10:07:53.322267+00:00",
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "job_id": "6661aa90-c2bf-4f99-9003-d63f2ba0393b",
+        "job_type": "render_voice",
+        "status": "dispatched",
+        "attempt_count": 0,
+        "max_attempts": 3,
+        "external_task_id": "f9692f4b-4367-4d6e-85d8-8ac57bd66f4c",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v26"
+        },
+        "result_payload": {
+          "celery_task_id": "f9692f4b-4367-4d6e-85d8-8ac57bd66f4c"
+        },
+        "created_at": "2026-04-20T10:07:53.325017+00:00",
+        "started_at": null,
+        "finished_at": null
+      },
+      {
+        "job_id": "dc70ce12-79f4-4841-953e-067233bb9a1f",
+        "job_type": "merge",
+        "status": "failed",
+        "attempt_count": 0,
+        "max_attempts": 3,
+        "external_task_id": "d2b19337-750d-45d2-8277-6d821fd230d7",
+        "error_code": "worker_execution_failed",
+        "error_message": "job_not_found",
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v26"
+        },
+        "result_payload": {
+          "error_code": "worker_execution_failed",
+          "error_message": "job_not_found",
+          "celery_task_id": "d2b19337-750d-45d2-8277-6d821fd230d7",
+          "worker_finished_at": "2026-04-20T10:07:53.336608"
+        },
+        "created_at": "2026-04-20T10:07:53.327244+00:00",
+        "started_at": null,
+        "finished_at": "2026-04-20T10:07:53.336608+00:00"
+      }
+    ],
+    "job_summary": {
+      "job_count": 5,
+      "queued_job_count": 0,
+      "dispatched_job_count": 4,
+      "running_job_count": 0,
+      "succeeded_job_count": 0,
+      "failed_job_count": 1
+    },
+    "derived_compile_status": "failed",
+    "derived_dispatch_status": "fully_dispatched",
+    "assets": [
+      {
+        "asset_id": "15e2f17b-2bd6-4089-ad50-a6a4c025b60e",
+        "asset_type": "export",
+        "asset_role": "merged_output",
+        "bucket_name": "exports",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v26/merge/v26-dc70ce12-79f4-4841-953e-067233bb9a1f.mp4",
+        "source_filename": "v26-dc70ce12-79f4-4841-953e-067233bb9a1f.mp4",
+        "content_type": "video/mp4",
+        "file_size": null,
+        "asset_metadata": {
+          "job_id": "dc70ce12-79f4-4841-953e-067233bb9a1f",
+          "job_type": "merge",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v26",
+          "external_task_id": "d2b19337-750d-45d2-8277-6d821fd230d7",
+          "materialization_error": "job_not_found",
+          "materialization_status": "failed",
+          "materialization_error_code": "worker_execution_failed"
+        },
+        "status": "failed",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-20T10:07:53.335226+00:00"
+      }
+    ],
+    "asset_association": {
+      "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+      "candidate_asset_count": 89,
+      "selected_asset_count": 1,
+      "selected_asset_types": [
+        "export"
+      ],
+      "selected_asset_ids": [
+        "15e2f17b-2bd6-4089-ad50-a6a4c025b60e"
+      ]
+    },
+    "poll_index": 1,
+    "collected_at": "2026-04-20T10:07:54Z"
+  }
+]

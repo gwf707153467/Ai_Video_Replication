@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-20T10:11:23Z",
+  "finished_at": "2026-04-20T10:12:33Z",
+  "status": "completed_evidence_collection",
+  "payload_path": ".evidence\\case-001\\compile_request_payload.json",
+  "pre_compile_latest_runtime_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\pre_compile_latest_runtime.json",
+  "compile_response_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\compile_response.json",
+  "runtime_poll_history_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\runtime_poll_history.json",
+  "runtime_snapshot_final_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\runtime_snapshot_final.json",
+  "object_store_probe_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\object_store_probe.json",
+  "export_pull_report_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\export_pull_report.json",
+  "runtime_id": "5bf3622f-3f65-4630-b16c-9c280195a7d7",
+  "runtime_version": "v27",
+  "terminal_compile_status": "succeeded",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": ".evidence\\case-001\\full-chain-rerun-20260420T181123Z\\final_output.mp4",
+  "final_output_exists": true,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

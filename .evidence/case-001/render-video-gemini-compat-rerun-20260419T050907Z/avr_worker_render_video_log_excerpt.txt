@@ -1,0 +1,5 @@
+[2026-04-19 05:09:10,747: INFO/MainProcess] Task render.video[40e8bda3-239d-4f86-8a03-a07f24508006] received
+[2026-04-19 05:09:12,404: INFO/ForkPoolWorker-2] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning "HTTP/1.1 400 Bad Request"
+[2026-04-19 05:09:12,459: ERROR/ForkPoolWorker-2] Task render.video[40e8bda3-239d-4f86-8a03-a07f24508006] raised unexpected: RuntimeError("Google video generation request failed via google-genai SDK: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'The number value for `durationSeconds` is out of bound. Please provide a value between 4 and 8, inclusive.', 'status': 'INVALID_ARGUMENT'}}")
+  File "/workspace/app/workers/tasks.py", line 515, in render_video_task
+RuntimeError: Google video generation request failed via google-genai SDK: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'The number value for `durationSeconds` is out of bound. Please provide a value between 4 and 8, inclusive.', 'status': 'INVALID_ARGUMENT'}}

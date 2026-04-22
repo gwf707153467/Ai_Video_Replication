@@ -1,0 +1,347 @@
+{
+  "exists": true,
+  "runtime_record": {
+    "runtime_id": "62c4d23b-a615-43cf-8ef0-39c70c802609",
+    "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+    "runtime_version": "v3",
+    "compile_status": "failed",
+    "dispatch_status": "fully_dispatched",
+    "dispatch_summary": {
+      "jobs": [
+        {
+          "job_id": "4c5e6ad9-7f0b-449d-83c4-f3fe6c6abf99",
+          "status": "succeeded",
+          "job_type": "compile",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "355d8af4-03ac-40e7-a3a3-ffd2f6d71a56"
+        },
+        {
+          "job_id": "8832f2b2-04ad-4cfb-8cb2-68613814f3d7",
+          "status": "succeeded",
+          "job_type": "render_image",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": null
+        },
+        {
+          "job_id": "0bfffc0e-83b7-4fc9-9b93-f92942b12162",
+          "status": "failed",
+          "job_type": "render_video",
+          "error_code": "google_video_generation_failed",
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "3b09f6db-7e14-45cb-a004-b0ff804ee429"
+        },
+        {
+          "job_id": "fcdd002c-c91f-4dc1-971a-5e0aac578a9c",
+          "status": "running",
+          "job_type": "render_voice",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "54504be4-bf65-469c-a3a4-d47cc7037161"
+        },
+        {
+          "job_id": "925e8f44-43d2-4348-b39c-644d8509f5f8",
+          "status": "running",
+          "job_type": "merge",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "7f808daa-a990-436f-ac78-81ca8ffbda7e"
+        }
+      ],
+      "job_count": 5,
+      "runtime_version": "v3",
+      "failed_job_count": 1,
+      "queued_job_count": 0,
+      "running_job_count": 2,
+      "succeeded_job_count": 2,
+      "dispatched_job_count": 0
+    },
+    "last_error_code": "google_video_generation_failed",
+    "last_error_message": "Google video generation request failed via google-genai SDK: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+    "created_at": "2026-04-21T04:09:19.426066+00:00",
+    "compile_started_at": "2026-04-21T04:09:19.422805+00:00",
+    "compile_finished_at": "2026-04-21T04:09:19.425850+00:00"
+  },
+  "jobs": [
+    {
+      "job_id": "4c5e6ad9-7f0b-449d-83c4-f3fe6c6abf99",
+      "job_type": "compile",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "355d8af4-03ac-40e7-a3a3-ffd2f6d71a56",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v3"
+      },
+      "result_payload": {
+        "task": "compile.runtime",
+        "job_id": "4c5e6ad9-7f0b-449d-83c4-f3fe6c6abf99",
+        "status": "succeeded",
+        "provider": "runtime_payload",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "runtime_version": "v3",
+        "provider_payload": {
+          "job_type": "compile",
+          "spu_count": 1,
+          "task_name": "compile.runtime",
+          "vbu_count": 1,
+          "runtime_id": "62c4d23b-a615-43cf-8ef0-39c70c802609",
+          "provider_name": "runtime_payload",
+          "sequence_count": 1,
+          "runtime_version": "v3",
+          "payload_project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+          "compile_options_keys": [
+            "input_manifest_path",
+            "proof_case_id",
+            "reference"
+          ],
+          "runtime_compile_status": "running",
+          "runtime_dispatch_status": "partially_dispatched"
+        },
+        "worker_finished_at": "2026-04-21T04:09:19.445928"
+      },
+      "created_at": "2026-04-21T04:09:19.428295+00:00",
+      "started_at": "2026-04-21T04:09:19.436241+00:00",
+      "finished_at": "2026-04-21T04:09:19.445940+00:00"
+    },
+    {
+      "job_id": "8832f2b2-04ad-4cfb-8cb2-68613814f3d7",
+      "job_type": "render_image",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "838078eb-3a37-419d-a7dc-a6ebd73ba2ce",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "prompt": "Project: case-003-bag-commuter-variant\nTarget market: US\nTarget language: en-US\nProject notes: Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.\nSequence plan: Sequence 1 - hook - Position the handbag as a stylish daily carry bag for commute, errands, and travel.\nPrimary visual subject: Everyday commuter handbag demo\nCreate a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\nVisual constraints: {'style': 'premium_ecommerce_bag_demo', 'camera': 'smooth handheld push-in, detail close-ups, elegant product handling', 'platform': 'tiktok_9_16', 'background': 'clean boutique / neutral lifestyle setting'}",
+        "dispatch_source": "compile_endpoint",
+        "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+        "provider_inputs": {
+          "prompt": "Project: case-003-bag-commuter-variant\nTarget market: US\nTarget language: en-US\nProject notes: Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.\nSequence plan: Sequence 1 - hook - Position the handbag as a stylish daily carry bag for commute, errands, and travel.\nPrimary visual subject: Everyday commuter handbag demo\nCreate a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\nVisual constraints: {'style': 'premium_ecommerce_bag_demo', 'camera': 'smooth handheld push-in, detail close-ups, elegant product handling', 'platform': 'tiktok_9_16', 'background': 'clean boutique / neutral lifestyle setting'}",
+          "source": "compiler_minimal_render_image_prompt_v1",
+          "aspect_ratio": "9:16",
+          "sample_count": 1,
+          "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+          "runtime_version": "v3"
+        },
+        "runtime_version": "v3"
+      },
+      "result_payload": {
+        "task": "render.image",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "3030eff3-d97b-4946-adc3-fc42261ac8fa",
+          "file_size": 1176505,
+          "asset_role": "render_output",
+          "asset_type": "generated_image",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v3/render_image/8832f2b2-04ad-4cfb-8cb2-68613814f3d7.png",
+          "bucket_name": "generated-images",
+          "content_type": "image/png"
+        },
+        "job_id": "8832f2b2-04ad-4cfb-8cb2-68613814f3d7",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "materialization": {
+          "etag": "4dc8414bf2e53c9c9200119960644dc8",
+          "size": 1176505,
+          "status": "materialized",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v3/render_image/8832f2b2-04ad-4cfb-8cb2-68613814f3d7.png",
+          "version_id": null,
+          "bucket_name": "generated-images",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v3",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "imagen-4.0-fast-generate-001",
+            "request": {
+              "aspect_ratio": "9:16",
+              "sample_count": 1,
+              "safety_setting": null,
+              "person_generation": null,
+              "negative_prompt_present": true,
+              "negative_prompt_forwarded": false
+            },
+            "response": {
+              "response_type": "GenerateImagesResponse",
+              "generated_images_count": 1
+            }
+          },
+          "prompt": "Project: case-003-bag-commuter-variant\nTarget market: US\nTarget language: en-US\nProject notes: Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.\nSequence plan: Sequence 1 - hook - Position the handbag as a stylish daily carry bag for commute, errands, and travel.\nPrimary visual subject: Everyday commuter handbag demo\nCreate a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\nVisual constraints: {'style': 'premium_ecommerce_bag_demo', 'camera': 'smooth handheld push-in, detail close-ups, elegant product handling', 'platform': 'tiktok_9_16', 'background': 'clean boutique / neutral lifestyle setting'}",
+          "job_type": "render_image",
+          "task_name": "render.image",
+          "provider_name": "google",
+          "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+          "runtime_version": "v3",
+          "generation_options": {
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "safety_setting": null,
+            "person_generation": null
+          }
+        },
+        "worker_finished_at": "2026-04-21T04:09:23.531538"
+      },
+      "created_at": "2026-04-21T04:09:19.428299+00:00",
+      "started_at": "2026-04-21T04:09:19.437677+00:00",
+      "finished_at": "2026-04-21T04:09:23.531558+00:00"
+    },
+    {
+      "job_id": "0bfffc0e-83b7-4fc9-9b93-f92942b12162",
+      "job_type": "render_video",
+      "status": "failed",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "3b09f6db-7e14-45cb-a004-b0ff804ee429",
+      "error_code": "google_video_generation_failed",
+      "error_message": "Google video generation request failed via google-genai SDK: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v3"
+      },
+      "result_payload": {
+        "task": "render.video",
+        "error_code": "google_video_generation_failed",
+        "error_message": "Google video generation request failed via google-genai SDK: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "worker_started_at": "2026-04-21T04:09:19.439234",
+        "worker_finished_at": "2026-04-21T04:09:20.402188"
+      },
+      "created_at": "2026-04-21T04:09:19.428301+00:00",
+      "started_at": "2026-04-21T04:09:19.439234+00:00",
+      "finished_at": "2026-04-21T04:09:20.402188+00:00"
+    },
+    {
+      "job_id": "fcdd002c-c91f-4dc1-971a-5e0aac578a9c",
+      "job_type": "render_voice",
+      "status": "running",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "54504be4-bf65-469c-a3a4-d47cc7037161",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v3"
+      },
+      "result_payload": {
+        "task": "render.voice",
+        "worker_started_at": "2026-04-21T04:09:19.441556"
+      },
+      "created_at": "2026-04-21T04:09:19.428303+00:00",
+      "started_at": "2026-04-21T04:09:19.441556+00:00",
+      "finished_at": null
+    },
+    {
+      "job_id": "925e8f44-43d2-4348-b39c-644d8509f5f8",
+      "job_type": "merge",
+      "status": "running",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "7f808daa-a990-436f-ac78-81ca8ffbda7e",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v3"
+      },
+      "result_payload": {
+        "task": "merge.runtime",
+        "celery_task_id": "7f808daa-a990-436f-ac78-81ca8ffbda7e",
+        "worker_started_at": "2026-04-21T04:09:19.482776"
+      },
+      "created_at": "2026-04-21T04:09:19.428305+00:00",
+      "started_at": "2026-04-21T04:09:19.482776+00:00",
+      "finished_at": null
+    }
+  ],
+  "job_summary": {
+    "job_count": 5,
+    "queued_job_count": 0,
+    "dispatched_job_count": 0,
+    "running_job_count": 2,
+    "succeeded_job_count": 2,
+    "failed_job_count": 1
+  },
+  "derived_compile_status": "failed",
+  "derived_dispatch_status": "fully_dispatched",
+  "assets": [
+    {
+      "asset_id": "a000a8c6-53a2-4224-bc1d-0df24b543b70",
+      "asset_type": "generated_video",
+      "asset_role": "render_output",
+      "bucket_name": "generated-videos",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v3/render_video/0bfffc0e-83b7-4fc9-9b93-f92942b12162.mp4",
+      "source_filename": "0bfffc0e-83b7-4fc9-9b93-f92942b12162.mp4",
+      "content_type": "video/mp4",
+      "file_size": null,
+      "asset_metadata": {
+        "job_id": "0bfffc0e-83b7-4fc9-9b93-f92942b12162",
+        "job_type": "render_video",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v3",
+        "external_task_id": "3b09f6db-7e14-45cb-a004-b0ff804ee429",
+        "materialization_error": "Google video generation request failed via google-genai SDK: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "materialization_status": "failed",
+        "materialization_error_code": "google_video_generation_failed"
+      },
+      "status": "failed",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-21T04:09:20.400368+00:00"
+    },
+    {
+      "asset_id": "3030eff3-d97b-4946-adc3-fc42261ac8fa",
+      "asset_type": "generated_image",
+      "asset_role": "render_output",
+      "bucket_name": "generated-images",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v3/render_image/8832f2b2-04ad-4cfb-8cb2-68613814f3d7.png",
+      "source_filename": "8832f2b2-04ad-4cfb-8cb2-68613814f3d7.png",
+      "content_type": "image/png",
+      "file_size": 1176505,
+      "asset_metadata": {
+        "job_id": "8832f2b2-04ad-4cfb-8cb2-68613814f3d7",
+        "job_type": "render_image",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v3",
+        "external_task_id": null,
+        "materialized_etag": "4dc8414bf2e53c9c9200119960644dc8",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-21T04:09:23.504268+00:00"
+    }
+  ],
+  "asset_association": {
+    "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+    "candidate_asset_count": 10,
+    "selected_asset_count": 2,
+    "selected_asset_types": [
+      "generated_video",
+      "generated_image"
+    ],
+    "selected_asset_ids": [
+      "a000a8c6-53a2-4224-bc1d-0df24b543b70",
+      "3030eff3-d97b-4946-adc3-fc42261ac8fa"
+    ]
+  },
+  "poll_index": 2,
+  "collected_at": "2026-04-21T04:09:26Z"
+}

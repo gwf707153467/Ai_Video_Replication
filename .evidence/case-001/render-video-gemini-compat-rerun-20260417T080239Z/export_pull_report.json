@@ -1,0 +1,9 @@
+{
+  "ok": false,
+  "bucket_name": "exports",
+  "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v16/merge/v16-ea6eef76-e8e7-49f8-a2b1-5f3924b0c4a9.mp4",
+  "local_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T080239Z/final_output.mp4",
+  "byte_count": null,
+  "reason": "RuntimeError:container binary probe failed: returncode=1; stderr=Traceback (most recent call last):\n  File \"<stdin>\", line 17, in <module>\n  File \"/usr/local/lib/python3.11/site-packages/minio/api.py\", line 1257, in get_object\n    return self._execute(\n           ^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/minio/api.py\", line 444, in _execute\n    return self._url_open(\n           ^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/minio/api.py\", line 427, in _url_open\n    raise response_error\nminio.error.S3Error: S3 operation failed; code: NoSuchKey, message: The specified key does not exist., resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v16/merge/v16-ea6eef76-e8e7-49f8-a2b1-5f3924b0c4a9.mp4, request_id: 18A7162DE6CC7918, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v16/merge/v16-ea6eef76-e8e7-49f8-a2b1-5f3924b0c4a9.mp4",
+  "collected_at": "2026-04-17T08:02:44Z"
+}

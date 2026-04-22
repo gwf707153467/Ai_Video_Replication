@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-20T09:35:15Z",
+  "finished_at": "2026-04-20T09:35:19Z",
+  "status": "completed_evidence_collection",
+  "payload_path": ".evidence\\case-001\\compile_request_payload.json",
+  "pre_compile_latest_runtime_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\pre_compile_latest_runtime.json",
+  "compile_response_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\compile_response.json",
+  "runtime_poll_history_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\runtime_poll_history.json",
+  "runtime_snapshot_final_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\runtime_snapshot_final.json",
+  "object_store_probe_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\object_store_probe.json",
+  "export_pull_report_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\export_pull_report.json",
+  "runtime_id": "03bc44df-6771-4021-a1e6-b2834739ef05",
+  "runtime_version": "v21",
+  "terminal_compile_status": "failed",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": ".evidence\\case-001\\render-voice-fallback-rerun-20260420T173514Z\\final_output.mp4",
+  "final_output_exists": false,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

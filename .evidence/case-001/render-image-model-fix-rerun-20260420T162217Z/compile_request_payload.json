@@ -1,0 +1,11 @@
+{
+  "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+  "runtime_version": null,
+  "compile_reason": "authoritative_min_case_case-001",
+  "compile_options": {
+    "proof_case_id": "case-001",
+    "input_manifest_path": "/mnt/user-data/outputs/case_001_01_input_manifest_v0.json"
+  },
+  "auto_version": true,
+  "dispatch_jobs": true
+}

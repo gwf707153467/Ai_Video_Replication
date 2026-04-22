@@ -65,3 +65,11 @@ class StorageService:
             length=len(payload),
             content_type=content_type,
         )
+
+    def get_bytes(self, bucket_name: str, object_key: str) -> bytes:
+        response = self.client.get_object(bucket_name, object_key)
+        try:
+            return response.read()
+        finally:
+            response.close()
+            response.release_conn()

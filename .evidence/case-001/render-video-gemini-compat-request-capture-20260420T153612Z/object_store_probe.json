@@ -1,0 +1,38 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "audio-assets",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_voice/67fe4042-a384-42cc-8679-cd496a3adc4a.wav",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /audio-assets/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_voice/67fe4042-a384-42cc-8679-cd496a3adc4a.wav, request_id: 18A80079FF542896, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: audio-assets, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_voice/67fe4042-a384-42cc-8679-cd496a3adc4a.wav"
+    },
+    {
+      "bucket_name": "exports",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/merge/v18-0557128b-b912-4277-9670-da2db9a6c6fa.mp4",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/merge/v18-0557128b-b912-4277-9670-da2db9a6c6fa.mp4, request_id: 18A80079FFAFCCAB, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/merge/v18-0557128b-b912-4277-9670-da2db9a6c6fa.mp4"
+    },
+    {
+      "bucket_name": "generated-images",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_image/1193ac66-802f-477c-bb6f-0f759f3cbabd.png",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /generated-images/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_image/1193ac66-802f-477c-bb6f-0f759f3cbabd.png, request_id: 18A80079FFD0B184, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: generated-images, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_image/1193ac66-802f-477c-bb6f-0f759f3cbabd.png"
+    },
+    {
+      "bucket_name": "generated-videos",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_video/9041b36c-b965-46ac-aee7-c5da81d0abdf.mp4",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /generated-videos/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_video/9041b36c-b965-46ac-aee7-c5da81d0abdf.mp4, request_id: 18A80079FFEEDDD6, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: generated-videos, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v18/render_video/9041b36c-b965-46ac-aee7-c5da81d0abdf.mp4"
+    }
+  ],
+  "collected_at": "2026-04-20T07:36:17Z"
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-21T04:05:09Z",
+  "finished_at": "2026-04-21T04:06:18Z",
+  "status": "completed_evidence_collection",
+  "payload_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\case-002\\compile_request_payload.json",
+  "pre_compile_latest_runtime_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\pre_compile_latest_runtime.json",
+  "compile_response_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\compile_response.json",
+  "runtime_poll_history_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\runtime_poll_history.json",
+  "runtime_snapshot_final_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\runtime_snapshot_final.json",
+  "object_store_probe_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\object_store_probe.json",
+  "export_pull_report_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\export_pull_report.json",
+  "runtime_id": "b2ab32ff-39be-439a-9603-acb9e5d23e27",
+  "runtime_version": "v2",
+  "terminal_compile_status": "succeeded",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\regression\\20260421T040509Z\\case-002-run-1\\final_output.mp4",
+  "final_output_exists": true,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

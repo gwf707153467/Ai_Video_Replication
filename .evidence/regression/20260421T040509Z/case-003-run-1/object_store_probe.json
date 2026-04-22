@@ -1,0 +1,14 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "generated-videos",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v2/render_video/60c60e38-c6f9-45ce-87a1-80bad7c231e4.mp4",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /generated-videos/projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v2/render_video/60c60e38-c6f9-45ce-87a1-80bad7c231e4.mp4, request_id: 18A84399D3CE20E6, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: generated-videos, object_name: projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v2/render_video/60c60e38-c6f9-45ce-87a1-80bad7c231e4.mp4"
+    }
+  ],
+  "collected_at": "2026-04-21T04:06:21Z"
+}

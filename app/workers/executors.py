@@ -1,11 +1,15 @@
 from dataclasses import dataclass
+import subprocess
+import tempfile
+import time
 from typing import Any
 from uuid import UUID
 
 from app.core.config import settings
-from app.db.models import CompiledRuntime, Job
+from app.db.models import Asset, CompiledRuntime, Job
 from app.db.session import SessionLocal
 from app.providers.google.client import GoogleProviderClient, GoogleProviderError
+from app.services.runtime_artifact_service import RuntimeArtifactService
 
 
 class ProviderExecutorError(RuntimeError):
@@ -121,12 +125,26 @@ class BaseProviderExecutor:
             return False
         return default
 
+    _SUPPORTED_VIDEO_DURATION_SECONDS = (4, 6, 8)
+
+    @classmethod
+    def _normalize_video_duration_seconds(cls, value: Any) -> int | None:
+        duration_seconds = cls._coerce_positive_int(value)
+        if duration_seconds is None:
+            return None
+        # Veo 3.1 only accepts discrete values 4, 6, or 8 seconds.
+        # Prefer the larger supported value on ties to avoid shortening content.
+        return min(
+            cls._SUPPORTED_VIDEO_DURATION_SECONDS,
+            key=lambda supported: (abs(supported - duration_seconds), -supported),
+        )
+
     @classmethod
     def _duration_ms_to_seconds(cls, value: Any) -> int | None:
         duration_ms = cls._coerce_positive_int(value)
         if duration_ms is None:
             return None
-        return max(1, round(duration_ms / 1000))
+        return cls._normalize_video_duration_seconds(round(duration_ms / 1000))
 
     @classmethod
     def _join_text_blocks(cls, *parts: Any) -> str | None:
@@ -452,7 +470,7 @@ class GoogleVideoExecutor(GoogleExecutorMixin):
                 or self._normalize_optional_text(compile_options.get("aspect_ratio"))
             ),
             "duration_seconds": (
-                self._coerce_positive_int(provider_inputs.get("duration_seconds"))
+                self._normalize_video_duration_seconds(provider_inputs.get("duration_seconds"))
                 or self._duration_ms_to_seconds(primary_spu.get("duration_ms"))
             ),
             "fps": self._coerce_positive_int(provider_inputs.get("fps")),
@@ -611,17 +629,38 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
     ) -> tuple[str, str | None, str | None, Any | None, dict]:
         payload = job.payload or {}
         provider_inputs = self._coerce_dict(payload.get("provider_inputs"))
-        _, _, _, sequences = self._resolve_runtime_context(
+        runtime_payload, compile_options, sequences = None, None, None
+        _, runtime_payload, compile_options, sequences = self._resolve_runtime_context(
             project_id=project_id,
             runtime_version=runtime_version,
         )
-        primary_sequence, primary_vbu = self._select_primary_vbu(sequences)
-        tts_params = self._coerce_dict(primary_vbu.get("tts_params"))
+        primary_sequence = {}
+        primary_vbu = {}
+        tts_params = {}
+        text_source = "runtime_vbu"
+
+        try:
+            primary_sequence, primary_vbu = self._select_primary_vbu(sequences)
+            tts_params = self._coerce_dict(primary_vbu.get("tts_params"))
+            runtime_text = self._normalize_optional_text(primary_vbu.get("script_text"))
+        except ProviderExecutorError as exc:
+            if exc.code != "runtime_vbu_missing":
+                raise
+            primary_sequence, primary_spu = self._select_voice_fallback_sequence_spu(sequences)
+            primary_vbu = {}
+            tts_params = {}
+            runtime_text = self._build_voice_fallback_text(
+                runtime_payload=runtime_payload,
+                compile_options=compile_options,
+                sequence=primary_sequence,
+                spu=primary_spu,
+            )
+            text_source = "runtime_fallback"
 
         text = (
             self._normalize_optional_text(provider_inputs.get("text"))
             or self._normalize_optional_text(payload.get("text"))
-            or self._normalize_optional_text(primary_vbu.get("script_text"))
+            or runtime_text
         )
         if not text:
             raise GoogleProviderError(
@@ -655,7 +694,7 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
             "vbu_id": primary_vbu.get("vbu_id"),
             "vbu_code": primary_vbu.get("vbu_code"),
             "persuasive_role": primary_vbu.get("persuasive_role"),
-            "text_source": "job_payload" if provider_inputs.get("text") or payload.get("text") else "runtime_vbu",
+            "text_source": "job_payload" if provider_inputs.get("text") or payload.get("text") else text_source,
         }
         return text, voice_name, language_code, speech_config, selection_payload
 
@@ -671,6 +710,52 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
             "Compiled runtime does not contain any VBU with script_text for render_voice.",
         )
 
+    def _select_voice_fallback_sequence_spu(self, sequences: list) -> tuple[dict, dict]:
+        for sequence in sequences:
+            sequence_dict = self._coerce_dict(sequence)
+            for spu in self._coerce_list(sequence_dict.get("spus")):
+                spu_dict = self._coerce_dict(spu)
+                if (
+                    self._normalize_optional_text(spu_dict.get("display_name"))
+                    or self._normalize_optional_text(spu_dict.get("prompt_text"))
+                    or self._normalize_optional_text(sequence_dict.get("persuasive_goal"))
+                ):
+                    return sequence_dict, spu_dict
+        raise ProviderExecutorError(
+            "runtime_vbu_missing",
+            "Compiled runtime does not contain any VBU with script_text for render_voice.",
+        )
+
+    def _build_voice_fallback_text(
+        self,
+        *,
+        runtime_payload: dict,
+        compile_options: dict,
+        sequence: dict,
+        spu: dict,
+    ) -> str | None:
+        persuasive_goal = self._normalize_optional_text(sequence.get("persuasive_goal"))
+        display_name = self._normalize_optional_text(spu.get("display_name"))
+        prompt_text = self._normalize_optional_text(spu.get("prompt_text"))
+        source_kind = self._normalize_optional_text(
+            self._coerce_dict(compile_options.get("reference")).get("source_kind")
+        )
+
+        narration_parts: list[str] = []
+        if persuasive_goal:
+            narration_parts.append(persuasive_goal.rstrip(".") + ".")
+        if display_name:
+            narration_parts.append(f"Focus on {display_name}.")
+        if source_kind:
+            narration_parts.append(f"Keep the delivery aligned with the {source_kind} reference style.")
+        if not narration_parts and prompt_text:
+            narration_parts.append(prompt_text)
+        if not narration_parts and runtime_payload.get("project_id"):
+            narration_parts.append(
+                f"Create a concise voiceover for project {runtime_payload['project_id']}."
+            )
+        return " ".join(part.strip() for part in narration_parts if part and str(part).strip()) or None
+
     def _resolve_voice_profile_name(self, voice_profile: Any) -> str | None:
         if isinstance(voice_profile, dict):
             return (
@@ -681,7 +766,9 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
 
 
 class FailHardMergeExecutor(RuntimeBackedExecutor):
-    provider_name = "merge_fail_hard"
+    provider_name = "merge_ffmpeg"
+    _ASSET_WAIT_SECONDS = 2.0
+    _MAX_ASSET_WAITS = 90
 
     def execute(
         self,
@@ -693,10 +780,177 @@ class FailHardMergeExecutor(RuntimeBackedExecutor):
         asset_plan: dict | None = None,
     ) -> dict:
         self._load_runtime_payload(project_id=project_id, runtime_version=runtime_version)
-        raise ProviderExecutorError(
-            "merge_execution_not_ready",
-            "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+        video_asset = self._wait_for_runtime_asset(
+            project_id=project_id,
+            runtime_version=runtime_version,
+            asset_type="generated_video",
         )
+        audio_asset = self._wait_for_runtime_asset(
+            project_id=project_id,
+            runtime_version=runtime_version,
+            asset_type="audio",
+        )
+
+        if video_asset is None:
+            raise ProviderExecutorError(
+                "merge_video_asset_missing",
+                f"merge.runtime could not find a generated_video asset for runtime_version={runtime_version}.",
+            )
+        if audio_asset is None:
+            raise ProviderExecutorError(
+                "merge_audio_asset_missing",
+                f"merge.runtime could not find an audio asset for runtime_version={runtime_version}.",
+            )
+
+        artifact_service = RuntimeArtifactService()
+        video_bytes = artifact_service.get_bytes(video_asset.bucket_name, video_asset.object_key)
+        audio_bytes = artifact_service.get_bytes(audio_asset.bucket_name, audio_asset.object_key)
+        merged_bytes = self._mux_video_and_audio(
+            video_bytes=video_bytes,
+            audio_bytes=audio_bytes,
+            audio_content_type=audio_asset.content_type,
+        )
+
+        return ProviderExecutionResult(
+            status="succeeded",
+            provider=self.provider_name,
+            output_filename=asset_plan.get("filename") if asset_plan else None,
+            provider_payload={
+                "job_type": job.job_type,
+                "task_name": task_name,
+                "runtime_version": runtime_version,
+                "provider_name": self.provider_name,
+                "video_asset": self._asset_ref(video_asset),
+                "audio_asset": self._asset_ref(audio_asset),
+            },
+            binary_payload=merged_bytes,
+            content_type="video/mp4",
+        ).to_dict()
+
+    def _find_runtime_asset(
+        self,
+        *,
+        project_id: str,
+        runtime_version: str,
+        asset_type: str,
+    ) -> Asset | None:
+        db = SessionLocal()
+        try:
+            assets = (
+                db.query(Asset)
+                .filter(
+                    Asset.project_id == UUID(project_id),
+                    Asset.asset_type == asset_type,
+                )
+                .order_by(Asset.created_at.desc())
+                .all()
+            )
+            for asset in assets:
+                metadata = asset.asset_metadata if isinstance(asset.asset_metadata, dict) else {}
+                if metadata.get("runtime_version") == runtime_version and asset.status == "materialized":
+                    return asset
+        finally:
+            db.close()
+        return None
+
+    def _wait_for_runtime_asset(
+        self,
+        *,
+        project_id: str,
+        runtime_version: str,
+        asset_type: str,
+    ) -> Asset | None:
+        for _ in range(self._MAX_ASSET_WAITS + 1):
+            asset = self._find_runtime_asset(
+                project_id=project_id,
+                runtime_version=runtime_version,
+                asset_type=asset_type,
+            )
+            if asset is not None:
+                return asset
+            time.sleep(self._ASSET_WAIT_SECONDS)
+        return None
+
+    @staticmethod
+    def _asset_ref(asset: Asset) -> dict[str, Any]:
+        return {
+            "asset_id": str(asset.id),
+            "bucket_name": asset.bucket_name,
+            "object_key": asset.object_key,
+            "asset_type": asset.asset_type,
+            "status": asset.status,
+        }
+
+    @staticmethod
+    def _mux_video_and_audio(
+        *,
+        video_bytes: bytes,
+        audio_bytes: bytes,
+        audio_content_type: str | None = None,
+    ) -> bytes:
+        with tempfile.TemporaryDirectory(prefix="merge-runtime-") as temp_dir:
+            video_path = f"{temp_dir}/input_video.mp4"
+            audio_path = f"{temp_dir}/input_audio.bin"
+            output_path = f"{temp_dir}/output.mp4"
+
+            with open(video_path, "wb") as handle:
+                handle.write(video_bytes)
+            with open(audio_path, "wb") as handle:
+                handle.write(audio_bytes)
+
+            audio_input_args = FailHardMergeExecutor._build_audio_input_args(
+                content_type=audio_content_type,
+                audio_path=audio_path,
+            )
+            completed = subprocess.run(
+                [
+                    "ffmpeg",
+                    "-y",
+                    "-i",
+                    video_path,
+                    *audio_input_args,
+                    "-map",
+                    "0:v:0",
+                    "-map",
+                    "1:a:0",
+                    "-c:v",
+                    "copy",
+                    "-c:a",
+                    "aac",
+                    "-shortest",
+                    output_path,
+                ],
+                capture_output=True,
+                check=False,
+                )
+            if completed.returncode != 0:
+                stderr = completed.stderr.decode("utf-8", errors="replace").strip()
+                raise ProviderExecutorError(
+                    "merge_ffmpeg_failed",
+                    f"merge.runtime ffmpeg mux failed: {stderr or '<empty stderr>'}",
+                )
+
+            with open(output_path, "rb") as handle:
+                output_bytes = handle.read()
+            if not output_bytes:
+                raise ProviderExecutorError(
+                    "merge_output_empty",
+                    "merge.runtime produced an empty MP4 output.",
+                )
+            return output_bytes
+
+    @staticmethod
+    def _build_audio_input_args(*, content_type: str | None, audio_path: str) -> list[str]:
+        normalized = str(content_type or "").strip().lower()
+        if normalized.startswith("audio/l16"):
+            rate = "24000"
+            for segment in normalized.split(";")[1:]:
+                key, _, value = segment.partition("=")
+                if key.strip() == "rate" and value.strip():
+                    rate = value.strip()
+                    break
+            return ["-f", "s16le", "-ar", rate, "-ac", "1", "-i", audio_path]
+        return ["-i", audio_path]
 
 
 class ProviderExecutorRegistry:

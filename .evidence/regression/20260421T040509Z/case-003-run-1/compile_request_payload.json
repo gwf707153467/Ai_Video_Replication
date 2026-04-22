@@ -1,0 +1,30 @@
+{
+  "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+  "runtime_version": null,
+  "compile_reason": "regression_case-003_bag_reference",
+  "compile_options": {
+    "proof_case_id": "case-003",
+    "input_manifest_path": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-003/input_manifest.json",
+    "reference": {
+      "source_kind": "uploaded_reference_video",
+      "source_uri": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4",
+      "structural_goal": "Replicate the ecommerce bag video skeleton while swapping in new prompt/copy details.",
+      "retained_axes": [
+        "vertical short-form pacing",
+        "bag close-ups",
+        "product handling",
+        "premium ecommerce appeal"
+      ],
+      "swappable_axes": [
+        "bag style",
+        "market framing",
+        "voiceover copy"
+      ],
+      "notes": [
+        "case-003 regression payload frozen from current workspace."
+      ]
+    }
+  },
+  "auto_version": true,
+  "dispatch_jobs": true
+}

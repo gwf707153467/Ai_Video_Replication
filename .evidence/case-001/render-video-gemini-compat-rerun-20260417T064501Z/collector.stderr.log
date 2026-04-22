@@ -1,0 +1,5 @@
+usage: case_001_real_run_collect.py [-h] --payload PAYLOAD --evidence-dir
+                                    EVIDENCE_DIR --final-output FINAL_OUTPUT
+                                    [--poll-interval POLL_INTERVAL]
+                                    [--max-polls MAX_POLLS]
+case_001_real_run_collect.py: error: the following arguments are required: --evidence-dir, --final-output

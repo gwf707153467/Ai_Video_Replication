@@ -43,6 +43,8 @@ class GoogleProviderClient:
         self.timeout = 120.0
         self.video_poll_interval_seconds = 20.0
         self.video_max_polls = 45
+        self.tts_max_attempts = 3
+        self.tts_retry_backoff_seconds = 2.0
 
     def healthcheck(self) -> dict:
         return {
@@ -282,21 +284,35 @@ class GoogleProviderClient:
         if normalized_speech_config is not None:
             config_kwargs["speech_config"] = normalized_speech_config
 
-        try:
-            response = client.models.generate_content(
-                model=self.tts_model,
-                contents=normalized_text,
-                config=types.GenerateContentConfig(**config_kwargs),
+        response_summary = None
+        attempt_used = 0
+        last_retryable_error: GoogleProviderError | None = None
+        for attempt in range(1, self.tts_max_attempts + 1):
+            attempt_used = attempt
+            try:
+                response = client.models.generate_content(
+                    model=self.tts_model,
+                    contents=normalized_text,
+                    config=types.GenerateContentConfig(**config_kwargs),
+                )
+                audio_bytes, content_type, response_summary = self._extract_generated_voice(response)
+                break
+            except GoogleProviderError as exc:
+                if exc.code != "google_provider_response_invalid" or attempt >= self.tts_max_attempts:
+                    raise
+                last_retryable_error = exc
+                time.sleep(self.tts_retry_backoff_seconds * attempt)
+            except Exception as exc:
+                raise GoogleProviderError(
+                    "google_tts_generation_failed",
+                    f"Google TTS generation request failed via google-genai SDK: {exc}",
+                ) from exc
+        else:  # pragma: no cover - defensive guard
+            raise last_retryable_error or GoogleProviderError(
+                "google_provider_response_invalid",
+                "Google TTS response did not yield usable audio after retries.",
             )
-        except GoogleProviderError:
-            raise
-        except Exception as exc:
-            raise GoogleProviderError(
-                "google_tts_generation_failed",
-                f"Google TTS generation request failed via google-genai SDK: {exc}",
-            ) from exc
 
-        audio_bytes, content_type, response_summary = self._extract_generated_voice(response)
         provider_payload = {
             "model": self.tts_model,
             "sdk": "google-genai",
@@ -308,6 +324,7 @@ class GoogleProviderClient:
                 if normalized_speech_config is not None
                 else None,
                 "text_length": len(normalized_text),
+                "attempt_count": attempt_used,
             },
             "response": response_summary,
         }

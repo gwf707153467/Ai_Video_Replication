@@ -1,0 +1,34 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "generated-images",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_image/08037d34-e6d8-4ece-9c11-6b1f92943852.png",
+      "exists": true,
+      "size": 1297138,
+      "content_type": "image/png"
+    },
+    {
+      "bucket_name": "audio-assets",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_voice/2adce07d-48d3-484e-8fa1-fb74c3cc1378.wav",
+      "exists": true,
+      "size": 595726,
+      "content_type": "audio/L16;codec=pcm;rate=24000"
+    },
+    {
+      "bucket_name": "generated-videos",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_video/3ea36f5d-c8a5-4c79-b9fd-383ae2f84080.mp4",
+      "exists": true,
+      "size": 3415343,
+      "content_type": "video/mp4"
+    },
+    {
+      "bucket_name": "exports",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/merge/v1-3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75.mp4",
+      "exists": true,
+      "size": 3362160,
+      "content_type": "video/mp4"
+    }
+  ],
+  "collected_at": "2026-04-21T04:04:22Z"
+}

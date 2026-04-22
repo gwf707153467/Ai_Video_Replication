@@ -1,0 +1,22 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "audio-assets",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v20/render_voice/8349b5ed-a308-4b87-84bd-64dfcc608cf6.wav",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /audio-assets/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v20/render_voice/8349b5ed-a308-4b87-84bd-64dfcc608cf6.wav, request_id: 18A802FD9120EFF4, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: audio-assets, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v20/render_voice/8349b5ed-a308-4b87-84bd-64dfcc608cf6.wav"
+    },
+    {
+      "bucket_name": "exports",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v20/merge/v20-c70fcc0b-713a-4ce7-87b1-57f142e568d8.mp4",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v20/merge/v20-c70fcc0b-713a-4ce7-87b1-57f142e568d8.mp4, request_id: 18A802FD91410DE4, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v20/merge/v20-c70fcc0b-713a-4ce7-87b1-57f142e568d8.mp4"
+    }
+  ],
+  "collected_at": "2026-04-20T08:22:21Z"
+}

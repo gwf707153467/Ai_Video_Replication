@@ -1,0 +1,22 @@
+{
+  "attempts": [
+    {
+      "user": "postgres",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "psql: error: connection to server on socket \"/var/run/postgresql/.s.PGSQL.5432\" failed: FATAL:  database \"avr_db\" does not exist"
+    },
+    {
+      "user": "avr_user",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "psql: error: connection to server on socket \"/var/run/postgresql/.s.PGSQL.5432\" failed: FATAL:  role \"avr_user\" does not exist"
+    },
+    {
+      "user": "avr",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "psql: error: connection to server on socket \"/var/run/postgresql/.s.PGSQL.5432\" failed: FATAL:  role \"avr\" does not exist"
+    }
+  ]
+}

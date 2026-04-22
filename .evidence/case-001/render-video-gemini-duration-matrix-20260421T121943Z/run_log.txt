@@ -1,0 +1,10 @@
+[2026-04-21T12:19:45Z] Experiment initialized for durations=[4, 5, 6, 8] model=veo-3.1-generate-preview
+[2026-04-21T12:19:45Z] Submitting durationSeconds=4
+[2026-04-21T12:19:47Z] Completed durationSeconds=4 ok=True error=None
+[2026-04-21T12:19:47Z] Submitting durationSeconds=5
+[2026-04-21T12:19:47Z] Completed durationSeconds=5 ok=False error=400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'The number value for `durationSeconds` is out of bound. Please provide a value between 4 and 8, inclusive.', 'status': 'INVALID_ARGUMENT'}}
+[2026-04-21T12:19:47Z] Submitting durationSeconds=6
+[2026-04-21T12:19:48Z] Completed durationSeconds=6 ok=True error=None
+[2026-04-21T12:19:48Z] Submitting durationSeconds=8
+[2026-04-21T12:19:50Z] Completed durationSeconds=8 ok=True error=None
+[2026-04-21T12:19:50Z] Experiment completed with pattern=only_5_failed

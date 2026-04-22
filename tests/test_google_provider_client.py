@@ -268,6 +268,7 @@ class GoogleProviderClientVoiceTests(unittest.TestCase):
                     "speech_config_present": True,
                     "speech_config_type": "SpeechConfig",
                     "text_length": 6,
+                    "attempt_count": 1,
                 },
                 "response": {
                     "response_type": "SimpleNamespace",
@@ -338,6 +339,38 @@ class GoogleProviderClientVoiceTests(unittest.TestCase):
         exc = exc_info.exception
         self.assertEqual(exc.code, "google_provider_response_invalid")
         self.assertEqual(exc.message, "Google TTS inline audio payload is not bytes.")
+
+    def test_generate_voice_retries_when_response_has_no_inline_audio(self) -> None:
+        provider_client = self._build_client()
+        retry_response = SimpleNamespace(candidates=[SimpleNamespace(content=SimpleNamespace(parts=[]))])
+        success_response = SimpleNamespace(
+            candidates=[
+                SimpleNamespace(
+                    content=SimpleNamespace(
+                        parts=[
+                            SimpleNamespace(
+                                inline_data=SimpleNamespace(
+                                    data=b"voice-bytes",
+                                    mime_type="audio/wav",
+                                )
+                            )
+                        ]
+                    )
+                )
+            ]
+        )
+        sdk_client = SimpleNamespace(
+            models=SimpleNamespace(generate_content=MagicMock(side_effect=[retry_response, success_response])),
+        )
+
+        with patch("app.providers.google.client.genai.Client", return_value=sdk_client):
+            with patch("app.providers.google.client.time.sleep") as sleep_mock:
+                result = provider_client.generate_voice(text="Retry me.")
+
+        self.assertEqual(result.audio_bytes, b"voice-bytes")
+        self.assertEqual(result.provider_payload["request"]["attempt_count"], 2)
+        self.assertEqual(sdk_client.models.generate_content.call_count, 2)
+        sleep_mock.assert_called_once_with(provider_client.tts_retry_backoff_seconds)
 
 
 class GoogleProviderClientImageAndHelperTests(unittest.TestCase):

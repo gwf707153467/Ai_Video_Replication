@@ -1,0 +1,39 @@
+{
+  "captured_at": "2026-04-21T12:19:48Z",
+  "api_surface": "generative-language-v1beta-via-google-genai",
+  "sdk_version": "1.73.1",
+  "model": "veo-3.1-generate-preview",
+  "request_url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning",
+  "duration_seconds": 8,
+  "sample_count": 1,
+  "negative_prompt_present": true,
+  "prompt_length": 484,
+  "skip_poll": true,
+  "poll_interval_seconds": 5.0,
+  "max_polls": 1,
+  "config_dump": {
+    "number_of_videos": 1,
+    "duration_seconds": 8,
+    "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+  },
+  "request_body_expected": {
+    "instances": [
+      {
+        "prompt": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\n\nProject ID: 656ac6b1-ecb8-4f45-9f45-556be5915168\n\nSequence type: hook\n\nPersuasive goal: Introduce the beauty product with a clean premium visual\n\nSPU display name: Beauty serum hero shot\n\nVisual constraints: style=studio_clean, platform=tiktok_9_16, background=#FFFFFF"
+      }
+    ],
+    "parameters": {
+      "sampleCount": 1,
+      "durationSeconds": 8,
+      "negativePrompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+    }
+  },
+  "submit_ok": true,
+  "submit_operation": {
+    "operation_type": "GenerateVideosOperation",
+    "done": null,
+    "name": "models/veo-3.1-generate-preview/operations/8spsno6hbwtg"
+  },
+  "ok": true,
+  "result_mode": "submit_only"
+}

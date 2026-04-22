@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-20T10:01:15Z",
+  "finished_at": "2026-04-20T10:04:45Z",
+  "status": "completed_evidence_collection",
+  "payload_path": ".evidence\\case-001\\compile_request_payload.json",
+  "pre_compile_latest_runtime_path": ".evidence\\case-001\\full-chain-rerun-20260420T180115Z\\pre_compile_latest_runtime.json",
+  "compile_response_path": ".evidence\\case-001\\full-chain-rerun-20260420T180115Z\\compile_response.json",
+  "runtime_poll_history_path": ".evidence\\case-001\\full-chain-rerun-20260420T180115Z\\runtime_poll_history.json",
+  "runtime_snapshot_final_path": ".evidence\\case-001\\full-chain-rerun-20260420T180115Z\\runtime_snapshot_final.json",
+  "object_store_probe_path": null,
+  "export_pull_report_path": null,
+  "runtime_id": "ec148b1e-0aa5-4991-a58d-c0df0a6bb7e2",
+  "runtime_version": "v25",
+  "terminal_compile_status": "running",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": ".evidence\\case-001\\full-chain-rerun-20260420T180115Z\\final_output.mp4",
+  "final_output_exists": false,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

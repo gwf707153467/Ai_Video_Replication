@@ -75,3 +75,6 @@ class RuntimeArtifactService:
             payload=text.encode("utf-8"),
             content_type=content_type,
         )
+
+    def get_bytes(self, bucket_name: str, object_key: str) -> bytes:
+        return self.storage_service.get_bytes(bucket_name, object_key)

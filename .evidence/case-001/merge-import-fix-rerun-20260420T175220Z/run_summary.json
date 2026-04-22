@@ -1,0 +1,20 @@
+{
+  "case_id": "case-001",
+  "started_at": "2026-04-20T09:52:20Z",
+  "finished_at": "2026-04-20T09:53:30Z",
+  "status": "completed_evidence_collection",
+  "payload_path": ".evidence\\case-001\\compile_request_payload.json",
+  "pre_compile_latest_runtime_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\pre_compile_latest_runtime.json",
+  "compile_response_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\compile_response.json",
+  "runtime_poll_history_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\runtime_poll_history.json",
+  "runtime_snapshot_final_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\runtime_snapshot_final.json",
+  "object_store_probe_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\object_store_probe.json",
+  "export_pull_report_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\export_pull_report.json",
+  "runtime_id": "cc6c3047-a124-4979-93d7-477c32eea431",
+  "runtime_version": "v23",
+  "terminal_compile_status": "failed",
+  "terminal_dispatch_status": "fully_dispatched",
+  "final_output_path": ".evidence\\case-001\\merge-import-fix-rerun-20260420T175220Z\\final_output.mp4",
+  "final_output_exists": false,
+  "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."
+}

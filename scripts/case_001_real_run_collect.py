@@ -31,6 +31,15 @@ def append_log(path: Path, message: str) -> None:
         handle.write(f"[{utc_now()}] {message}\n")
 
 
+def resolve_case_id(payload: dict) -> str:
+    compile_options = payload.get("compile_options")
+    if isinstance(compile_options, dict):
+        proof_case_id = compile_options.get("proof_case_id")
+        if isinstance(proof_case_id, str) and proof_case_id.strip():
+            return proof_case_id.strip()
+    return CASE_ID
+
+
 def run_container_python_json(script: str, input_payload: dict | None = None) -> dict:
     command = ["docker", "exec", "-i"]
     if input_payload is not None:
@@ -440,8 +449,9 @@ def main() -> int:
     log_path = args.evidence_dir / "run_log.txt"
 
     payload = json.loads(args.payload.read_text(encoding="utf-8"))
+    case_id = resolve_case_id(payload)
     write_json(args.evidence_dir / "compile_request_payload.json", payload)
-    append_log(log_path, f"starting {CASE_ID} real-run evidence collection")
+    append_log(log_path, f"starting {case_id} real-run evidence collection")
     append_log(log_path, f"payload path: {args.payload}")
 
     latest_before = run_container_python_json(build_latest_runtime_probe_script(), {"project_id": payload["project_id"]})
@@ -471,7 +481,7 @@ def main() -> int:
 
     if not compile_response.get("ok") or not runtime_id or not runtime_version:
         summary = {
-            "case_id": CASE_ID,
+            "case_id": case_id,
             "started_at": started_at,
             "finished_at": utc_now(),
             "status": "compile_request_failed_or_incomplete",
@@ -595,7 +605,7 @@ def main() -> int:
         write_json(args.evidence_dir / "export_pull_report.json", export_pull_report)
 
     summary = {
-        "case_id": CASE_ID,
+        "case_id": case_id,
         "started_at": started_at,
         "finished_at": utc_now(),
         "status": "completed_evidence_collection",

@@ -1,0 +1,30 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "exports",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/merge/v19-a5be722a-4807-4d2f-882e-bb8a8ebd4acf.mp4",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/merge/v19-a5be722a-4807-4d2f-882e-bb8a8ebd4acf.mp4, request_id: 18A802410C964958, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/merge/v19-a5be722a-4807-4d2f-882e-bb8a8ebd4acf.mp4"
+    },
+    {
+      "bucket_name": "audio-assets",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/render_voice/ddb714ec-d02c-4de7-a758-5f0a8115a31d.wav",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /audio-assets/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/render_voice/ddb714ec-d02c-4de7-a758-5f0a8115a31d.wav, request_id: 18A802410CD6B0D5, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: audio-assets, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/render_voice/ddb714ec-d02c-4de7-a758-5f0a8115a31d.wav"
+    },
+    {
+      "bucket_name": "generated-images",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/render_image/b5f1d573-1ffd-4b69-b780-218b0b65784d.png",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /generated-images/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/render_image/b5f1d573-1ffd-4b69-b780-218b0b65784d.png, request_id: 18A802410D083581, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: generated-images, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v19/render_image/b5f1d573-1ffd-4b69-b780-218b0b65784d.png"
+    }
+  ],
+  "collected_at": "2026-04-20T08:08:51Z"
+}

@@ -1,0 +1,35 @@
+{
+  "captured_at": "2026-04-21T12:19:47Z",
+  "api_surface": "generative-language-v1beta-via-google-genai",
+  "sdk_version": "1.73.1",
+  "model": "veo-3.1-generate-preview",
+  "request_url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning",
+  "duration_seconds": 5,
+  "sample_count": 1,
+  "negative_prompt_present": true,
+  "prompt_length": 484,
+  "skip_poll": true,
+  "poll_interval_seconds": 5.0,
+  "max_polls": 1,
+  "config_dump": {
+    "number_of_videos": 1,
+    "duration_seconds": 5,
+    "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+  },
+  "request_body_expected": {
+    "instances": [
+      {
+        "prompt": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\n\nProject ID: 656ac6b1-ecb8-4f45-9f45-556be5915168\n\nSequence type: hook\n\nPersuasive goal: Introduce the beauty product with a clean premium visual\n\nSPU display name: Beauty serum hero shot\n\nVisual constraints: style=studio_clean, platform=tiktok_9_16, background=#FFFFFF"
+      }
+    ],
+    "parameters": {
+      "sampleCount": 1,
+      "durationSeconds": 5,
+      "negativePrompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+    }
+  },
+  "ok": false,
+  "error_type": "ClientError",
+  "error_message": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'The number value for `durationSeconds` is out of bound. Please provide a value between 4 and 8, inclusive.', 'status': 'INVALID_ARGUMENT'}}",
+  "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 240, in submit_one_duration\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/models.py\", line 6786, in generate_videos\n    return self._generate_videos(\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/models.py\", line 6054, in _generate_videos\n    response = self._api_client.request(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/_api_client.py\", line 1537, in request\n    response = self._request(http_request, http_options, stream=False)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/_api_client.py\", line 1332, in _request\n    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/tenacity/__init__.py\", line 470, in __call__\n    do = self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/tenacity/__init__.py\", line 371, in iter\n    result = action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/tenacity/__init__.py\", line 413, in exc_check\n    raise retry_exc.reraise()\n          ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/tenacity/__init__.py\", line 184, in reraise\n    raise self.last_attempt.result()\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/usr/local/lib/python3.11/site-packages/tenacity/__init__.py\", line 473, in __call__\n    result = fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/_api_client.py\", line 1309, in _request_once\n    errors.APIError.raise_for_response(response)\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/errors.py\", line 155, in raise_for_response\n    cls.raise_error(response.status_code, response_json, response)\n  File \"/usr/local/lib/python3.11/site-packages/google/genai/errors.py\", line 184, in raise_error\n    raise ClientError(status_code, response_json, response)\ngoogle.genai.errors.ClientError: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'The number value for `durationSeconds` is out of bound. Please provide a value between 4 and 8, inclusive.', 'status': 'INVALID_ARGUMENT'}}\n"
+}

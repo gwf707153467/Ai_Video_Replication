@@ -1,0 +1,16 @@
+{
+  "reference_sha256": "5adb41e9067a93487f74a7b486c48746a7a383a3e2df3b5055cd51bcbaaeb52e",
+  "reference_size": 17552524,
+  "cases": [
+    {
+      "case_id": "case-002",
+      "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+      "case_dir": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\case-002"
+    },
+    {
+      "case_id": "case-003",
+      "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+      "case_dir": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\case-003"
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "exists": true,
+  "runtime_record": {
+    "runtime_id": "cc6c3047-a124-4979-93d7-477c32eea431",
+    "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+    "runtime_version": "v23",
+    "compile_status": "failed",
+    "dispatch_status": "fully_dispatched",
+    "dispatch_summary": {
+      "jobs": [
+        {
+          "job_id": "3c713b1e-5abc-4fd6-b955-b12e14ad05bf",
+          "status": "succeeded",
+          "job_type": "compile",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "5f21a393-ef95-4092-9400-9e5caff5c022"
+        },
+        {
+          "job_id": "3528f33d-6110-476c-a8d7-46a2f721507a",
+          "status": "succeeded",
+          "job_type": "render_image",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "a9071dd0-e034-422d-85e4-ef78fb45af8a"
+        },
+        {
+          "job_id": "e1bacd85-821a-454c-9594-5bbc39eb455a",
+          "status": "succeeded",
+          "job_type": "render_video",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "a7a1c940-6fa6-4459-b37c-1bcd09a32b20"
+        },
+        {
+          "job_id": "8d84a6dc-7731-4d68-9c6f-2712f254dd25",
+          "status": "succeeded",
+          "job_type": "render_voice",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "c7a27fff-5c24-44d5-aecc-518e2d265c05"
+        },
+        {
+          "job_id": "4a18ed2c-d52f-4d63-b520-bb2d18fc74b1",
+          "status": "failed",
+          "job_type": "merge",
+          "error_code": "merge_ffmpeg_failed",
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "d7dde2f1-b8cb-4946-a3e6-3a4d153b4eaf"
+        }
+      ],
+      "job_count": 5,
+      "runtime_version": "v23",
+      "failed_job_count": 1,
+      "queued_job_count": 0,
+      "running_job_count": 0,
+      "succeeded_job_count": 4,
+      "dispatched_job_count": 0
+    },
+    "last_error_code": "merge_ffmpeg_failed",
+    "last_error_message": "merge.runtime ffmpeg mux failed: ffmpeg version 7.1.3-0+deb13u1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with gcc 14 (Debian 14.2.0-19)\n  configuration: --prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\n  libavutil      59. 39.100 / 59. 39.100\n  libavcodec     61. 19.101 / 61. 19.101\n  libavformat    61.  7.100 / 61.  7.100\n  libavdevice    61.  3.100 / 61.  3.100\n  libavfilter    10.  4.100 / 10.  4.100\n  libswscale      8.  3.100 /  8.  3.100\n  libswresample   5.  3.100 /  5.  3.100\n  libpostproc    58.  3.100 / 58.  3.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/merge-runtime-lkl77rva/input_video.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:06.00, start: 0.000000, bitrate: 1279 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1280x720, 1122 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n      Metadata:\n        handler_name    : VideoHandler\n        vendor_id       : [0][0][0][0]\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 140 kb/s (default)\n      Metadata:\n        handler_name    : SoundHandler\n        vendor_id       : [0][0][0][0]\n[in#1 @ 0x5dbc1545c840] Error opening input: Invalid data found when processing input\nError opening input file /tmp/merge-runtime-lkl77rva/input_audio.wav.\nError opening input files: Invalid data found when processing input",
+    "created_at": "2026-04-20T09:52:22.060307+00:00",
+    "compile_started_at": "2026-04-20T09:52:22.057568+00:00",
+    "compile_finished_at": "2026-04-20T09:52:22.060063+00:00"
+  },
+  "jobs": [
+    {
+      "job_id": "3c713b1e-5abc-4fd6-b955-b12e14ad05bf",
+      "job_type": "compile",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "5f21a393-ef95-4092-9400-9e5caff5c022",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v23"
+      },
+      "result_payload": {
+        "task": "compile.runtime",
+        "job_id": "3c713b1e-5abc-4fd6-b955-b12e14ad05bf",
+        "status": "succeeded",
+        "provider": "runtime_payload",
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "runtime_version": "v23",
+        "provider_payload": {
+          "job_type": "compile",
+          "spu_count": 1,
+          "task_name": "compile.runtime",
+          "vbu_count": 0,
+          "runtime_id": "cc6c3047-a124-4979-93d7-477c32eea431",
+          "provider_name": "runtime_payload",
+          "sequence_count": 1,
+          "runtime_version": "v23",
+          "payload_project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "compile_options_keys": [
+            "input_manifest_path",
+            "proof_case_id"
+          ],
+          "runtime_compile_status": "running",
+          "runtime_dispatch_status": "fully_dispatched"
+        },
+        "worker_finished_at": "2026-04-20T09:52:22.172201"
+      },
+      "created_at": "2026-04-20T09:52:22.062321+00:00",
+      "started_at": "2026-04-20T09:52:22.117605+00:00",
+      "finished_at": "2026-04-20T09:52:22.172221+00:00"
+    },
+    {
+      "job_id": "3528f33d-6110-476c-a8d7-46a2f721507a",
+      "job_type": "render_image",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "a9071dd0-e034-422d-85e4-ef78fb45af8a",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+        "dispatch_source": "compile_endpoint",
+        "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+        "provider_inputs": {
+          "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+          "source": "compiler_minimal_render_image_prompt_v1",
+          "aspect_ratio": "9:16",
+          "sample_count": 1,
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "runtime_version": "v23"
+        },
+        "runtime_version": "v23"
+      },
+      "result_payload": {
+        "task": "render.image",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "6a695f76-cc07-4804-b6b7-7d7a3b139321",
+          "file_size": 508851,
+          "asset_role": "render_output",
+          "asset_type": "generated_image",
+          "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_image/3528f33d-6110-476c-a8d7-46a2f721507a.png",
+          "bucket_name": "generated-images",
+          "content_type": "image/png"
+        },
+        "job_id": "3528f33d-6110-476c-a8d7-46a2f721507a",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "materialization": {
+          "etag": "b9a33096c02282909d1b2f28148ec175",
+          "size": 508851,
+          "status": "materialized",
+          "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_image/3528f33d-6110-476c-a8d7-46a2f721507a.png",
+          "version_id": null,
+          "bucket_name": "generated-images",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v23",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "imagen-4.0-fast-generate-001",
+            "request": {
+              "aspect_ratio": "9:16",
+              "sample_count": 1,
+              "safety_setting": null,
+              "person_generation": null,
+              "negative_prompt_present": true,
+              "negative_prompt_forwarded": false
+            },
+            "response": {
+              "response_type": "GenerateImagesResponse",
+              "generated_images_count": 1
+            }
+          },
+          "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+          "job_type": "render_image",
+          "task_name": "render.image",
+          "provider_name": "google",
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "runtime_version": "v23",
+          "generation_options": {
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "safety_setting": null,
+            "person_generation": null
+          }
+        },
+        "worker_finished_at": "2026-04-20T09:52:25.631231"
+      },
+      "created_at": "2026-04-20T09:52:22.064975+00:00",
+      "started_at": "2026-04-20T09:52:22.113500+00:00",
+      "finished_at": "2026-04-20T09:52:25.631264+00:00"
+    },
+    {
+      "job_id": "e1bacd85-821a-454c-9594-5bbc39eb455a",
+      "job_type": "render_video",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "a7a1c940-6fa6-4459-b37c-1bcd09a32b20",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v23"
+      },
+      "result_payload": {
+        "task": "render.video",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "f0a925f9-383b-4a52-9867-ef2b449c4781",
+          "file_size": 959454,
+          "asset_role": "render_output",
+          "asset_type": "generated_video",
+          "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_video/e1bacd85-821a-454c-9594-5bbc39eb455a.mp4",
+          "bucket_name": "generated-videos",
+          "content_type": "video/mp4"
+        },
+        "job_id": "e1bacd85-821a-454c-9594-5bbc39eb455a",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "materialization": {
+          "etag": "8a397c8fd0d88d9901db3c1b7a5b3b13",
+          "size": 959454,
+          "status": "materialized",
+          "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_video/e1bacd85-821a-454c-9594-5bbc39eb455a.mp4",
+          "version_id": null,
+          "bucket_name": "generated-videos",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v23",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "veo-3.1-generate-preview",
+            "request": {
+              "fps": null,
+              "seed": null,
+              "max_polls": 45,
+              "resolution": null,
+              "aspect_ratio": null,
+              "sample_count": 1,
+              "enhance_prompt": null,
+              "output_gcs_uri": null,
+              "duration_seconds": 6,
+              "person_generation": null,
+              "compression_quality": null,
+              "poll_interval_seconds": 20.0,
+              "reference_images_count": 0,
+              "negative_prompt_present": true
+            },
+            "response": {
+              "video_uri": "https://generativelanguage.googleapis.com/v1beta/files/9x18wsevost4:download?alt=media",
+              "result_type": "GenerateVideosResponse",
+              "operation_name": "models/veo-3.1-generate-preview/operations/sdmfj4513ytw",
+              "operation_type": "GenerateVideosOperation",
+              "generated_videos_count": 1
+            }
+          },
+          "prompt": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\n\nProject ID: 656ac6b1-ecb8-4f45-9f45-556be5915168\n\nSequence type: hook\n\nPersuasive goal: Introduce the beauty product with a clean premium visual\n\nSPU display name: Beauty serum hero shot\n\nVisual constraints: style=studio_clean, platform=tiktok_9_16, background=#FFFFFF",
+          "job_type": "render_video",
+          "selection": {
+            "spu_id": "31431873-86b2-4adb-aeaf-78f6067335d8",
+            "spu_code": "SPU-001",
+            "sequence_id": "7226dad0-a05f-411b-9acf-ac15a3128f4c",
+            "display_name": "Beauty serum hero shot",
+            "prompt_source": "runtime_spu",
+            "sequence_code": null,
+            "sequence_index": 1
+          },
+          "task_name": "render.video",
+          "provider_name": "google",
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "runtime_version": "v23",
+          "generation_options": {
+            "fps": null,
+            "mask": null,
+            "seed": null,
+            "max_polls": null,
+            "last_frame": null,
+            "resolution": null,
+            "aspect_ratio": null,
+            "sample_count": 1,
+            "enhance_prompt": null,
+            "output_gcs_uri": null,
+            "duration_seconds": 6,
+            "reference_images": null,
+            "person_generation": null,
+            "compression_quality": null,
+            "poll_interval_seconds": null
+          }
+        },
+        "worker_finished_at": "2026-04-20T09:53:25.993849"
+      },
+      "created_at": "2026-04-20T09:52:22.066820+00:00",
+      "started_at": "2026-04-20T09:52:22.116401+00:00",
+      "finished_at": "2026-04-20T09:53:25.993876+00:00"
+    },
+    {
+      "job_id": "8d84a6dc-7731-4d68-9c6f-2712f254dd25",
+      "job_type": "render_voice",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "c7a27fff-5c24-44d5-aecc-518e2d265c05",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v23"
+      },
+      "result_payload": {
+        "task": "render.voice",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "b2c33727-2e6e-4ff5-b740-7e89ea26d6e1",
+          "file_size": 169486,
+          "asset_role": "voice_output",
+          "asset_type": "audio",
+          "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_voice/8d84a6dc-7731-4d68-9c6f-2712f254dd25.wav",
+          "bucket_name": "audio-assets",
+          "content_type": "audio/L16;codec=pcm;rate=24000"
+        },
+        "job_id": "8d84a6dc-7731-4d68-9c6f-2712f254dd25",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+        "materialization": {
+          "etag": "b7e6bbd010d36462c638a1b7c6d2f581",
+          "size": 169486,
+          "status": "materialized",
+          "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_voice/8d84a6dc-7731-4d68-9c6f-2712f254dd25.wav",
+          "version_id": null,
+          "bucket_name": "audio-assets",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v23",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "gemini-2.5-pro-preview-tts",
+            "request": {
+              "voice_name": null,
+              "text_length": 90,
+              "language_code": "en-US",
+              "speech_config_type": "SpeechConfig",
+              "speech_config_present": true
+            },
+            "response": {
+              "part_index": 0,
+              "response_type": "GenerateContentResponse",
+              "candidate_index": 0,
+              "candidates_count": 1
+            }
+          },
+          "job_type": "render_voice",
+          "selection": {
+            "vbu_id": null,
+            "vbu_code": null,
+            "sequence_id": "7226dad0-a05f-411b-9acf-ac15a3128f4c",
+            "text_source": "runtime_fallback",
+            "sequence_code": null,
+            "sequence_index": 1,
+            "persuasive_role": null
+          },
+          "task_name": "render.voice",
+          "voice_name": null,
+          "language_code": "en-US",
+          "provider_name": "google",
+          "runtime_version": "v23"
+        },
+        "worker_finished_at": "2026-04-20T09:52:26.811575"
+      },
+      "created_at": "2026-04-20T09:52:22.069513+00:00",
+      "started_at": "2026-04-20T09:52:22.117021+00:00",
+      "finished_at": "2026-04-20T09:52:26.811604+00:00"
+    },
+    {
+      "job_id": "4a18ed2c-d52f-4d63-b520-bb2d18fc74b1",
+      "job_type": "merge",
+      "status": "failed",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "d7dde2f1-b8cb-4946-a3e6-3a4d153b4eaf",
+      "error_code": "merge_ffmpeg_failed",
+      "error_message": "merge.runtime ffmpeg mux failed: ffmpeg version 7.1.3-0+deb13u1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with gcc 14 (Debian 14.2.0-19)\n  configuration: --prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\n  libavutil      59. 39.100 / 59. 39.100\n  libavcodec     61. 19.101 / 61. 19.101\n  libavformat    61.  7.100 / 61.  7.100\n  libavdevice    61.  3.100 / 61.  3.100\n  libavfilter    10.  4.100 / 10.  4.100\n  libswscale      8.  3.100 /  8.  3.100\n  libswresample   5.  3.100 /  5.  3.100\n  libpostproc    58.  3.100 / 58.  3.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/merge-runtime-lkl77rva/input_video.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:06.00, start: 0.000000, bitrate: 1279 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1280x720, 1122 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n      Metadata:\n        handler_name    : VideoHandler\n        vendor_id       : [0][0][0][0]\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 140 kb/s (default)\n      Metadata:\n        handler_name    : SoundHandler\n        vendor_id       : [0][0][0][0]\n[in#1 @ 0x5dbc1545c840] Error opening input: Invalid data found when processing input\nError opening input file /tmp/merge-runtime-lkl77rva/input_audio.wav.\nError opening input files: Invalid data found when processing input",
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v23"
+      },
+      "result_payload": {
+        "task": "merge.runtime",
+        "error_code": "merge_ffmpeg_failed",
+        "error_message": "merge.runtime ffmpeg mux failed: ffmpeg version 7.1.3-0+deb13u1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with gcc 14 (Debian 14.2.0-19)\n  configuration: --prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\n  libavutil      59. 39.100 / 59. 39.100\n  libavcodec     61. 19.101 / 61. 19.101\n  libavformat    61.  7.100 / 61.  7.100\n  libavdevice    61.  3.100 / 61.  3.100\n  libavfilter    10.  4.100 / 10.  4.100\n  libswscale      8.  3.100 /  8.  3.100\n  libswresample   5.  3.100 /  5.  3.100\n  libpostproc    58.  3.100 / 58.  3.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/merge-runtime-lkl77rva/input_video.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:06.00, start: 0.000000, bitrate: 1279 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1280x720, 1122 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n      Metadata:\n        handler_name    : VideoHandler\n        vendor_id       : [0][0][0][0]\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 140 kb/s (default)\n      Metadata:\n        handler_name    : SoundHandler\n        vendor_id       : [0][0][0][0]\n[in#1 @ 0x5dbc1545c840] Error opening input: Invalid data found when processing input\nError opening input file /tmp/merge-runtime-lkl77rva/input_audio.wav.\nError opening input files: Invalid data found when processing input",
+        "celery_task_id": "d7dde2f1-b8cb-4946-a3e6-3a4d153b4eaf",
+        "worker_started_at": "2026-04-20T09:52:22.122600",
+        "worker_finished_at": "2026-04-20T09:53:26.865813"
+      },
+      "created_at": "2026-04-20T09:52:22.071665+00:00",
+      "started_at": "2026-04-20T09:52:22.122600+00:00",
+      "finished_at": "2026-04-20T09:53:26.865813+00:00"
+    }
+  ],
+  "job_summary": {
+    "job_count": 5,
+    "queued_job_count": 0,
+    "dispatched_job_count": 0,
+    "running_job_count": 0,
+    "succeeded_job_count": 4,
+    "failed_job_count": 1
+  },
+  "derived_compile_status": "failed",
+  "derived_dispatch_status": "fully_dispatched",
+  "assets": [
+    {
+      "asset_id": "6a695f76-cc07-4804-b6b7-7d7a3b139321",
+      "asset_type": "generated_image",
+      "asset_role": "render_output",
+      "bucket_name": "generated-images",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_image/3528f33d-6110-476c-a8d7-46a2f721507a.png",
+      "source_filename": "3528f33d-6110-476c-a8d7-46a2f721507a.png",
+      "content_type": "image/png",
+      "file_size": 508851,
+      "asset_metadata": {
+        "job_id": "3528f33d-6110-476c-a8d7-46a2f721507a",
+        "job_type": "render_image",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v23",
+        "external_task_id": "a9071dd0-e034-422d-85e4-ef78fb45af8a",
+        "materialized_etag": "b9a33096c02282909d1b2f28148ec175",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-20T09:52:25.610228+00:00"
+    },
+    {
+      "asset_id": "b2c33727-2e6e-4ff5-b740-7e89ea26d6e1",
+      "asset_type": "audio",
+      "asset_role": "voice_output",
+      "bucket_name": "audio-assets",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_voice/8d84a6dc-7731-4d68-9c6f-2712f254dd25.wav",
+      "source_filename": "8d84a6dc-7731-4d68-9c6f-2712f254dd25.wav",
+      "content_type": "audio/L16;codec=pcm;rate=24000",
+      "file_size": 169486,
+      "asset_metadata": {
+        "job_id": "8d84a6dc-7731-4d68-9c6f-2712f254dd25",
+        "job_type": "render_voice",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v23",
+        "external_task_id": "c7a27fff-5c24-44d5-aecc-518e2d265c05",
+        "materialized_etag": "b7e6bbd010d36462c638a1b7c6d2f581",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-20T09:52:26.785636+00:00"
+    },
+    {
+      "asset_id": "f0a925f9-383b-4a52-9867-ef2b449c4781",
+      "asset_type": "generated_video",
+      "asset_role": "render_output",
+      "bucket_name": "generated-videos",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/render_video/e1bacd85-821a-454c-9594-5bbc39eb455a.mp4",
+      "source_filename": "e1bacd85-821a-454c-9594-5bbc39eb455a.mp4",
+      "content_type": "video/mp4",
+      "file_size": 959454,
+      "asset_metadata": {
+        "job_id": "e1bacd85-821a-454c-9594-5bbc39eb455a",
+        "job_type": "render_video",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v23",
+        "external_task_id": "a7a1c940-6fa6-4459-b37c-1bcd09a32b20",
+        "materialized_etag": "8a397c8fd0d88d9901db3c1b7a5b3b13",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-20T09:53:25.965890+00:00"
+    },
+    {
+      "asset_id": "78788f1b-7a3d-436e-a526-1e7074c616a7",
+      "asset_type": "export",
+      "asset_role": "merged_output",
+      "bucket_name": "exports",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v23/merge/v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4",
+      "source_filename": "v23-4a18ed2c-d52f-4d63-b520-bb2d18fc74b1.mp4",
+      "content_type": "video/mp4",
+      "file_size": null,
+      "asset_metadata": {
+        "job_id": "4a18ed2c-d52f-4d63-b520-bb2d18fc74b1",
+        "job_type": "merge",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v23",
+        "external_task_id": "d7dde2f1-b8cb-4946-a3e6-3a4d153b4eaf",
+        "materialization_error": "merge.runtime ffmpeg mux failed: ffmpeg version 7.1.3-0+deb13u1 Copyright (c) 2000-2025 the FFmpeg developers\n  built with gcc 14 (Debian 14.2.0-19)\n  configuration: --prefix=/usr --extra-version=0+deb13u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\n  libavutil      59. 39.100 / 59. 39.100\n  libavcodec     61. 19.101 / 61. 19.101\n  libavformat    61.  7.100 / 61.  7.100\n  libavdevice    61.  3.100 / 61.  3.100\n  libavfilter    10.  4.100 / 10.  4.100\n  libswscale      8.  3.100 /  8.  3.100\n  libswresample   5.  3.100 /  5.  3.100\n  libpostproc    58.  3.100 / 58.  3.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/merge-runtime-lkl77rva/input_video.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Google\n  Duration: 00:00:06.00, start: 0.000000, bitrate: 1279 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1280x720, 1122 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n      Metadata:\n        handler_name    : VideoHandler\n        vendor_id       : [0][0][0][0]\n  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 140 kb/s (default)\n      Metadata:\n        handler_name    : SoundHandler\n        vendor_id       : [0][0][0][0]\n[in#1 @ 0x5dbc1545c840] Error opening input: Invalid data found when processing input\nError opening input file /tmp/merge-runtime-lkl77rva/input_audio.wav.\nError opening input files: Invalid data found when processing input",
+        "materialization_status": "failed",
+        "materialization_error_code": "merge_ffmpeg_failed"
+      },
+      "status": "failed",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-20T09:53:26.861589+00:00"
+    }
+  ],
+  "asset_association": {
+    "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+    "candidate_asset_count": 83,
+    "selected_asset_count": 4,
+    "selected_asset_types": [
+      "generated_image",
+      "audio",
+      "generated_video",
+      "export"
+    ],
+    "selected_asset_ids": [
+      "6a695f76-cc07-4804-b6b7-7d7a3b139321",
+      "b2c33727-2e6e-4ff5-b740-7e89ea26d6e1",
+      "f0a925f9-383b-4a52-9867-ef2b449c4781",
+      "78788f1b-7a3d-436e-a526-1e7074c616a7"
+    ]
+  },
+  "poll_index": 12,
+  "collected_at": "2026-04-20T09:53:28Z"
+}

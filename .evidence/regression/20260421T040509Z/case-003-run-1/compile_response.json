@@ -1,0 +1,130 @@
+{
+  "ok": true,
+  "status_code": 200,
+  "response_json": {
+    "id": "feade1a6-9e0c-4cbc-91a5-20d51eb6db78",
+    "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+    "runtime_version": "v2",
+    "compile_status": "dispatched",
+    "runtime_payload": {
+      "sequences": [
+        {
+          "spus": [
+            {
+              "spu_id": "d8b24fec-4142-4ed0-b5d7-4a7bad3c7bb2",
+              "status": "draft",
+              "spu_code": "CASE-003-SPU-001",
+              "asset_role": "primary_visual",
+              "duration_ms": 6000,
+              "prompt_text": "Create a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.",
+              "display_name": "Everyday commuter handbag demo",
+              "generation_mode": "veo_segment",
+              "visual_constraints": {
+                "style": "premium_ecommerce_bag_demo",
+                "camera": "smooth handheld push-in, detail close-ups, elegant product handling",
+                "platform": "tiktok_9_16",
+                "background": "clean boutique / neutral lifestyle setting"
+              },
+              "negative_prompt_text": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands"
+            }
+          ],
+          "vbus": [
+            {
+              "status": "draft",
+              "vbu_id": "940bfdba-c970-4f25-9ce3-d595841bac5d",
+              "language": "en-US",
+              "vbu_code": "CASE-003-VBU-001",
+              "tts_params": {},
+              "duration_ms": 6000,
+              "script_text": "Meet the bag that keeps your day organized without sacrificing style. Room for your essentials, polished enough for work, and easy enough for every errand after.",
+              "voice_profile": null,
+              "persuasive_role": "hook"
+            }
+          ],
+          "bridges": [],
+          "sequence_id": "c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4",
+          "sequence_type": "hook",
+          "sequence_index": 1,
+          "persuasive_goal": "Position the handbag as a stylish daily carry bag for commute, errands, and travel."
+        }
+      ],
+      "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+      "bridge_count": 0,
+      "compile_reason": "regression_case-003_bag_reference",
+      "compile_options": {
+        "reference": {
+          "notes": [
+            "case-003 regression payload frozen from current workspace."
+          ],
+          "source_uri": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4",
+          "source_kind": "uploaded_reference_video",
+          "retained_axes": [
+            "vertical short-form pacing",
+            "bag close-ups",
+            "product handling",
+            "premium ecommerce appeal"
+          ],
+          "swappable_axes": [
+            "bag style",
+            "market framing",
+            "voiceover copy"
+          ],
+          "structural_goal": "Replicate the ecommerce bag video skeleton while swapping in new prompt/copy details."
+        },
+        "proof_case_id": "case-003",
+        "input_manifest_path": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-003/input_manifest.json"
+      },
+      "runtime_version": "v2",
+      "audio_track_count": 1,
+      "visual_track_count": 1
+    },
+    "dispatch_status": "fully_dispatched",
+    "dispatch_summary": {
+      "jobs": [
+        {
+          "job_id": "e276fb08-d586-4874-942c-c08f0cd20eae",
+          "status": "dispatched",
+          "job_type": "compile",
+          "external_task_id": "6ee4cb44-0215-492c-bab8-8dec3d45c7ec"
+        },
+        {
+          "job_id": "0c2c5c0b-6a22-4143-8268-7e860b8afae2",
+          "status": "dispatched",
+          "job_type": "render_image",
+          "external_task_id": "f3610ab6-1584-4fa8-87fe-b663f8d63139"
+        },
+        {
+          "job_id": "60c60e38-c6f9-45ce-87a1-80bad7c231e4",
+          "status": "dispatched",
+          "job_type": "render_video",
+          "external_task_id": "7a752640-7510-494c-bf60-75f5dca6a81e"
+        },
+        {
+          "job_id": "4c70d579-513e-46df-a1bf-4e95f6c353bc",
+          "status": "dispatched",
+          "job_type": "render_voice",
+          "external_task_id": "b47407fc-b678-4180-ae92-de8b4a33c89d"
+        },
+        {
+          "job_id": "31041924-9afa-457e-9a8a-7d2cdf8f6230",
+          "status": "dispatched",
+          "job_type": "merge",
+          "external_task_id": "5c982037-362f-49d5-b960-2ca0a3c0aa36"
+        }
+      ],
+      "job_count": 5,
+      "dispatch_status": "fully_dispatched",
+      "runtime_version": "v2",
+      "queued_job_count": 0,
+      "dispatched_job_count": 5,
+      "undispatched_job_count": 0
+    },
+    "last_error_code": null,
+    "last_error_message": null,
+    "compile_started_at": "2026-04-21T04:06:19.441388Z",
+    "compile_finished_at": "2026-04-21T04:06:19.443486Z",
+    "created_at": "2026-04-21T04:06:19.443711Z"
+  },
+  "raw_body": "{\"id\":\"feade1a6-9e0c-4cbc-91a5-20d51eb6db78\",\"project_id\":\"5ef87634-f207-4846-bcdd-917d433502ae\",\"runtime_version\":\"v2\",\"compile_status\":\"dispatched\",\"runtime_payload\":{\"sequences\":[{\"spus\":[{\"spu_id\":\"d8b24fec-4142-4ed0-b5d7-4a7bad3c7bb2\",\"status\":\"draft\",\"spu_code\":\"CASE-003-SPU-001\",\"asset_role\":\"primary_visual\",\"duration_ms\":6000,\"prompt_text\":\"Create a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\",\"display_name\":\"Everyday commuter handbag demo\",\"generation_mode\":\"veo_segment\",\"visual_constraints\":{\"style\":\"premium_ecommerce_bag_demo\",\"camera\":\"smooth handheld push-in, detail close-ups, elegant product handling\",\"platform\":\"tiktok_9_16\",\"background\":\"clean boutique / neutral lifestyle setting\"},\"negative_prompt_text\":\"blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands\"}],\"vbus\":[{\"status\":\"draft\",\"vbu_id\":\"940bfdba-c970-4f25-9ce3-d595841bac5d\",\"language\":\"en-US\",\"vbu_code\":\"CASE-003-VBU-001\",\"tts_params\":{},\"duration_ms\":6000,\"script_text\":\"Meet the bag that keeps your day organized without sacrificing style. Room for your essentials, polished enough for work, and easy enough for every errand after.\",\"voice_profile\":null,\"persuasive_role\":\"hook\"}],\"bridges\":[],\"sequence_id\":\"c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4\",\"sequence_type\":\"hook\",\"sequence_index\":1,\"persuasive_goal\":\"Position the handbag as a stylish daily carry bag for commute, errands, and travel.\"}],\"project_id\":\"5ef87634-f207-4846-bcdd-917d433502ae\",\"bridge_count\":0,\"compile_reason\":\"regression_case-003_bag_reference\",\"compile_options\":{\"reference\":{\"notes\":[\"case-003 regression payload frozen from current workspace.\"],\"source_uri\":\"/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4\",\"source_kind\":\"uploaded_reference_video\",\"retained_axes\":[\"vertical short-form pacing\",\"bag close-ups\",\"product handling\",\"premium ecommerce appeal\"],\"swappable_axes\":[\"bag style\",\"market framing\",\"voiceover copy\"],\"structural_goal\":\"Replicate the ecommerce bag video skeleton while swapping in new prompt/copy details.\"},\"proof_case_id\":\"case-003\",\"input_manifest_path\":\"/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-003/input_manifest.json\"},\"runtime_version\":\"v2\",\"audio_track_count\":1,\"visual_track_count\":1},\"dispatch_status\":\"fully_dispatched\",\"dispatch_summary\":{\"jobs\":[{\"job_id\":\"e276fb08-d586-4874-942c-c08f0cd20eae\",\"status\":\"dispatched\",\"job_type\":\"compile\",\"external_task_id\":\"6ee4cb44-0215-492c-bab8-8dec3d45c7ec\"},{\"job_id\":\"0c2c5c0b-6a22-4143-8268-7e860b8afae2\",\"status\":\"dispatched\",\"job_type\":\"render_image\",\"external_task_id\":\"f3610ab6-1584-4fa8-87fe-b663f8d63139\"},{\"job_id\":\"60c60e38-c6f9-45ce-87a1-80bad7c231e4\",\"status\":\"dispatched\",\"job_type\":\"render_video\",\"external_task_id\":\"7a752640-7510-494c-bf60-75f5dca6a81e\"},{\"job_id\":\"4c70d579-513e-46df-a1bf-4e95f6c353bc\",\"status\":\"dispatched\",\"job_type\":\"render_voice\",\"external_task_id\":\"b47407fc-b678-4180-ae92-de8b4a33c89d\"},{\"job_id\":\"31041924-9afa-457e-9a8a-7d2cdf8f6230\",\"status\":\"dispatched\",\"job_type\":\"merge\",\"external_task_id\":\"5c982037-362f-49d5-b960-2ca0a3c0aa36\"}],\"job_count\":5,\"dispatch_status\":\"fully_dispatched\",\"runtime_version\":\"v2\",\"queued_job_count\":0,\"dispatched_job_count\":5,\"undispatched_job_count\":0},\"last_error_code\":null,\"last_error_message\":null,\"compile_started_at\":\"2026-04-21T04:06:19.441388Z\",\"compile_finished_at\":\"2026-04-21T04:06:19.443486Z\",\"created_at\":\"2026-04-21T04:06:19.443711Z\"}",
+  "collected_at": "2026-04-21T04:06:19Z"
+}

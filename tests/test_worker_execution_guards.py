@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 from types import SimpleNamespace
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from app.workers.executors import (
     CompileRuntimeExecutor,
@@ -124,15 +124,34 @@ class WorkerExecutionValidationTests(unittest.TestCase):
 
 
 class FailHardMergeExecutorTests(unittest.TestCase):
-    def test_execute_raises_fail_hard_error_after_runtime_payload_check(self) -> None:
+    def test_execute_muxes_materialized_video_and_audio_assets(self) -> None:
         executor = FailHardMergeExecutor()
         executor._load_runtime_payload = MagicMock(
             return_value=(SimpleNamespace(runtime_version="runtime-v1"), {"project_id": "project-1"})
         )
+        video_asset = SimpleNamespace(
+            id="asset-video-1",
+            bucket_name="generated-videos",
+            object_key="projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+            asset_type="generated_video",
+            status="materialized",
+        )
+        audio_asset = SimpleNamespace(
+            id="asset-audio-1",
+            bucket_name="audio-assets",
+            object_key="projects/project-1/runtime/runtime-v1/render_voice/job-voice-1.wav",
+            asset_type="audio",
+            status="materialized",
+            content_type="audio/wav",
+        )
+        executor._wait_for_runtime_asset = MagicMock(side_effect=[video_asset, audio_asset])
+        executor._mux_video_and_audio = MagicMock(return_value=b"merged-video")
         job = SimpleNamespace(id="job-merge-1", payload={}, job_type="merge")
+        artifact_service = MagicMock()
+        artifact_service.get_bytes.side_effect = [b"video-bytes", b"audio-bytes"]
 
-        with self.assertRaises(ProviderExecutorError) as raised:
-            executor.execute(
+        with patch("app.workers.executors.RuntimeArtifactService", return_value=artifact_service):
+            result = executor.execute(
                 job=job,
                 project_id="project-1",
                 runtime_version="runtime-v1",
@@ -149,10 +168,116 @@ class FailHardMergeExecutorTests(unittest.TestCase):
             project_id="project-1",
             runtime_version="runtime-v1",
         )
-        self.assertEqual(raised.exception.code, "merge_execution_not_ready")
+        executor._wait_for_runtime_asset.assert_any_call(
+            project_id="project-1",
+            runtime_version="runtime-v1",
+            asset_type="generated_video",
+        )
+        executor._wait_for_runtime_asset.assert_any_call(
+            project_id="project-1",
+            runtime_version="runtime-v1",
+            asset_type="audio",
+        )
+        artifact_service.get_bytes.assert_any_call(
+            "generated-videos",
+            "projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+        )
+        artifact_service.get_bytes.assert_any_call(
+            "audio-assets",
+            "projects/project-1/runtime/runtime-v1/render_voice/job-voice-1.wav",
+        )
+        executor._mux_video_and_audio.assert_called_once_with(
+            video_bytes=b"video-bytes",
+            audio_bytes=b"audio-bytes",
+            audio_content_type="audio/wav",
+        )
+        self.assertEqual(result["status"], "succeeded")
+        self.assertEqual(result["provider"], "merge_ffmpeg")
+        self.assertEqual(result["binary_payload"], b"merged-video")
+        self.assertEqual(result["content_type"], "video/mp4")
         self.assertEqual(
-            raised.exception.message,
-            "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+            result["provider_payload"]["video_asset"],
+            {
+                "asset_id": "asset-video-1",
+                "bucket_name": "generated-videos",
+                "object_key": "projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+                "asset_type": "generated_video",
+                "status": "materialized",
+            },
+        )
+        self.assertEqual(
+            result["provider_payload"]["audio_asset"],
+            {
+                "asset_id": "asset-audio-1",
+                "bucket_name": "audio-assets",
+                "object_key": "projects/project-1/runtime/runtime-v1/render_voice/job-voice-1.wav",
+                "asset_type": "audio",
+                "status": "materialized",
+            },
+        )
+
+    def test_execute_raises_when_audio_asset_is_missing(self) -> None:
+        executor = FailHardMergeExecutor()
+        executor._load_runtime_payload = MagicMock(
+            return_value=(SimpleNamespace(runtime_version="runtime-v1"), {"project_id": "project-1"})
+        )
+        video_asset = SimpleNamespace(
+            id="asset-video-1",
+            bucket_name="generated-videos",
+            object_key="projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+            asset_type="generated_video",
+            status="materialized",
+        )
+        executor._wait_for_runtime_asset = MagicMock(side_effect=[video_asset, None])
+        job = SimpleNamespace(id="job-merge-1", payload={}, job_type="merge")
+
+        with self.assertRaises(ProviderExecutorError) as raised:
+            executor.execute(
+                job=job,
+                project_id="project-1",
+                runtime_version="runtime-v1",
+                task_name="merge.runtime",
+                asset_plan={
+                    "asset_type": "export",
+                    "asset_role": "merged_output",
+                    "filename": "runtime-v1-job-merge-1.mp4",
+                    "content_type": "video/mp4",
+                },
+            )
+
+        self.assertEqual(raised.exception.code, "merge_audio_asset_missing")
+
+    def test_wait_for_runtime_asset_retries_before_returning_asset(self) -> None:
+        executor = FailHardMergeExecutor()
+        asset = SimpleNamespace(
+            id="asset-video-1",
+            bucket_name="generated-videos",
+            object_key="projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+            asset_type="generated_video",
+            status="materialized",
+        )
+        executor._find_runtime_asset = MagicMock(side_effect=[None, None, asset])
+
+        with patch("app.workers.executors.time.sleep") as sleep_mock:
+            resolved = executor._wait_for_runtime_asset(
+                project_id="project-1",
+                runtime_version="runtime-v1",
+                asset_type="generated_video",
+            )
+
+        self.assertIs(resolved, asset)
+        self.assertEqual(executor._find_runtime_asset.call_count, 3)
+        self.assertEqual(sleep_mock.call_count, 2)
+
+    def test_build_audio_input_args_uses_pcm_flags_for_l16_audio(self) -> None:
+        args = FailHardMergeExecutor._build_audio_input_args(
+            content_type="audio/L16;codec=pcm;rate=24000",
+            audio_path="/tmp/input_audio.bin",
+        )
+
+        self.assertEqual(
+            args,
+            ["-f", "s16le", "-ar", "24000", "-ac", "1", "-i", "/tmp/input_audio.bin"],
         )
 
 
@@ -283,6 +408,60 @@ class GoogleVoiceExecutorRuntimeContextTests(unittest.TestCase):
             },
         )
 
+    def test_resolve_voice_inputs_falls_back_when_runtime_has_no_vbu(self) -> None:
+        executor = GoogleVoiceExecutor()
+        executor._resolve_runtime_context = MagicMock(
+            return_value=(
+                SimpleNamespace(runtime_version="runtime-v1"),
+                {"project_id": "project-1"},
+                {"reference": {"source_kind": "uploaded_reference_video"}},
+                [
+                    {
+                        "sequence_id": "seq-voice-fallback",
+                        "sequence_code": "hook",
+                        "sequence_index": 0,
+                        "persuasive_goal": "Introduce the beauty product with a clean premium visual",
+                        "vbus": [],
+                        "spus": [
+                            {
+                                "spu_id": "spu-voice-fallback",
+                                "spu_code": "shot-voice-fallback",
+                                "display_name": "Beauty serum hero shot",
+                                "prompt_text": "Close-up product reveal with hand interaction.",
+                            }
+                        ],
+                    }
+                ],
+            )
+        )
+        job = SimpleNamespace(id="job-voice-fallback", payload={}, job_type="render_voice")
+
+        text, voice_name, language_code, speech_config, selection_payload = executor._resolve_voice_inputs(
+            job=job,
+            project_id="project-1",
+            runtime_version="runtime-v1",
+        )
+
+        self.assertEqual(
+            text,
+            "Introduce the beauty product with a clean premium visual. Focus on Beauty serum hero shot. Keep the delivery aligned with the uploaded_reference_video reference style.",
+        )
+        self.assertIsNone(voice_name)
+        self.assertEqual(language_code, "en-US")
+        self.assertIsNone(speech_config)
+        self.assertEqual(
+            selection_payload,
+            {
+                "sequence_id": "seq-voice-fallback",
+                "sequence_code": "hook",
+                "sequence_index": 0,
+                "vbu_id": None,
+                "vbu_code": None,
+                "persuasive_role": None,
+                "text_source": "runtime_fallback",
+            },
+        )
+
 
 class GoogleVideoExecutorRuntimeContextTests(unittest.TestCase):
     def test_resolve_video_inputs_builds_prompt_and_selection_from_runtime_spu(self) -> None:
@@ -385,6 +564,98 @@ class GoogleVideoExecutorRuntimeContextTests(unittest.TestCase):
                 "prompt_source": "runtime_spu",
             },
         )
+
+    def test_resolve_video_inputs_clamps_provider_duration_seconds_to_veo_supported_range(self) -> None:
+        cases = [
+            (2, 4),
+            (5, 6),
+            (7, 8),
+            (12, 8),
+        ]
+        for provided_duration, expected_duration in cases:
+            with self.subTest(provided_duration=provided_duration):
+                executor = GoogleVideoExecutor()
+                executor._resolve_runtime_context = MagicMock(
+                    return_value=(
+                        SimpleNamespace(runtime_version="runtime-v1"),
+                        {"project_id": "project-1"},
+                        {},
+                        [
+                            {
+                                "sequence_id": "seq-video-1",
+                                "sequence_code": "hook",
+                                "sequence_index": 0,
+                                "spus": [
+                                    {
+                                        "spu_id": "spu-1",
+                                        "spu_code": "shot-1",
+                                        "display_name": "Hero shot",
+                                        "prompt_text": "Runtime video prompt.",
+                                        "duration_ms": 6000,
+                                        "visual_constraints": {},
+                                    }
+                                ],
+                            }
+                        ],
+                    )
+                )
+                job = SimpleNamespace(
+                    id="job-video-duration-override",
+                    payload={"provider_inputs": {"duration_seconds": provided_duration}},
+                    job_type="render_video",
+                )
+
+                _, _, generation_options, _ = executor._resolve_video_inputs(
+                    job=job,
+                    project_id="project-1",
+                    runtime_version="runtime-v1",
+                )
+
+                self.assertEqual(generation_options["duration_seconds"], expected_duration)
+
+    def test_resolve_video_inputs_clamps_runtime_duration_ms_to_veo_supported_range(self) -> None:
+        cases = [
+            (1500, 4),
+            (5000, 6),
+            (7000, 8),
+            (12000, 8),
+        ]
+        for duration_ms, expected_duration in cases:
+            with self.subTest(duration_ms=duration_ms):
+                executor = GoogleVideoExecutor()
+                executor._resolve_runtime_context = MagicMock(
+                    return_value=(
+                        SimpleNamespace(runtime_version="runtime-v1"),
+                        {"project_id": "project-1"},
+                        {},
+                        [
+                            {
+                                "sequence_id": "seq-video-1",
+                                "sequence_code": "hook",
+                                "sequence_index": 0,
+                                "spus": [
+                                    {
+                                        "spu_id": "spu-1",
+                                        "spu_code": "shot-1",
+                                        "display_name": "Hero shot",
+                                        "prompt_text": "Runtime video prompt.",
+                                        "duration_ms": duration_ms,
+                                        "visual_constraints": {},
+                                    }
+                                ],
+                            }
+                        ],
+                    )
+                )
+                job = SimpleNamespace(id="job-video-duration-runtime", payload={}, job_type="render_video")
+
+                _, _, generation_options, _ = executor._resolve_video_inputs(
+                    job=job,
+                    project_id="project-1",
+                    runtime_version="runtime-v1",
+                )
+
+                self.assertEqual(generation_options["duration_seconds"], expected_duration)
 
 
 class CompileRuntimeExecutorTests(unittest.TestCase):

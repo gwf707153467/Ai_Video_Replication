@@ -1,0 +1,82 @@
+{
+  "case_id": "case-002",
+  "case_description": "Bag reference video replication case: premium handbag TikTok ecommerce hook based on the uploaded bag video skeleton.",
+  "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+  "repo_path": "/mnt/user-data/workspace/Ai_Videos_Replication",
+  "inputs": [
+    {
+      "logical_name": "uploaded_bag_reference_video",
+      "path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\case-002-reference-bag-video.mp4",
+      "sandbox_hint_path": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4",
+      "media_type": "video/mp4",
+      "file_size": 17552524,
+      "sha256": "5adb41e9067a93487f74a7b486c48746a7a383a3e2df3b5055cd51bcbaaeb52e",
+      "source_note": "User provided bag reference video frozen for regression case creation."
+    }
+  ],
+  "created_entities": {
+    "project": {
+      "id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+      "name": "case-002-bag-reference-replication",
+      "status": "draft",
+      "source_market": "US",
+      "source_language": "en-US",
+      "notes": "Bag reference video replication case: premium handbag TikTok ecommerce hook based on the uploaded bag video skeleton.",
+      "created_at": "2026-04-21T04:01:30.332768Z",
+      "updated_at": "2026-04-21T04:01:30.332792Z"
+    },
+    "sequence": {
+      "id": "7668fd33-1403-4bfc-a530-b508b8a0b283",
+      "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+      "sequence_index": 1,
+      "sequence_type": "hook",
+      "persuasive_goal": "Make the handbag feel premium, versatile, and worth clicking within the first seconds.",
+      "status": "draft",
+      "created_at": "2026-04-21T04:01:30.398019Z"
+    },
+    "spu": {
+      "id": "a0c765bf-6d15-4e9f-bade-651c99845a7d",
+      "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+      "sequence_id": "7668fd33-1403-4bfc-a530-b508b8a0b283",
+      "spu_code": "CASE-002-SPU-001",
+      "display_name": "Premium structured handbag hero demo",
+      "asset_role": "primary_visual",
+      "duration_ms": 6000,
+      "generation_mode": "veo_segment",
+      "prompt_text": "Create a 9:16 TikTok ecommerce product video segment inspired by the uploaded bag reference video. Show a premium structured handbag as the hero product, with smooth handheld push-in, zipper and stitching close-ups, clean product handling, a brief styling moment, and boutique lighting. Keep the bag centered and desirable, no text overlay, no visible brand logo, realistic materials, polished social commerce look.",
+      "negative_prompt_text": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+      "visual_constraints": {
+        "style": "premium_ecommerce_bag_demo",
+        "camera": "smooth handheld push-in, detail close-ups, elegant product handling",
+        "platform": "tiktok_9_16",
+        "background": "clean boutique / neutral lifestyle setting"
+      },
+      "status": "draft",
+      "created_at": "2026-04-21T04:01:30.412125Z"
+    },
+    "vbu": {
+      "id": "c00b50a3-dd29-4c27-aa9d-6069e9c1afce",
+      "project_id": "28d53bc4-2262-4d5c-93df-0809de34fe97",
+      "sequence_id": "7668fd33-1403-4bfc-a530-b508b8a0b283",
+      "vbu_code": "CASE-002-VBU-001",
+      "persuasive_role": "hook",
+      "script_text": "This is the everyday bag that makes your outfit look instantly polished. Clean structure, practical space, and premium details made for workdays, weekends, and everything in between.",
+      "voice_profile": null,
+      "language": "en-US",
+      "duration_ms": 6000,
+      "tts_params": {},
+      "status": "draft",
+      "created_at": "2026-04-21T04:01:30.426191Z"
+    }
+  },
+  "expected_output": {
+    "format": "mp4",
+    "requires": [
+      "compile",
+      "render_image",
+      "render_video",
+      "render_voice",
+      "merge"
+    ]
+  }
+}

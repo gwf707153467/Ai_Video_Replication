@@ -1,0 +1,82 @@
+{
+  "case_id": "case-003",
+  "case_description": "Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.",
+  "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+  "repo_path": "/mnt/user-data/workspace/Ai_Videos_Replication",
+  "inputs": [
+    {
+      "logical_name": "uploaded_bag_reference_video",
+      "path": "D:\\Documents\\Codex\\deerflow2.0\\backend\\.deer-flow\\threads\\4cac9b0a-8397-4256-bcd3-46a38345d163\\user-data\\workspace\\Ai_Videos_Replication\\.evidence\\case-002-reference-bag-video.mp4",
+      "sandbox_hint_path": "/mnt/user-data/workspace/Ai_Videos_Replication/.evidence/case-002-reference-bag-video.mp4",
+      "media_type": "video/mp4",
+      "file_size": 17552524,
+      "sha256": "5adb41e9067a93487f74a7b486c48746a7a383a3e2df3b5055cd51bcbaaeb52e",
+      "source_note": "User provided bag reference video frozen for regression case creation."
+    }
+  ],
+  "created_entities": {
+    "project": {
+      "id": "5ef87634-f207-4846-bcdd-917d433502ae",
+      "name": "case-003-bag-commuter-variant",
+      "status": "draft",
+      "source_market": "US",
+      "source_language": "en-US",
+      "notes": "Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.",
+      "created_at": "2026-04-21T04:01:30.438494Z",
+      "updated_at": "2026-04-21T04:01:30.438496Z"
+    },
+    "sequence": {
+      "id": "c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4",
+      "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+      "sequence_index": 1,
+      "sequence_type": "hook",
+      "persuasive_goal": "Position the handbag as a stylish daily carry bag for commute, errands, and travel.",
+      "status": "draft",
+      "created_at": "2026-04-21T04:01:30.445066Z"
+    },
+    "spu": {
+      "id": "d8b24fec-4142-4ed0-b5d7-4a7bad3c7bb2",
+      "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+      "sequence_id": "c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4",
+      "spu_code": "CASE-003-SPU-001",
+      "display_name": "Everyday commuter handbag demo",
+      "asset_role": "primary_visual",
+      "duration_ms": 6000,
+      "generation_mode": "veo_segment",
+      "prompt_text": "Create a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.",
+      "negative_prompt_text": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+      "visual_constraints": {
+        "style": "premium_ecommerce_bag_demo",
+        "camera": "smooth handheld push-in, detail close-ups, elegant product handling",
+        "platform": "tiktok_9_16",
+        "background": "clean boutique / neutral lifestyle setting"
+      },
+      "status": "draft",
+      "created_at": "2026-04-21T04:01:30.451469Z"
+    },
+    "vbu": {
+      "id": "940bfdba-c970-4f25-9ce3-d595841bac5d",
+      "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+      "sequence_id": "c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4",
+      "vbu_code": "CASE-003-VBU-001",
+      "persuasive_role": "hook",
+      "script_text": "Meet the bag that keeps your day organized without sacrificing style. Room for your essentials, polished enough for work, and easy enough for every errand after.",
+      "voice_profile": null,
+      "language": "en-US",
+      "duration_ms": 6000,
+      "tts_params": {},
+      "status": "draft",
+      "created_at": "2026-04-21T04:01:30.458033Z"
+    }
+  },
+  "expected_output": {
+    "format": "mp4",
+    "requires": [
+      "compile",
+      "render_image",
+      "render_video",
+      "render_voice",
+      "merge"
+    ]
+  }
+}

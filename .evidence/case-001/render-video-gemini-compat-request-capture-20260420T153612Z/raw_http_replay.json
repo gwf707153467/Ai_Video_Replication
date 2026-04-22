@@ -1,0 +1,19 @@
+{
+  "request_url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning",
+  "request_body": {
+    "instances": [
+      {
+        "prompt": "Create a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\n\nProject ID: 656ac6b1-ecb8-4f45-9f45-556be5915168\n\nSequence type: hook\n\nPersuasive goal: Introduce the beauty product with a clean premium visual\n\nSPU display name: Beauty serum hero shot\n\nVisual constraints: style=studio_clean, platform=tiktok_9_16, background=#FFFFFF"
+      }
+    ],
+    "parameters": {
+      "sampleCount": 1,
+      "durationSeconds": 5,
+      "negativePrompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay"
+    }
+  },
+  "ok": false,
+  "status_code": 400,
+  "response_body": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"The number value for `durationSeconds` is out of bound. Please provide a value between 4 and 8, inclusive.\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n",
+  "error_reason": "http_error"
+}

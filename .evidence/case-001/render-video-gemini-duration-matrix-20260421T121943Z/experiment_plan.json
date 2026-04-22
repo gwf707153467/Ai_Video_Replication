@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-04-21T12:19:45Z",
+  "case_id": "case-001",
+  "objective": "Minimal direct Google/Veo duration matrix experiment against the same model/account/API surface, varying only durationSeconds across 4/5/6/8.",
+  "history_evidence_dir": ".evidence/case-001/render-video-gemini-compat-request-capture-20260420T153612Z",
+  "fixed_inputs": {
+    "model": "veo-3.1-generate-preview",
+    "request_url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning",
+    "sample_count": 1,
+    "skip_poll": true,
+    "prompt_length": 484,
+    "negative_prompt_present": true
+  },
+  "durations": [
+    4,
+    5,
+    6,
+    8
+  ],
+  "expected_reference_request_url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:predictLongRunning"
+}

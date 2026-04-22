@@ -1,0 +1,18 @@
+[2026-04-17T06:46:50Z] starting case-001 real-run evidence collection
+[2026-04-17T06:46:50Z] payload path: .evidence/case-001/compile_request_payload.json
+[2026-04-17T06:46:52Z] latest runtime before compile: {"exists": true, "runtime_id": "444ac8f8-34e8-4a79-a47c-99be3fd2a9cc", "runtime_version": "v14", "compile_status": "failed", "dispatch_status": "fully_dispatched", "created_at": "2026-04-17T05:49:09.790701+00:00", "collected_at": "2026-04-17T06:46:52Z"}
+[2026-04-17T06:46:52Z] compile response: {"ok": true, "status_code": 200, "runtime_id": "aac33f8e-8e6a-4ffa-9c0e-378b2ebe01c3", "runtime_version": "v15"}
+[2026-04-17T06:46:53Z] runtime poll: {"poll_index": 1, "derived_compile_status": "failed", "derived_dispatch_status": "fully_dispatched", "job_count": 5, "succeeded_job_count": 1, "failed_job_count": 4, "selected_asset_count": 4}
+[2026-04-17T06:46:54Z] object probe collected for 4 objects
+[2026-04-17T06:46:54Z] export pull failed: RuntimeError: container binary probe failed: returncode=1; stderr=Traceback (most recent call last):
+  File "<stdin>", line 17, in <module>
+  File "/usr/local/lib/python3.11/site-packages/minio/api.py", line 1257, in get_object
+    return self._execute(
+           ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/minio/api.py", line 444, in _execute
+    return self._url_open(
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/minio/api.py", line 427, in _url_open
+    raise response_error
+minio.error.S3Error: S3 operation failed; code: NoSuchKey, message: The specified key does not exist., resource: /exports/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v15/merge/v15-f93df49f-d00b-48a6-8f27-89626cb8ccee.mp4, request_id: 18A7120A9AA61FE5, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: exports, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v15/merge/v15-f93df49f-d00b-48a6-8f27-89626cb8ccee.mp4
+[2026-04-17T06:46:54Z] summary: {"case_id": "case-001", "started_at": "2026-04-17T06:46:50Z", "finished_at": "2026-04-17T06:46:54Z", "status": "completed_evidence_collection", "payload_path": ".evidence/case-001/compile_request_payload.json", "pre_compile_latest_runtime_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/pre_compile_latest_runtime.json", "compile_response_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/compile_response.json", "runtime_poll_history_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/runtime_poll_history.json", "runtime_snapshot_final_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/runtime_snapshot_final.json", "object_store_probe_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/object_store_probe.json", "export_pull_report_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/export_pull_report.json", "runtime_id": "aac33f8e-8e6a-4ffa-9c0e-378b2ebe01c3", "runtime_version": "v15", "terminal_compile_status": "failed", "terminal_dispatch_status": "fully_dispatched", "final_output_path": ".evidence/case-001/render-video-gemini-compat-rerun-20260417T064650Z/final_output.mp4", "final_output_exists": false, "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN."}

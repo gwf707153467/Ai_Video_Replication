@@ -1,0 +1,300 @@
+[
+  {
+    "exists": true,
+    "runtime_record": {
+      "runtime_id": "a1baa5ad-9b0e-45f2-bdf2-a77753766b86",
+      "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+      "runtime_version": "v17",
+      "compile_status": "failed",
+      "dispatch_status": "fully_dispatched",
+      "dispatch_summary": {
+        "jobs": [
+          {
+            "job_id": "c0e1d6e8-00bf-4b9d-a53b-517c4de7a20f",
+            "status": "succeeded",
+            "job_type": "compile",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "f9dec616-24d2-4ce4-b328-98ef27e34a5b"
+          },
+          {
+            "job_id": "f6f32590-819a-42c8-b24b-1da164724b4a",
+            "status": "running",
+            "job_type": "render_image",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "8d6a19a2-10cf-4dd2-a19b-46a2c485496d"
+          },
+          {
+            "job_id": "cd591b28-fd78-4723-95bf-33d1961bc543",
+            "status": "running",
+            "job_type": "render_video",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "40e8bda3-239d-4f86-8a03-a07f24508006"
+          },
+          {
+            "job_id": "c5602a09-da80-473c-9044-95f8f6821d44",
+            "status": "failed",
+            "job_type": "render_voice",
+            "error_code": "runtime_vbu_missing",
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "91e03926-810f-4698-8096-261bb309b103"
+          },
+          {
+            "job_id": "fac979a5-db91-487b-97b8-684c454bc248",
+            "status": "running",
+            "job_type": "merge",
+            "error_code": null,
+            "max_attempts": 3,
+            "attempt_count": 1,
+            "external_task_id": "e0eb4297-2c15-460a-89ca-09b23c92ac9e"
+          }
+        ],
+        "job_count": 5,
+        "runtime_version": "v17",
+        "failed_job_count": 1,
+        "queued_job_count": 0,
+        "running_job_count": 3,
+        "succeeded_job_count": 1,
+        "dispatched_job_count": 0
+      },
+      "last_error_code": "runtime_vbu_missing",
+      "last_error_message": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+      "created_at": "2026-04-19T05:09:10.292712+00:00",
+      "compile_started_at": "2026-04-19T05:09:10.267017+00:00",
+      "compile_finished_at": "2026-04-19T05:09:10.280832+00:00"
+    },
+    "jobs": [
+      {
+        "job_id": "c0e1d6e8-00bf-4b9d-a53b-517c4de7a20f",
+        "job_type": "compile",
+        "status": "succeeded",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "f9dec616-24d2-4ce4-b328-98ef27e34a5b",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v17"
+        },
+        "result_payload": {
+          "task": "compile.runtime",
+          "job_id": "c0e1d6e8-00bf-4b9d-a53b-517c4de7a20f",
+          "status": "succeeded",
+          "provider": "runtime_payload",
+          "project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+          "runtime_version": "v17",
+          "provider_payload": {
+            "job_type": "compile",
+            "spu_count": 1,
+            "task_name": "compile.runtime",
+            "vbu_count": 0,
+            "runtime_id": "a1baa5ad-9b0e-45f2-bdf2-a77753766b86",
+            "provider_name": "runtime_payload",
+            "sequence_count": 1,
+            "runtime_version": "v17",
+            "payload_project_id": "656ac6b1-ecb8-4f45-9f45-556be5915168",
+            "compile_options_keys": [
+              "input_manifest_path",
+              "proof_case_id"
+            ],
+            "runtime_compile_status": "running",
+            "runtime_dispatch_status": "fully_dispatched"
+          },
+          "worker_finished_at": "2026-04-19T05:09:11.301898"
+        },
+        "created_at": "2026-04-19T05:09:10.305153+00:00",
+        "started_at": "2026-04-19T05:09:11.212916+00:00",
+        "finished_at": "2026-04-19T05:09:11.302013+00:00"
+      },
+      {
+        "job_id": "f6f32590-819a-42c8-b24b-1da164724b4a",
+        "job_type": "render_image",
+        "status": "running",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "8d6a19a2-10cf-4dd2-a19b-46a2c485496d",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+          "dispatch_source": "compile_endpoint",
+          "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+          "provider_inputs": {
+            "prompt": "Project: eighth-batch-render-image-smoke\nTarget market: US\nTarget language: en-US\nProject notes: Minimal real smoke for render_image chain\nSequence plan: Sequence 1 - hook - Introduce the beauty product with a clean premium visual\nPrimary visual subject: Beauty serum hero shot\nCreate a premium TikTok beauty product hero image on pure white background, serum bottle centered vertically, clean studio lighting, realistic packaging detail, high-end cosmetic advertising look, 9:16 composition.\nVisual constraints: {'style': 'studio_clean', 'platform': 'tiktok_9_16', 'background': '#FFFFFF'}",
+            "source": "compiler_minimal_render_image_prompt_v1",
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "negative_prompt": "blurry, deformed packaging, extra objects, cropped product, watermark, text overlay",
+            "runtime_version": "v17"
+          },
+          "runtime_version": "v17"
+        },
+        "result_payload": {
+          "task": "render.image",
+          "celery_task_id": "8d6a19a2-10cf-4dd2-a19b-46a2c485496d",
+          "worker_started_at": "2026-04-19T05:09:11.240899"
+        },
+        "created_at": "2026-04-19T05:09:10.609698+00:00",
+        "started_at": "2026-04-19T05:09:11.240899+00:00",
+        "finished_at": null
+      },
+      {
+        "job_id": "cd591b28-fd78-4723-95bf-33d1961bc543",
+        "job_type": "render_video",
+        "status": "running",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "40e8bda3-239d-4f86-8a03-a07f24508006",
+        "error_code": null,
+        "error_message": null,
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v17"
+        },
+        "result_payload": {
+          "task": "render.video",
+          "celery_task_id": "40e8bda3-239d-4f86-8a03-a07f24508006",
+          "worker_started_at": "2026-04-19T05:09:11.212512"
+        },
+        "created_at": "2026-04-19T05:09:10.612273+00:00",
+        "started_at": "2026-04-19T05:09:11.212512+00:00",
+        "finished_at": null
+      },
+      {
+        "job_id": "c5602a09-da80-473c-9044-95f8f6821d44",
+        "job_type": "render_voice",
+        "status": "failed",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "91e03926-810f-4698-8096-261bb309b103",
+        "error_code": "runtime_vbu_missing",
+        "error_message": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v17"
+        },
+        "result_payload": {
+          "task": "render.voice",
+          "error_code": "runtime_vbu_missing",
+          "error_message": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+          "celery_task_id": "91e03926-810f-4698-8096-261bb309b103",
+          "worker_started_at": "2026-04-19T05:09:11.212873",
+          "worker_finished_at": "2026-04-19T05:09:11.325703"
+        },
+        "created_at": "2026-04-19T05:09:10.614588+00:00",
+        "started_at": "2026-04-19T05:09:11.212873+00:00",
+        "finished_at": "2026-04-19T05:09:11.325703+00:00"
+      },
+      {
+        "job_id": "fac979a5-db91-487b-97b8-684c454bc248",
+        "job_type": "merge",
+        "status": "failed",
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "external_task_id": "e0eb4297-2c15-460a-89ca-09b23c92ac9e",
+        "error_code": "merge_execution_not_ready",
+        "error_message": "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+        "provider_name": null,
+        "payload": {
+          "dispatch_source": "compile_endpoint",
+          "runtime_version": "v17"
+        },
+        "result_payload": {
+          "task": "merge.runtime",
+          "error_code": "merge_execution_not_ready",
+          "error_message": "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+          "celery_task_id": "e0eb4297-2c15-460a-89ca-09b23c92ac9e",
+          "worker_started_at": "2026-04-19T05:09:11.212786",
+          "worker_finished_at": "2026-04-19T05:09:11.326380"
+        },
+        "created_at": "2026-04-19T05:09:10.616714+00:00",
+        "started_at": "2026-04-19T05:09:11.212786+00:00",
+        "finished_at": "2026-04-19T05:09:11.326380+00:00"
+      }
+    ],
+    "job_summary": {
+      "job_count": 5,
+      "queued_job_count": 0,
+      "dispatched_job_count": 0,
+      "running_job_count": 2,
+      "succeeded_job_count": 1,
+      "failed_job_count": 2
+    },
+    "derived_compile_status": "failed",
+    "derived_dispatch_status": "fully_dispatched",
+    "assets": [
+      {
+        "asset_id": "d60ba110-6ca5-47b4-8734-618c681a5593",
+        "asset_type": "audio",
+        "asset_role": "voice_output",
+        "bucket_name": "audio-assets",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v17/render_voice/c5602a09-da80-473c-9044-95f8f6821d44.wav",
+        "source_filename": "c5602a09-da80-473c-9044-95f8f6821d44.wav",
+        "content_type": "audio/wav",
+        "file_size": null,
+        "asset_metadata": {
+          "job_id": "c5602a09-da80-473c-9044-95f8f6821d44",
+          "job_type": "render_voice",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v17",
+          "external_task_id": "91e03926-810f-4698-8096-261bb309b103",
+          "materialization_error": "Compiled runtime does not contain any VBU with script_text for render_voice.",
+          "materialization_status": "failed",
+          "materialization_error_code": "runtime_vbu_missing"
+        },
+        "status": "failed",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-19T05:09:11.320462+00:00"
+      },
+      {
+        "asset_id": "0038eae1-bde0-447a-8a91-311e0951814c",
+        "asset_type": "export",
+        "asset_role": "merged_output",
+        "bucket_name": "exports",
+        "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v17/merge/v17-fac979a5-db91-487b-97b8-684c454bc248.mp4",
+        "source_filename": "v17-fac979a5-db91-487b-97b8-684c454bc248.mp4",
+        "content_type": "video/mp4",
+        "file_size": null,
+        "asset_metadata": {
+          "job_id": "fac979a5-db91-487b-97b8-684c454bc248",
+          "job_type": "merge",
+          "generated_by": "worker_provider_executor",
+          "runtime_version": "v17",
+          "external_task_id": "e0eb4297-2c15-460a-89ca-09b23c92ac9e",
+          "materialization_error": "merge.runtime real execution chain is not implemented yet: object-read + mux pipeline is required, stub success is disabled.",
+          "materialization_status": "failed",
+          "materialization_error_code": "merge_execution_not_ready"
+        },
+        "status": "failed",
+        "notes": "sixth_batch_materialization_backbone",
+        "created_at": "2026-04-19T05:09:11.320463+00:00"
+      }
+    ],
+    "asset_association": {
+      "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+      "candidate_asset_count": 58,
+      "selected_asset_count": 2,
+      "selected_asset_types": [
+        "audio",
+        "export"
+      ],
+      "selected_asset_ids": [
+        "d60ba110-6ca5-47b4-8734-618c681a5593",
+        "0038eae1-bde0-447a-8a91-311e0951814c"
+      ]
+    },
+    "poll_index": 1,
+    "collected_at": "2026-04-19T05:09:11Z"
+  }
+]

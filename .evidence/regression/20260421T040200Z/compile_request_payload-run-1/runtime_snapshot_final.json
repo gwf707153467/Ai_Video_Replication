@@ -1,0 +1,581 @@
+{
+  "exists": true,
+  "runtime_record": {
+    "runtime_id": "cfc4d98e-0c49-4e56-aa89-0c590610d99c",
+    "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+    "runtime_version": "v1",
+    "compile_status": "succeeded",
+    "dispatch_status": "fully_dispatched",
+    "dispatch_summary": {
+      "jobs": [
+        {
+          "job_id": "04ac556d-0dc1-4e5b-8621-cfb39f0a2ad3",
+          "status": "succeeded",
+          "job_type": "compile",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "635ace04-411c-481c-a837-5f38bdc24100"
+        },
+        {
+          "job_id": "08037d34-e6d8-4ece-9c11-6b1f92943852",
+          "status": "succeeded",
+          "job_type": "render_image",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "ee6a2af3-b88b-44ca-a5aa-a7e1c1628a25"
+        },
+        {
+          "job_id": "3ea36f5d-c8a5-4c79-b9fd-383ae2f84080",
+          "status": "succeeded",
+          "job_type": "render_video",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "1ac27fdb-5ea8-4fec-9285-10daf58b35d1"
+        },
+        {
+          "job_id": "2adce07d-48d3-484e-8fa1-fb74c3cc1378",
+          "status": "succeeded",
+          "job_type": "render_voice",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "240edf8d-4fbf-4919-97fb-c2ff45cf8df4"
+        },
+        {
+          "job_id": "3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75",
+          "status": "succeeded",
+          "job_type": "merge",
+          "error_code": null,
+          "max_attempts": 3,
+          "attempt_count": 1,
+          "external_task_id": "52499831-d65d-456d-bc59-7438e9ae0683"
+        }
+      ],
+      "job_count": 5,
+      "runtime_version": "v1",
+      "failed_job_count": 0,
+      "queued_job_count": 0,
+      "running_job_count": 0,
+      "succeeded_job_count": 5,
+      "dispatched_job_count": 0
+    },
+    "last_error_code": null,
+    "last_error_message": null,
+    "created_at": "2026-04-21T04:03:16.657951+00:00",
+    "compile_started_at": "2026-04-21T04:03:16.655476+00:00",
+    "compile_finished_at": "2026-04-21T04:03:16.657743+00:00"
+  },
+  "jobs": [
+    {
+      "job_id": "04ac556d-0dc1-4e5b-8621-cfb39f0a2ad3",
+      "job_type": "compile",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "635ace04-411c-481c-a837-5f38bdc24100",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v1"
+      },
+      "result_payload": {
+        "task": "compile.runtime",
+        "job_id": "04ac556d-0dc1-4e5b-8621-cfb39f0a2ad3",
+        "status": "succeeded",
+        "provider": "runtime_payload",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "runtime_version": "v1",
+        "provider_payload": {
+          "job_type": "compile",
+          "spu_count": 1,
+          "task_name": "compile.runtime",
+          "vbu_count": 1,
+          "runtime_id": "cfc4d98e-0c49-4e56-aa89-0c590610d99c",
+          "provider_name": "runtime_payload",
+          "sequence_count": 1,
+          "runtime_version": "v1",
+          "payload_project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+          "compile_options_keys": [
+            "input_manifest_path",
+            "proof_case_id",
+            "reference"
+          ],
+          "runtime_compile_status": "running",
+          "runtime_dispatch_status": "partially_dispatched"
+        },
+        "worker_finished_at": "2026-04-21T04:03:16.679089"
+      },
+      "created_at": "2026-04-21T04:03:16.660075+00:00",
+      "started_at": "2026-04-21T04:03:16.666989+00:00",
+      "finished_at": "2026-04-21T04:03:16.679098+00:00"
+    },
+    {
+      "job_id": "08037d34-e6d8-4ece-9c11-6b1f92943852",
+      "job_type": "render_image",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "ee6a2af3-b88b-44ca-a5aa-a7e1c1628a25",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "prompt": "Project: case-003-bag-commuter-variant\nTarget market: US\nTarget language: en-US\nProject notes: Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.\nSequence plan: Sequence 1 - hook - Position the handbag as a stylish daily carry bag for commute, errands, and travel.\nPrimary visual subject: Everyday commuter handbag demo\nCreate a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\nVisual constraints: {'style': 'premium_ecommerce_bag_demo', 'camera': 'smooth handheld push-in, detail close-ups, elegant product handling', 'platform': 'tiktok_9_16', 'background': 'clean boutique / neutral lifestyle setting'}",
+        "dispatch_source": "compile_endpoint",
+        "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+        "provider_inputs": {
+          "prompt": "Project: case-003-bag-commuter-variant\nTarget market: US\nTarget language: en-US\nProject notes: Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.\nSequence plan: Sequence 1 - hook - Position the handbag as a stylish daily carry bag for commute, errands, and travel.\nPrimary visual subject: Everyday commuter handbag demo\nCreate a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\nVisual constraints: {'style': 'premium_ecommerce_bag_demo', 'camera': 'smooth handheld push-in, detail close-ups, elegant product handling', 'platform': 'tiktok_9_16', 'background': 'clean boutique / neutral lifestyle setting'}",
+          "source": "compiler_minimal_render_image_prompt_v1",
+          "aspect_ratio": "9:16",
+          "sample_count": 1,
+          "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+          "runtime_version": "v1"
+        },
+        "runtime_version": "v1"
+      },
+      "result_payload": {
+        "task": "render.image",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "973b9f15-e07f-4572-9676-98ed30e45685",
+          "file_size": 1297138,
+          "asset_role": "render_output",
+          "asset_type": "generated_image",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_image/08037d34-e6d8-4ece-9c11-6b1f92943852.png",
+          "bucket_name": "generated-images",
+          "content_type": "image/png"
+        },
+        "job_id": "08037d34-e6d8-4ece-9c11-6b1f92943852",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "materialization": {
+          "etag": "6cf34982d1d04fcf152a84243633df10",
+          "size": 1297138,
+          "status": "materialized",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_image/08037d34-e6d8-4ece-9c11-6b1f92943852.png",
+          "version_id": null,
+          "bucket_name": "generated-images",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v1",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "imagen-4.0-fast-generate-001",
+            "request": {
+              "aspect_ratio": "9:16",
+              "sample_count": 1,
+              "safety_setting": null,
+              "person_generation": null,
+              "negative_prompt_present": true,
+              "negative_prompt_forwarded": false
+            },
+            "response": {
+              "response_type": "GenerateImagesResponse",
+              "generated_images_count": 1
+            }
+          },
+          "prompt": "Project: case-003-bag-commuter-variant\nTarget market: US\nTarget language: en-US\nProject notes: Bag regression variant: same product category, different market angle and copy, focused on commute and daily organization.\nSequence plan: Sequence 1 - hook - Position the handbag as a stylish daily carry bag for commute, errands, and travel.\nPrimary visual subject: Everyday commuter handbag demo\nCreate a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\nVisual constraints: {'style': 'premium_ecommerce_bag_demo', 'camera': 'smooth handheld push-in, detail close-ups, elegant product handling', 'platform': 'tiktok_9_16', 'background': 'clean boutique / neutral lifestyle setting'}",
+          "job_type": "render_image",
+          "task_name": "render.image",
+          "provider_name": "google",
+          "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+          "runtime_version": "v1",
+          "generation_options": {
+            "aspect_ratio": "9:16",
+            "sample_count": 1,
+            "safety_setting": null,
+            "person_generation": null
+          }
+        },
+        "worker_finished_at": "2026-04-21T04:03:19.847838"
+      },
+      "created_at": "2026-04-21T04:03:16.660079+00:00",
+      "started_at": "2026-04-21T04:03:16.667975+00:00",
+      "finished_at": "2026-04-21T04:03:19.847858+00:00"
+    },
+    {
+      "job_id": "3ea36f5d-c8a5-4c79-b9fd-383ae2f84080",
+      "job_type": "render_video",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "1ac27fdb-5ea8-4fec-9285-10daf58b35d1",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v1"
+      },
+      "result_payload": {
+        "task": "render.video",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "502700a6-9276-4c20-a3c2-4a387f9ae658",
+          "file_size": 3415343,
+          "asset_role": "render_output",
+          "asset_type": "generated_video",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_video/3ea36f5d-c8a5-4c79-b9fd-383ae2f84080.mp4",
+          "bucket_name": "generated-videos",
+          "content_type": "video/mp4"
+        },
+        "job_id": "3ea36f5d-c8a5-4c79-b9fd-383ae2f84080",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "materialization": {
+          "etag": "ada3cd97ddf7346d87771e37f89b5c94",
+          "size": 3415343,
+          "status": "materialized",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_video/3ea36f5d-c8a5-4c79-b9fd-383ae2f84080.mp4",
+          "version_id": null,
+          "bucket_name": "generated-videos",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v1",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "veo-3.1-generate-preview",
+            "request": {
+              "fps": null,
+              "seed": null,
+              "max_polls": 45,
+              "resolution": null,
+              "aspect_ratio": null,
+              "sample_count": 1,
+              "enhance_prompt": null,
+              "output_gcs_uri": null,
+              "duration_seconds": 6,
+              "person_generation": null,
+              "compression_quality": null,
+              "poll_interval_seconds": 20.0,
+              "reference_images_count": 0,
+              "negative_prompt_present": true
+            },
+            "response": {
+              "video_uri": "https://generativelanguage.googleapis.com/v1beta/files/itd3ntfvq1m9:download?alt=media",
+              "result_type": "GenerateVideosResponse",
+              "operation_name": "models/veo-3.1-generate-preview/operations/n1kfhkrcgiaw",
+              "operation_type": "GenerateVideosOperation",
+              "generated_videos_count": 1
+            }
+          },
+          "prompt": "Create a 9:16 TikTok ecommerce video segment for an everyday commuter handbag. Preserve the pacing of a viral bag product demo: quick opening hook, hand-held product reveal, interior capacity shot, strap/detail close-up, and a final lifestyle carry moment. Use warm daylight, neutral wardrobe styling, realistic leather texture, organized compartments, no captions, no watermark, no fake logos.\n\nProject ID: 5ef87634-f207-4846-bcdd-917d433502ae\n\nSequence type: hook\n\nPersuasive goal: Position the handbag as a stylish daily carry bag for commute, errands, and travel.\n\nSPU display name: Everyday commuter handbag demo\n\nVisual constraints: style=premium_ecommerce_bag_demo, camera=smooth handheld push-in, detail close-ups, elegant product handling, platform=tiktok_9_16, background=clean boutique / neutral lifestyle setting\n\nReference guidance: Replicate the ecommerce bag video skeleton while swapping in new prompt/copy details.\n\nvertical short-form pacing, bag close-ups, product handling, premium ecommerce appeal\n\n['case-003 regression payload frozen from current workspace.']",
+          "job_type": "render_video",
+          "selection": {
+            "spu_id": "d8b24fec-4142-4ed0-b5d7-4a7bad3c7bb2",
+            "spu_code": "CASE-003-SPU-001",
+            "sequence_id": "c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4",
+            "display_name": "Everyday commuter handbag demo",
+            "prompt_source": "runtime_spu",
+            "sequence_code": null,
+            "sequence_index": 1
+          },
+          "task_name": "render.video",
+          "provider_name": "google",
+          "negative_prompt": "blurry, warped bag shape, broken zipper, extra straps, fake logos, watermark, captions, text overlay, low quality, distorted hands",
+          "runtime_version": "v1",
+          "generation_options": {
+            "fps": null,
+            "mask": null,
+            "seed": null,
+            "max_polls": null,
+            "last_frame": null,
+            "resolution": null,
+            "aspect_ratio": null,
+            "sample_count": 1,
+            "enhance_prompt": null,
+            "output_gcs_uri": null,
+            "duration_seconds": 6,
+            "reference_images": null,
+            "person_generation": null,
+            "compression_quality": null,
+            "poll_interval_seconds": null
+          }
+        },
+        "worker_finished_at": "2026-04-21T04:04:20.494689"
+      },
+      "created_at": "2026-04-21T04:03:16.660081+00:00",
+      "started_at": "2026-04-21T04:03:16.669749+00:00",
+      "finished_at": "2026-04-21T04:04:20.494709+00:00"
+    },
+    {
+      "job_id": "2adce07d-48d3-484e-8fa1-fb74c3cc1378",
+      "job_type": "render_voice",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "240edf8d-4fbf-4919-97fb-c2ff45cf8df4",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v1"
+      },
+      "result_payload": {
+        "task": "render.voice",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "e16b880d-0b47-48fd-8a84-567e3e400c74",
+          "file_size": 595726,
+          "asset_role": "voice_output",
+          "asset_type": "audio",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_voice/2adce07d-48d3-484e-8fa1-fb74c3cc1378.wav",
+          "bucket_name": "audio-assets",
+          "content_type": "audio/L16;codec=pcm;rate=24000"
+        },
+        "job_id": "2adce07d-48d3-484e-8fa1-fb74c3cc1378",
+        "status": "succeeded",
+        "provider": "google",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "materialization": {
+          "etag": "3a17fe3410744dd37ed573e227ff687f",
+          "size": 595726,
+          "status": "materialized",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_voice/2adce07d-48d3-484e-8fa1-fb74c3cc1378.wav",
+          "version_id": null,
+          "bucket_name": "audio-assets",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v1",
+        "provider_payload": {
+          "google": {
+            "sdk": "google-genai",
+            "model": "gemini-2.5-pro-preview-tts",
+            "request": {
+              "voice_name": null,
+              "text_length": 161,
+              "attempt_count": 1,
+              "language_code": "en-US",
+              "speech_config_type": "SpeechConfig",
+              "speech_config_present": true
+            },
+            "response": {
+              "part_index": 0,
+              "response_type": "GenerateContentResponse",
+              "candidate_index": 0,
+              "candidates_count": 1
+            }
+          },
+          "job_type": "render_voice",
+          "selection": {
+            "vbu_id": "940bfdba-c970-4f25-9ce3-d595841bac5d",
+            "vbu_code": "CASE-003-VBU-001",
+            "sequence_id": "c5c1ecef-f7c5-45e6-8067-b1ba9b7fb3d4",
+            "text_source": "runtime_vbu",
+            "sequence_code": null,
+            "sequence_index": 1,
+            "persuasive_role": "hook"
+          },
+          "task_name": "render.voice",
+          "voice_name": null,
+          "language_code": "en-US",
+          "provider_name": "google",
+          "runtime_version": "v1"
+        },
+        "worker_finished_at": "2026-04-21T04:03:28.096830"
+      },
+      "created_at": "2026-04-21T04:03:16.660083+00:00",
+      "started_at": "2026-04-21T04:03:16.672218+00:00",
+      "finished_at": "2026-04-21T04:03:28.096860+00:00"
+    },
+    {
+      "job_id": "3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75",
+      "job_type": "merge",
+      "status": "succeeded",
+      "attempt_count": 1,
+      "max_attempts": 3,
+      "external_task_id": "52499831-d65d-456d-bc59-7438e9ae0683",
+      "error_code": null,
+      "error_message": null,
+      "provider_name": null,
+      "payload": {
+        "dispatch_source": "compile_endpoint",
+        "runtime_version": "v1"
+      },
+      "result_payload": {
+        "task": "merge.runtime",
+        "asset": {
+          "status": "materialized",
+          "asset_id": "7f4c43cb-846c-4659-941b-2d0583e93d23",
+          "file_size": 3362160,
+          "asset_role": "merged_output",
+          "asset_type": "export",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/merge/v1-3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75.mp4",
+          "bucket_name": "exports",
+          "content_type": "video/mp4"
+        },
+        "job_id": "3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75",
+        "status": "succeeded",
+        "provider": "merge_ffmpeg",
+        "project_id": "5ef87634-f207-4846-bcdd-917d433502ae",
+        "materialization": {
+          "etag": "d4e5809314d6a099fdbe2525b22e15c1",
+          "size": 3362160,
+          "status": "materialized",
+          "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/merge/v1-3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75.mp4",
+          "version_id": null,
+          "bucket_name": "exports",
+          "idempotency": "fresh_write"
+        },
+        "runtime_version": "v1",
+        "provider_payload": {
+          "job_type": "merge",
+          "task_name": "merge.runtime",
+          "audio_asset": {
+            "status": "materialized",
+            "asset_id": "e16b880d-0b47-48fd-8a84-567e3e400c74",
+            "asset_type": "audio",
+            "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_voice/2adce07d-48d3-484e-8fa1-fb74c3cc1378.wav",
+            "bucket_name": "audio-assets"
+          },
+          "video_asset": {
+            "status": "materialized",
+            "asset_id": "502700a6-9276-4c20-a3c2-4a387f9ae658",
+            "asset_type": "generated_video",
+            "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_video/3ea36f5d-c8a5-4c79-b9fd-383ae2f84080.mp4",
+            "bucket_name": "generated-videos"
+          },
+          "provider_name": "merge_ffmpeg",
+          "runtime_version": "v1"
+        },
+        "worker_finished_at": "2026-04-21T04:04:20.978843"
+      },
+      "created_at": "2026-04-21T04:03:16.660085+00:00",
+      "started_at": "2026-04-21T04:03:16.673662+00:00",
+      "finished_at": "2026-04-21T04:04:20.978862+00:00"
+    }
+  ],
+  "job_summary": {
+    "job_count": 5,
+    "queued_job_count": 0,
+    "dispatched_job_count": 0,
+    "running_job_count": 0,
+    "succeeded_job_count": 5,
+    "failed_job_count": 0
+  },
+  "derived_compile_status": "succeeded",
+  "derived_dispatch_status": "fully_dispatched",
+  "assets": [
+    {
+      "asset_id": "973b9f15-e07f-4572-9676-98ed30e45685",
+      "asset_type": "generated_image",
+      "asset_role": "render_output",
+      "bucket_name": "generated-images",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_image/08037d34-e6d8-4ece-9c11-6b1f92943852.png",
+      "source_filename": "08037d34-e6d8-4ece-9c11-6b1f92943852.png",
+      "content_type": "image/png",
+      "file_size": 1297138,
+      "asset_metadata": {
+        "job_id": "08037d34-e6d8-4ece-9c11-6b1f92943852",
+        "job_type": "render_image",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v1",
+        "external_task_id": "ee6a2af3-b88b-44ca-a5aa-a7e1c1628a25",
+        "materialized_etag": "6cf34982d1d04fcf152a84243633df10",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-21T04:03:19.826490+00:00"
+    },
+    {
+      "asset_id": "e16b880d-0b47-48fd-8a84-567e3e400c74",
+      "asset_type": "audio",
+      "asset_role": "voice_output",
+      "bucket_name": "audio-assets",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_voice/2adce07d-48d3-484e-8fa1-fb74c3cc1378.wav",
+      "source_filename": "2adce07d-48d3-484e-8fa1-fb74c3cc1378.wav",
+      "content_type": "audio/L16;codec=pcm;rate=24000",
+      "file_size": 595726,
+      "asset_metadata": {
+        "job_id": "2adce07d-48d3-484e-8fa1-fb74c3cc1378",
+        "job_type": "render_voice",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v1",
+        "external_task_id": "240edf8d-4fbf-4919-97fb-c2ff45cf8df4",
+        "materialized_etag": "3a17fe3410744dd37ed573e227ff687f",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-21T04:03:28.079015+00:00"
+    },
+    {
+      "asset_id": "502700a6-9276-4c20-a3c2-4a387f9ae658",
+      "asset_type": "generated_video",
+      "asset_role": "render_output",
+      "bucket_name": "generated-videos",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/render_video/3ea36f5d-c8a5-4c79-b9fd-383ae2f84080.mp4",
+      "source_filename": "3ea36f5d-c8a5-4c79-b9fd-383ae2f84080.mp4",
+      "content_type": "video/mp4",
+      "file_size": 3415343,
+      "asset_metadata": {
+        "job_id": "3ea36f5d-c8a5-4c79-b9fd-383ae2f84080",
+        "job_type": "render_video",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v1",
+        "external_task_id": "1ac27fdb-5ea8-4fec-9285-10daf58b35d1",
+        "materialized_etag": "ada3cd97ddf7346d87771e37f89b5c94",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-21T04:04:20.451359+00:00"
+    },
+    {
+      "asset_id": "7f4c43cb-846c-4659-941b-2d0583e93d23",
+      "asset_type": "export",
+      "asset_role": "merged_output",
+      "bucket_name": "exports",
+      "object_key": "projects/5ef87634-f207-4846-bcdd-917d433502ae/runtime/v1/merge/v1-3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75.mp4",
+      "source_filename": "v1-3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75.mp4",
+      "content_type": "video/mp4",
+      "file_size": 3362160,
+      "asset_metadata": {
+        "job_id": "3a6b93ce-876d-4ebd-9e2f-5017f1e6ff75",
+        "job_type": "merge",
+        "generated_by": "worker_provider_executor",
+        "runtime_version": "v1",
+        "external_task_id": "52499831-d65d-456d-bc59-7438e9ae0683",
+        "materialized_etag": "d4e5809314d6a099fdbe2525b22e15c1",
+        "materialization_status": "uploaded_by_worker",
+        "materialized_version_id": null
+      },
+      "status": "materialized",
+      "notes": "sixth_batch_materialization_backbone",
+      "created_at": "2026-04-21T04:04:20.933208+00:00"
+    }
+  ],
+  "asset_association": {
+    "association_method": "project_id + required_asset_types + asset_metadata.runtime_version",
+    "candidate_asset_count": 4,
+    "selected_asset_count": 4,
+    "selected_asset_types": [
+      "generated_image",
+      "audio",
+      "generated_video",
+      "export"
+    ],
+    "selected_asset_ids": [
+      "973b9f15-e07f-4572-9676-98ed30e45685",
+      "e16b880d-0b47-48fd-8a84-567e3e400c74",
+      "502700a6-9276-4c20-a3c2-4a387f9ae658",
+      "7f4c43cb-846c-4659-941b-2d0583e93d23"
+    ]
+  },
+  "poll_index": 12,
+  "collected_at": "2026-04-21T04:04:22Z"
+}

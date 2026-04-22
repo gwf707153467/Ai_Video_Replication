@@ -1,0 +1,21 @@
+{
+  "minio_endpoint": "minio:9000",
+  "objects": [
+    {
+      "bucket_name": "generated-images",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v24/render_image/bf2a4f18-bbf7-474a-bcc5-b997d7ecef58.png",
+      "exists": true,
+      "size": 393192,
+      "content_type": "image/png"
+    },
+    {
+      "bucket_name": "audio-assets",
+      "object_key": "projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v24/render_voice/768a1080-d0a1-4db0-8c74-37ead5b033fc.wav",
+      "exists": false,
+      "size": null,
+      "content_type": null,
+      "error": "S3Error:S3 operation failed; code: NoSuchKey, message: Object does not exist, resource: /audio-assets/projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v24/render_voice/768a1080-d0a1-4db0-8c74-37ead5b033fc.wav, request_id: 18A80844799AC53A, host_id: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8, bucket_name: audio-assets, object_name: projects/656ac6b1-ecb8-4f45-9f45-556be5915168/runtime/v24/render_voice/768a1080-d0a1-4db0-8c74-37ead5b033fc.wav"
+    }
+  ],
+  "collected_at": "2026-04-20T09:59:03Z"
+}
