@@ -1,4 +1,3 @@
-import os
 import unittest
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -6,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import create_engine, delete
 from sqlalchemy.orm import sessionmaker
 
-from app.core.config import settings
+from _db_test_helper import resolve_test_database_url
 from app.db.base import Base
 from app.enums.runtime import AttemptStatus, AttemptType, JobStatus, JobType, LeaseStatus
 from app.enums.worker import WorkerHealthStatus
@@ -23,18 +22,10 @@ from app.services.runtime_fail_service import RuntimeFailService
 UTC = timezone.utc
 
 
-def _resolve_database_url() -> str:
-    return (
-        os.getenv("RUNTIME_TERMINAL_TEST_DATABASE_URL")
-        or os.getenv("DATABASE_URL")
-        or settings.database_url.replace("@postgres:", "@127.0.0.1:")
-    )
-
-
 class RuntimeTerminalRepositoryTransactionConflictTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.engine = create_engine(_resolve_database_url(), future=True)
+        cls.engine = create_engine(resolve_test_database_url(), future=True)
         cls.SessionLocal = sessionmaker(bind=cls.engine, expire_on_commit=False, future=True)
         Base.metadata.create_all(bind=cls.engine)
 
@@ -679,3 +670,4 @@ class RuntimeTerminalRepositoryTransactionConflictTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

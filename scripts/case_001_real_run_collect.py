@@ -187,8 +187,6 @@ def build_runtime_snapshot_probe_script() -> str:
         required_asset_types = payload.get("required_asset_types", [
             "generated_image",
             "generated_video",
-            "audio",
-            "export",
         ])
 
         def serialize_runtime(runtime):
@@ -540,7 +538,7 @@ def main() -> int:
         write_json(args.evidence_dir / "runtime_snapshot_final.json", final_snapshot)
 
     object_probe: dict | None = None
-    export_pull_report: dict | None = None
+    asset_pull_report: dict | None = None
     if final_snapshot and final_snapshot.get("assets"):
         object_probe = run_container_python_json(
             build_object_probe_script(),
@@ -559,50 +557,20 @@ def main() -> int:
         write_json(args.evidence_dir / "object_store_probe.json", object_probe)
         append_log(log_path, f"object probe collected for {len(object_probe.get('objects', []))} objects")
 
-        export_assets = [asset for asset in final_snapshot.get("assets", []) if asset.get("asset_type") == "export"]
-        if export_assets:
-            export_asset = export_assets[-1]
-            try:
-                export_bytes = run_container_python_binary(
-                    build_export_fetch_script(),
-                    {
-                        "bucket_name": export_asset["bucket_name"],
-                        "object_key": export_asset["object_key"],
-                    },
-                )
-                args.final_output.write_bytes(export_bytes)
-                export_pull_report = {
-                    "ok": True,
-                    "bucket_name": export_asset["bucket_name"],
-                    "object_key": export_asset["object_key"],
-                    "local_path": str(args.final_output),
-                    "byte_count": len(export_bytes),
-                    "content_type": export_asset.get("content_type"),
-                    "collected_at": utc_now(),
-                }
-                append_log(log_path, f"export object pulled to {args.final_output} ({len(export_bytes)} bytes)")
-            except Exception as exc:
-                export_pull_report = {
-                    "ok": False,
-                    "bucket_name": export_asset.get("bucket_name"),
-                    "object_key": export_asset.get("object_key"),
-                    "local_path": str(args.final_output),
-                    "byte_count": None,
-                    "reason": f"{type(exc).__name__}:{exc}",
-                    "collected_at": utc_now(),
-                }
-                append_log(log_path, f"export pull failed: {type(exc).__name__}: {exc}")
-        else:
-            export_pull_report = {
-                "ok": False,
-                "reason": "export_asset_missing",
-                "local_path": str(args.final_output),
-                "collected_at": utc_now(),
-            }
-            append_log(log_path, "no export asset found in final snapshot")
+        asset_pull_report = {
+            "ok": True,
+            "reason": "image_video_baseline_collects_evidence_only",
+            "required_asset_types": ["generated_image", "generated_video"],
+            "selected_asset_count": len(final_snapshot.get("assets") or []),
+            "selected_asset_types": sorted({asset.get("asset_type") for asset in final_snapshot.get("assets", []) if asset.get("asset_type")}),
+            "local_path": str(args.final_output),
+            "local_file_written": False,
+            "collected_at": utc_now(),
+        }
+        append_log(log_path, "skipping final-output pull because current baseline collects generated_image/generated_video evidence only")
 
-    if export_pull_report is not None:
-        write_json(args.evidence_dir / "export_pull_report.json", export_pull_report)
+    if asset_pull_report is not None:
+        write_json(args.evidence_dir / "asset_pull_report.json", asset_pull_report)
 
     summary = {
         "case_id": case_id,
@@ -615,18 +583,24 @@ def main() -> int:
         "runtime_poll_history_path": str(args.evidence_dir / "runtime_poll_history.json"),
         "runtime_snapshot_final_path": str(args.evidence_dir / "runtime_snapshot_final.json"),
         "object_store_probe_path": str(args.evidence_dir / "object_store_probe.json") if object_probe is not None else None,
-        "export_pull_report_path": str(args.evidence_dir / "export_pull_report.json") if export_pull_report is not None else None,
+        "asset_pull_report_path": str(args.evidence_dir / "asset_pull_report.json") if asset_pull_report is not None else None,
         "runtime_id": runtime_id,
         "runtime_version": runtime_version,
         "terminal_compile_status": final_snapshot.get("derived_compile_status") if final_snapshot else None,
         "terminal_dispatch_status": final_snapshot.get("derived_dispatch_status") if final_snapshot else None,
+        "selected_asset_types": sorted({asset.get("asset_type") for asset in (final_snapshot.get("assets") or []) if asset.get("asset_type")}) if final_snapshot else [],
+        "selected_asset_count": len(final_snapshot.get("assets") or []) if final_snapshot else 0,
         "final_output_path": str(args.final_output),
         "final_output_exists": args.final_output.exists(),
-        "note": "This script collects real-run evidence only. It does not by itself prove playable final MP4 or upgrade verdict to PROVEN.",
+        "note": "This script collects real-run image/video evidence only. It does not by itself prove a merged playable final MP4 or upgrade verdict to PROVEN.",
     }
     write_json(args.evidence_dir / "run_summary.json", summary)
     append_log(log_path, f"summary: {json.dumps(summary, ensure_ascii=False)}")
     return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 
 
 if __name__ == "__main__":

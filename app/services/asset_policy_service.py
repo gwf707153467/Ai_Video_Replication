@@ -50,6 +50,12 @@ class AssetPolicyService:
         runtime_version: str,
         job_type: str,
         filename: str | None,
+        sequence_id: UUID | None = None,
     ) -> str:
         safe_filename = cls.safe_name(filename)
+        if sequence_id:
+            return (
+                f"projects/{project_id}/runtime/{runtime_version}/"
+                f"sequences/{sequence_id}/{job_type}/{safe_filename}"
+            )
         return f"projects/{project_id}/runtime/{runtime_version}/{job_type}/{safe_filename}"

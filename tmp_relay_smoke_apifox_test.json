@@ -1,0 +1,41 @@
+{
+  "report_name": "relay_smoke",
+  "report_version": "v1",
+  "executed_at": "2026-05-10T05:40:36.306585+00:00",
+  "repo_root": "/app/backend/.deer-flow/threads/4cac9b0a-8397-4256-bcd3-46a38345d163/user-data/workspace/Ai_Videos_Replication",
+  "relay_base_url": "https://ai.ai666.net",
+  "overall_status": "failed",
+  "config": {
+    "api_key_present": true,
+    "api_key_masked": "AIza...eqBw",
+    "image_model": "",
+    "video_model": "veo-3",
+    "tts_model": "",
+    "image_aspect_ratio": "1:1",
+    "video_aspect_ratio": "9:16",
+    "timeout_seconds": 120.0,
+    "poll_interval_seconds": 10.0
+  },
+  "checks": {
+    "image_create": {
+      "status": "failed",
+      "started_at": "2026-05-10T05:40:34.102418+00:00",
+      "duration_seconds": 0.0,
+      "error": {
+        "type": "GoogleProviderError",
+        "code": "google_image_model_not_configured",
+        "message": "Google image model is not configured."
+      }
+    },
+    "video_create_poll": {
+      "status": "failed",
+      "started_at": "2026-05-10T05:40:34.102442+00:00",
+      "duration_seconds": 2.204,
+      "error": {
+        "type": "GoogleProviderError",
+        "code": "google_video_generation_failed",
+        "message": "Google video generation request failed via relay HTTP API: HTTP 401 calling /v1/video/create: {\"error\":{\"code\":\"\",\"message\":\"Invalid token (request id: c3e3f826-4c32-11f1-96a9-e24dfa699d0c)\",\"type\":\"aix_api_error\"}}"
+      }
+    }
+  }
+}

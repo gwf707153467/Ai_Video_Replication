@@ -173,6 +173,18 @@ class BaseProviderExecutor:
 
 
 class RuntimeBackedExecutor(BaseProviderExecutor):
+    @classmethod
+    def _coerce_non_negative_int(cls, value: Any, *, default: int | None = None) -> int | None:
+        if value is None:
+            return default
+        try:
+            normalized = int(value)
+        except (TypeError, ValueError):
+            return default
+        if normalized < 0:
+            return default
+        return normalized
+
     def _load_runtime_payload(self, *, project_id: str, runtime_version: str) -> tuple[CompiledRuntime, dict]:
         db = SessionLocal()
         try:
@@ -210,6 +222,39 @@ class RuntimeBackedExecutor(BaseProviderExecutor):
         compile_options = self._coerce_dict(runtime_payload.get("compile_options"))
         sequences = self._coerce_list(runtime_payload.get("sequences"))
         return runtime, runtime_payload, compile_options, sequences
+
+    def _resolve_sequence_selector(self, job: Job) -> dict:
+        payload = self._coerce_dict(job.payload)
+        sequence_selector = self._coerce_dict(payload.get("sequence_selector"))
+        sequence_id = (
+            self._normalize_optional_text(sequence_selector.get("sequence_id"))
+            or self._normalize_optional_text(payload.get("sequence_id"))
+        )
+        sequence_index = self._coerce_non_negative_int(sequence_selector.get("sequence_index"))
+        if sequence_index is None:
+            sequence_index = self._coerce_non_negative_int(payload.get("sequence_index"))
+        return {
+            "sequence_id": sequence_id,
+            "sequence_index": sequence_index,
+        }
+
+    def _resolve_selected_sequence(self, *, job: Job, sequences: list) -> dict | None:
+        selector = self._resolve_sequence_selector(job)
+        requested_sequence_id = selector.get("sequence_id")
+        if requested_sequence_id:
+            for sequence in sequences:
+                sequence_dict = self._coerce_dict(sequence)
+                if self._normalize_optional_text(sequence_dict.get("sequence_id")) == requested_sequence_id:
+                    return sequence_dict
+
+        requested_sequence_index = selector.get("sequence_index")
+        if requested_sequence_index is not None:
+            for sequence in sequences:
+                sequence_dict = self._coerce_dict(sequence)
+                if self._coerce_non_negative_int(sequence_dict.get("sequence_index")) == requested_sequence_index:
+                    return sequence_dict
+
+        return None
 
 
 class CompileRuntimeExecutor(RuntimeBackedExecutor):
@@ -300,7 +345,11 @@ class GoogleImagenExecutor(GoogleExecutorMixin):
         asset_plan: dict | None = None,
     ) -> dict:
         output_filename = asset_plan.get("filename") if asset_plan else None
-        prompt, negative_prompt, generation_options = self._resolve_prompt_inputs(job)
+        prompt, negative_prompt, generation_options, selection_payload = self._resolve_prompt_inputs(
+            job=job,
+            project_id=project_id,
+            runtime_version=runtime_version,
+        )
         client = self._build_google_client()
 
         try:
@@ -332,30 +381,82 @@ class GoogleImagenExecutor(GoogleExecutorMixin):
                 "prompt": prompt,
                 "negative_prompt": negative_prompt,
                 "generation_options": generation_options,
+                "selection": selection_payload,
                 "google": generated.provider_payload,
             },
             binary_payload=generated.image_bytes,
             content_type=generated.content_type,
         ).to_dict()
 
-    def _resolve_prompt_inputs(self, job: Job) -> tuple[str, str | None, dict]:
+    def _resolve_prompt_inputs(
+        self,
+        *,
+        job: Job,
+        project_id: str,
+        runtime_version: str,
+    ) -> tuple[str, str | None, dict, dict]:
         payload = job.payload or {}
         provider_inputs = self._coerce_dict(payload.get("provider_inputs"))
-        prompt = provider_inputs.get("prompt") or payload.get("prompt")
-        if not prompt or not str(prompt).strip():
+        _, _, _, sequences = self._resolve_runtime_context(
+            project_id=project_id,
+            runtime_version=runtime_version,
+        )
+        selected_sequence = self._resolve_selected_sequence(job=job, sequences=sequences)
+        primary_sequence, primary_spu = self._select_image_sequence_spu(
+            sequences,
+            selected_sequence=selected_sequence,
+        )
+
+        prompt = (
+            self._normalize_optional_text(provider_inputs.get("prompt"))
+            or self._normalize_optional_text(payload.get("prompt"))
+            or self._normalize_optional_text(primary_spu.get("prompt_text"))
+        )
+        if not prompt:
             raise GoogleProviderError(
                 "google_image_prompt_missing",
                 f"render_image job {job.id} is missing provider_inputs.prompt / prompt",
             )
 
-        negative_prompt = provider_inputs.get("negative_prompt") or payload.get("negative_prompt")
+        negative_prompt = (
+            provider_inputs.get("negative_prompt")
+            or payload.get("negative_prompt")
+            or primary_spu.get("negative_prompt_text")
+        )
         generation_options = {
-            "sample_count": provider_inputs.get("sample_count") or 1,
-            "aspect_ratio": provider_inputs.get("aspect_ratio"),
+            "sample_count": self._coerce_positive_int(provider_inputs.get("sample_count"), default=1) or 1,
+            "aspect_ratio": self._normalize_optional_text(provider_inputs.get("aspect_ratio")),
             "safety_setting": provider_inputs.get("safety_setting"),
-            "person_generation": provider_inputs.get("person_generation"),
+            "person_generation": self._normalize_optional_text(provider_inputs.get("person_generation")),
         }
-        return str(prompt).strip(), self._normalize_optional_text(negative_prompt), generation_options
+        selection_payload = {
+            "sequence_id": primary_sequence.get("sequence_id"),
+            "sequence_code": primary_sequence.get("sequence_code"),
+            "sequence_index": primary_sequence.get("sequence_index"),
+            "spu_id": primary_spu.get("spu_id"),
+            "spu_code": primary_spu.get("spu_code"),
+            "display_name": primary_spu.get("display_name"),
+            "prompt_source": "job_payload" if provider_inputs.get("prompt") or payload.get("prompt") else "runtime_spu",
+        }
+        return prompt, self._normalize_optional_text(negative_prompt), generation_options, selection_payload
+
+    def _select_image_sequence_spu(
+        self,
+        sequences: list,
+        *,
+        selected_sequence: dict | None = None,
+    ) -> tuple[dict, dict]:
+        if selected_sequence is not None:
+            return selected_sequence, self._select_first_prompt_spu(selected_sequence)
+        return self._select_primary_spu(sequences)
+
+    def _select_first_prompt_spu(self, sequence: dict) -> dict:
+        sequence_dict = self._coerce_dict(sequence)
+        for spu in self._coerce_list(sequence_dict.get("spus")):
+            spu_dict = self._coerce_dict(spu)
+            if self._normalize_optional_text(spu_dict.get("prompt_text")):
+                return spu_dict
+        return {}
 
 
 class GoogleVideoExecutor(GoogleExecutorMixin):
@@ -436,7 +537,11 @@ class GoogleVideoExecutor(GoogleExecutorMixin):
             project_id=project_id,
             runtime_version=runtime_version,
         )
-        primary_sequence, primary_spu = self._select_primary_spu(sequences)
+        selected_sequence = self._resolve_selected_sequence(job=job, sequences=sequences)
+        primary_sequence, primary_spu = self._select_primary_spu(
+            sequences,
+            selected_sequence=selected_sequence,
+        )
 
         prompt = (
             self._normalize_optional_text(provider_inputs.get("prompt"))
@@ -503,13 +608,24 @@ class GoogleVideoExecutor(GoogleExecutorMixin):
         }
         return prompt, negative_prompt, generation_options, selection_payload
 
-    def _select_primary_spu(self, sequences: list) -> tuple[dict, dict]:
-        for sequence in sequences:
+    def _select_primary_spu(
+        self,
+        sequences: list,
+        *,
+        selected_sequence: dict | None = None,
+    ) -> tuple[dict, dict]:
+        search_sequences = [selected_sequence] if selected_sequence is not None else sequences
+        for sequence in search_sequences:
             sequence_dict = self._coerce_dict(sequence)
             for spu in self._coerce_list(sequence_dict.get("spus")):
                 spu_dict = self._coerce_dict(spu)
                 if self._normalize_optional_text(spu_dict.get("prompt_text")):
                     return sequence_dict, spu_dict
+        if selected_sequence is not None:
+            raise ProviderExecutorError(
+                "runtime_spu_missing",
+                "Selected runtime sequence does not contain any SPU with prompt_text for render_video.",
+            )
         raise ProviderExecutorError(
             "runtime_spu_missing",
             "Compiled runtime does not contain any SPU with prompt_text for render_video.",
@@ -634,19 +750,26 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
             project_id=project_id,
             runtime_version=runtime_version,
         )
+        selected_sequence = self._resolve_selected_sequence(job=job, sequences=sequences)
         primary_sequence = {}
         primary_vbu = {}
         tts_params = {}
         text_source = "runtime_vbu"
 
         try:
-            primary_sequence, primary_vbu = self._select_primary_vbu(sequences)
+            primary_sequence, primary_vbu = self._select_primary_vbu(
+                sequences,
+                selected_sequence=selected_sequence,
+            )
             tts_params = self._coerce_dict(primary_vbu.get("tts_params"))
             runtime_text = self._normalize_optional_text(primary_vbu.get("script_text"))
         except ProviderExecutorError as exc:
             if exc.code != "runtime_vbu_missing":
                 raise
-            primary_sequence, primary_spu = self._select_voice_fallback_sequence_spu(sequences)
+            primary_sequence, primary_spu = self._select_voice_fallback_sequence_spu(
+                sequences,
+                selected_sequence=selected_sequence,
+            )
             primary_vbu = {}
             tts_params = {}
             runtime_text = self._build_voice_fallback_text(
@@ -698,20 +821,37 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
         }
         return text, voice_name, language_code, speech_config, selection_payload
 
-    def _select_primary_vbu(self, sequences: list) -> tuple[dict, dict]:
-        for sequence in sequences:
+    def _select_primary_vbu(
+        self,
+        sequences: list,
+        *,
+        selected_sequence: dict | None = None,
+    ) -> tuple[dict, dict]:
+        search_sequences = [selected_sequence] if selected_sequence is not None else sequences
+        for sequence in search_sequences:
             sequence_dict = self._coerce_dict(sequence)
             for vbu in self._coerce_list(sequence_dict.get("vbus")):
                 vbu_dict = self._coerce_dict(vbu)
                 if self._normalize_optional_text(vbu_dict.get("script_text")):
                     return sequence_dict, vbu_dict
+        if selected_sequence is not None:
+            raise ProviderExecutorError(
+                "runtime_vbu_missing",
+                "Selected runtime sequence does not contain any VBU with script_text for render_voice.",
+            )
         raise ProviderExecutorError(
             "runtime_vbu_missing",
             "Compiled runtime does not contain any VBU with script_text for render_voice.",
         )
 
-    def _select_voice_fallback_sequence_spu(self, sequences: list) -> tuple[dict, dict]:
-        for sequence in sequences:
+    def _select_voice_fallback_sequence_spu(
+        self,
+        sequences: list,
+        *,
+        selected_sequence: dict | None = None,
+    ) -> tuple[dict, dict]:
+        search_sequences = [selected_sequence] if selected_sequence is not None else sequences
+        for sequence in search_sequences:
             sequence_dict = self._coerce_dict(sequence)
             for spu in self._coerce_list(sequence_dict.get("spus")):
                 spu_dict = self._coerce_dict(spu)
@@ -721,6 +861,11 @@ class GoogleVoiceExecutor(GoogleExecutorMixin):
                     or self._normalize_optional_text(sequence_dict.get("persuasive_goal"))
                 ):
                     return sequence_dict, spu_dict
+        if selected_sequence is not None:
+            raise ProviderExecutorError(
+                "runtime_vbu_missing",
+                "Selected runtime sequence does not contain any VBU with script_text for render_voice.",
+            )
         raise ProviderExecutorError(
             "runtime_vbu_missing",
             "Compiled runtime does not contain any VBU with script_text for render_voice.",

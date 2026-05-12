@@ -51,14 +51,10 @@ class BaselineExpectation:
         "compile",
         "render_image",
         "render_video",
-        "render_voice",
-        "merge",
     )
     required_asset_types: tuple[str, ...] = (
         "generated_image",
         "generated_video",
-        "audio",
-        "export",
     )
     required_health_keys: tuple[str, ...] = (
         "status",
@@ -74,8 +70,6 @@ class BaselineExpectation:
             "minio_bucket_reference": "reference-assets",
             "minio_bucket_generated_images": "generated-images",
             "minio_bucket_generated_videos": "generated-videos",
-            "minio_bucket_audio": "audio-assets",
-            "minio_bucket_exports": "exports",
             "minio_bucket_runtime": "runtime-packets",
         }
     )

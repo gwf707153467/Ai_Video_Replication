@@ -20,6 +20,8 @@ class RuntimeSequencePacket(BaseModel):
     sequence_index: int
     sequence_type: str
     persuasive_goal: str | None = None
+    target_duration_ms: int | None = None
+    has_voice: bool = False
     spus: list[dict] = Field(default_factory=list)
     vbus: list[dict] = Field(default_factory=list)
     bridges: list[dict] = Field(default_factory=list)
@@ -33,6 +35,8 @@ class RuntimePacket(BaseModel):
     visual_track_count: int
     audio_track_count: int
     bridge_count: int
+    sequence_count: int = 0
+    target_total_duration_ms: int = 0
     sequences: list[RuntimeSequencePacket]
 
 

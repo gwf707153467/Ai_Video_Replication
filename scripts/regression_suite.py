@@ -262,10 +262,11 @@ def main() -> int:
             run_summary = load_json_if_exists(run_summary_path)
             runtime_snapshot = load_json_if_exists(evidence_dir / "runtime_snapshot_final.json")
 
+            selected_asset_types = set((run_summary.get("selected_asset_types") or []))
             if (
                 result.ok
                 and run_summary.get("terminal_compile_status") == "succeeded"
-                and run_summary.get("final_output_exists") is True
+                and {"generated_image", "generated_video"}.issubset(selected_asset_types)
             ):
                 case_status = "PASS"
             elif is_quota_blocked(runtime_snapshot):

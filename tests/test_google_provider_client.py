@@ -20,51 +20,83 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
 
     def test_generate_video_success_path_returns_downloaded_bytes_and_request_summary(self) -> None:
         provider_client = self._build_client()
-        video_file = SimpleNamespace(uri="gs://bucket/generated-video.webm", video_bytes=b"video-bytes")
-        operation = SimpleNamespace(
-            name="operations/video-123",
-            done=True,
-            result=SimpleNamespace(
-                generated_videos=[SimpleNamespace(video=video_file)],
-            ),
+        operation_create = {
+            "id": "video-123",
+            "status": "queued",
+            "model": "veo-test",
+        }
+        operation_done = {
+            "id": "video-123",
+            "status": "completed",
+            "result": {
+                "url": "https://cdn.example.com/generated-video.webm",
+            },
+        }
+        download_response = MagicMock(
+            status_code=200,
+            headers={"content-type": "video/webm"},
+            content=b"video-bytes",
         )
-        sdk_client = SimpleNamespace(
-            models=SimpleNamespace(generate_videos=MagicMock(return_value=operation)),
-            operations=SimpleNamespace(get=MagicMock()),
-            files=SimpleNamespace(download=MagicMock()),
-        )
+        http_client = MagicMock()
+        http_client.request.side_effect = [
+            MagicMock(status_code=200, json=MagicMock(return_value=operation_create)),
+            MagicMock(status_code=200, json=MagicMock(return_value=operation_done)),
+        ]
+        http_client.get.return_value = download_response
+        context_client = MagicMock()
+        context_client.__enter__.return_value = http_client
+        context_client.__exit__.return_value = None
 
-        with patch("app.providers.google.client.genai.Client", return_value=sdk_client) as client_ctor:
+        with patch.object(provider_client, "_build_http_client", return_value=context_client):
             result = provider_client.generate_video(
                 prompt="  cinematic product demo  ",
                 negative_prompt="avoid clutter",
                 sample_count=2,
                 aspect_ratio="9:16",
                 duration_seconds=6,
+                fps=24,
+                seed=7,
                 resolution="1080x1920",
+                person_generation="allow_adult",
+                output_gcs_uri="gs://relay-output/video-123",
+                enhance_prompt=True,
+                compression_quality="optimized",
+                last_frame={"url": "https://cdn.example.com/last-frame.png"},
+                mask={"url": "https://cdn.example.com/mask.png"},
+                reference_images=["https://cdn.example.com/input.png"],
                 poll_interval_seconds=0.5,
                 max_polls=3,
             )
 
-        client_ctor.assert_called_once_with(api_key="test-google-key")
-        sdk_client.models.generate_videos.assert_called_once()
-        call_kwargs = sdk_client.models.generate_videos.call_args.kwargs
-        self.assertEqual(call_kwargs["model"], "veo-test")
-        self.assertEqual(call_kwargs["prompt"], "cinematic product demo")
+        self.assertEqual(http_client.request.call_count, 2)
+        create_call = http_client.request.call_args_list[0]
+        self.assertEqual(create_call.args[:2], ("POST", "/v1/video/create"))
         self.assertEqual(
-            call_kwargs["config"].model_dump(exclude_none=True),
+            create_call.kwargs["json"],
             {
-                "number_of_videos": 2,
-                "duration_seconds": 6,
-                "aspect_ratio": "9:16",
-                "resolution": "1080x1920",
+                "model": "veo-test",
+                "prompt": "cinematic product demo",
+                "sample_count": 2,
                 "negative_prompt": "avoid clutter",
+                "aspect_ratio": "9:16",
+                "duration_seconds": 6,
+                "fps": 24,
+                "seed": 7,
+                "resolution": "1080x1920",
+                "person_generation": "allow_adult",
+                "output_gcs_uri": "gs://relay-output/video-123",
+                "enhance_prompt": True,
+                "compression_quality": "optimized",
+                "last_frame": {"url": "https://cdn.example.com/last-frame.png"},
+                "mask": {"url": "https://cdn.example.com/mask.png"},
+                "images": ["https://cdn.example.com/input.png"],
             },
         )
-        sdk_client.files.download.assert_called_once_with(file=video_file)
+        poll_call = http_client.request.call_args_list[1]
+        self.assertEqual(poll_call.args[:2], ("GET", "/v1/videos/video-123"))
+        http_client.get.assert_called_once_with("https://cdn.example.com/generated-video.webm")
         self.assertEqual(result.video_bytes, b"video-bytes")
         self.assertEqual(result.content_type, "video/webm")
-        self.assertNotIn("generate_audio", result.provider_payload["request"])
         self.assertEqual(
             result.provider_payload,
             {
@@ -74,29 +106,29 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
                     "sample_count": 2,
                     "aspect_ratio": "9:16",
                     "duration_seconds": 6,
-                    "fps": None,
-                    "seed": None,
+                    "fps": 24,
+                    "seed": 7,
                     "resolution": "1080x1920",
-                    "person_generation": None,
-                    "output_gcs_uri": None,
-                    "enhance_prompt": None,
-                    "compression_quality": None,
+                    "person_generation": "allow_adult",
+                    "output_gcs_uri": "gs://relay-output/video-123",
+                    "enhance_prompt": True,
+                    "compression_quality": "optimized",
                     "negative_prompt_present": True,
-                    "reference_images_count": 0,
+                    "reference_images_count": 1,
                     "poll_interval_seconds": 0.5,
                     "max_polls": 3,
                 },
                 "response": {
-                    "operation_name": "operations/video-123",
-                    "operation_type": "SimpleNamespace",
-                    "result_type": "SimpleNamespace",
+                    "operation_name": "video-123",
+                    "operation_type": "dict",
+                    "result_type": "dict",
                     "generated_videos_count": 1,
-                    "video_uri": "gs://bucket/generated-video.webm",
+                    "video_uri": "https://cdn.example.com/generated-video.webm",
                 },
             },
         )
 
-    def test_generate_video_rejects_missing_prompt_before_sdk_call(self) -> None:
+    def test_generate_video_rejects_missing_prompt_before_http_call(self) -> None:
         provider_client = self._build_client()
 
         with self.assertRaises(GoogleProviderError) as exc_info:
@@ -106,9 +138,23 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
         self.assertEqual(exc.code, "google_video_prompt_missing")
         self.assertEqual(exc.message, "Google video generation prompt is missing.")
 
+    def test_poll_video_operation_rejects_missing_operation(self) -> None:
+        provider_client = self._build_client()
+
+        with self.assertRaises(GoogleProviderError) as exc_info:
+            provider_client._poll_video_operation(
+                MagicMock(),
+                None,
+                poll_interval_seconds=0.0,
+                max_polls=1,
+            )
+
+        exc = exc_info.exception
+        self.assertEqual(exc.code, "google_provider_response_invalid")
+        self.assertEqual(exc.message, "Google video generation did not return an operation.")
+
     def test_poll_video_operation_maps_operation_error(self) -> None:
         provider_client = self._build_client()
-        sdk_client = SimpleNamespace(operations=SimpleNamespace(get=MagicMock()))
         operation = SimpleNamespace(
             name="operations/video-failed",
             done=True,
@@ -117,7 +163,7 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
 
         with self.assertRaises(GoogleProviderError) as exc_info:
             provider_client._poll_video_operation(
-                sdk_client,
+                MagicMock(),
                 operation,
                 poll_interval_seconds=0.0,
                 max_polls=1,
@@ -132,14 +178,13 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
 
     def test_poll_video_operation_maps_poll_failure(self) -> None:
         provider_client = self._build_client()
-        operation = SimpleNamespace(name="operations/video-poll", done=False)
-        sdk_client = SimpleNamespace(
-            operations=SimpleNamespace(get=MagicMock(side_effect=RuntimeError("poll boom"))),
-        )
+        operation = {"id": "operations/video-poll", "status": "queued"}
+        client = MagicMock()
+        client.request.side_effect = RuntimeError("poll boom")
 
         with self.assertRaises(GoogleProviderError) as exc_info:
             provider_client._poll_video_operation(
-                sdk_client,
+                client,
                 operation,
                 poll_interval_seconds=0.0,
                 max_polls=1,
@@ -154,15 +199,14 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
 
     def test_poll_video_operation_times_out_after_max_polls(self) -> None:
         provider_client = self._build_client()
-        operation = SimpleNamespace(name="operations/video-timeout", done=False)
-        sdk_client = SimpleNamespace(
-            operations=SimpleNamespace(get=MagicMock(return_value=operation)),
-        )
+        operation = {"id": "operations/video-timeout", "status": "queued"}
+        client = MagicMock()
+        client.request.return_value = MagicMock(status_code=200, json=MagicMock(return_value=operation))
 
         with patch("app.providers.google.client.time.sleep") as sleep_mock:
             with self.assertRaises(GoogleProviderError) as exc_info:
                 provider_client._poll_video_operation(
-                    sdk_client,
+                    client,
                     operation,
                     poll_interval_seconds=0.25,
                     max_polls=1,
@@ -178,23 +222,22 @@ class GoogleProviderClientVideoTests(unittest.TestCase):
 
     def test_extract_generated_video_maps_download_failure(self) -> None:
         provider_client = self._build_client()
-        video_file = SimpleNamespace(uri="gs://bucket/generated-video.mp4")
-        operation = SimpleNamespace(
-            name="operations/video-download",
-            result=SimpleNamespace(generated_videos=[SimpleNamespace(video=video_file)]),
-        )
-        sdk_client = SimpleNamespace(
-            files=SimpleNamespace(download=MagicMock(side_effect=RuntimeError("download boom"))),
-        )
+        operation = {
+            "id": "video-download",
+            "status": "completed",
+            "result": {"url": "https://cdn.example.com/generated-video.mp4"},
+        }
+        client = MagicMock()
+        client.get.side_effect = RuntimeError("download boom")
 
         with self.assertRaises(GoogleProviderError) as exc_info:
-            provider_client._extract_generated_video(sdk_client, operation)
+            provider_client._extract_generated_video(client, operation)
 
         exc = exc_info.exception
         self.assertEqual(exc.code, "google_video_download_failed")
         self.assertEqual(
             exc.message,
-            "Google video download failed for uri=gs://bucket/generated-video.mp4: download boom",
+            "Google video download failed for uri=https://cdn.example.com/generated-video.mp4: download boom",
         )
 
 
@@ -207,76 +250,21 @@ class GoogleProviderClientVoiceTests(unittest.TestCase):
             tts_model="gemini-tts-test",
         )
 
-    def test_generate_voice_success_path_returns_audio_bytes_and_request_summary(self) -> None:
+    def test_generate_voice_reports_unsupported_for_relay_provider(self) -> None:
         provider_client = self._build_client()
-        response = SimpleNamespace(
-            candidates=[
-                SimpleNamespace(
-                    content=SimpleNamespace(
-                        parts=[
-                            SimpleNamespace(
-                                inline_data=SimpleNamespace(
-                                    data=b"voice-bytes",
-                                    mime_type="audio/wav",
-                                )
-                            )
-                        ]
-                    )
-                )
-            ]
-        )
-        sdk_client = SimpleNamespace(
-            models=SimpleNamespace(generate_content=MagicMock(return_value=response)),
-        )
 
-        with patch("app.providers.google.client.genai.Client", return_value=sdk_client) as client_ctor:
-            result = provider_client.generate_voice(
+        with self.assertRaises(GoogleProviderError) as exc_info:
+            provider_client.generate_voice(
                 text="  Hello.  ",
                 voice_name="Zephyr",
                 language_code="en-GB",
             )
 
-        client_ctor.assert_called_once_with(api_key="test-google-key")
-        sdk_client.models.generate_content.assert_called_once()
-        call_kwargs = sdk_client.models.generate_content.call_args.kwargs
-        self.assertEqual(call_kwargs["model"], "gemini-tts-test")
-        self.assertEqual(call_kwargs["contents"], "Hello.")
+        exc = exc_info.exception
+        self.assertEqual(exc.code, "google_tts_generation_failed")
         self.assertEqual(
-            call_kwargs["config"].model_dump(exclude_none=True),
-            {
-                "response_modalities": ["audio"],
-                "speech_config": {
-                    "voice_config": {
-                        "prebuilt_voice_config": {
-                            "voice_name": "Zephyr",
-                        }
-                    },
-                    "language_code": "en-GB",
-                },
-            },
-        )
-        self.assertEqual(result.audio_bytes, b"voice-bytes")
-        self.assertEqual(result.content_type, "audio/wav")
-        self.assertEqual(
-            result.provider_payload,
-            {
-                "model": "gemini-tts-test",
-                "sdk": "google-genai",
-                "request": {
-                    "voice_name": "Zephyr",
-                    "language_code": "en-GB",
-                    "speech_config_present": True,
-                    "speech_config_type": "SpeechConfig",
-                    "text_length": 6,
-                    "attempt_count": 1,
-                },
-                "response": {
-                    "response_type": "SimpleNamespace",
-                    "candidates_count": 1,
-                    "candidate_index": 0,
-                    "part_index": 0,
-                },
-            },
+            exc.message,
+            "Google TTS generation is not supported by the configured relay provider.",
         )
 
     def test_build_speech_config_merges_voice_name_into_existing_speech_config(self) -> None:
@@ -340,37 +328,15 @@ class GoogleProviderClientVoiceTests(unittest.TestCase):
         self.assertEqual(exc.code, "google_provider_response_invalid")
         self.assertEqual(exc.message, "Google TTS inline audio payload is not bytes.")
 
-    def test_generate_voice_retries_when_response_has_no_inline_audio(self) -> None:
+    def test_generate_voice_rejects_missing_text_before_support_check(self) -> None:
         provider_client = self._build_client()
-        retry_response = SimpleNamespace(candidates=[SimpleNamespace(content=SimpleNamespace(parts=[]))])
-        success_response = SimpleNamespace(
-            candidates=[
-                SimpleNamespace(
-                    content=SimpleNamespace(
-                        parts=[
-                            SimpleNamespace(
-                                inline_data=SimpleNamespace(
-                                    data=b"voice-bytes",
-                                    mime_type="audio/wav",
-                                )
-                            )
-                        ]
-                    )
-                )
-            ]
-        )
-        sdk_client = SimpleNamespace(
-            models=SimpleNamespace(generate_content=MagicMock(side_effect=[retry_response, success_response])),
-        )
 
-        with patch("app.providers.google.client.genai.Client", return_value=sdk_client):
-            with patch("app.providers.google.client.time.sleep") as sleep_mock:
-                result = provider_client.generate_voice(text="Retry me.")
+        with self.assertRaises(GoogleProviderError) as exc_info:
+            provider_client.generate_voice(text="   ")
 
-        self.assertEqual(result.audio_bytes, b"voice-bytes")
-        self.assertEqual(result.provider_payload["request"]["attempt_count"], 2)
-        self.assertEqual(sdk_client.models.generate_content.call_count, 2)
-        sleep_mock.assert_called_once_with(provider_client.tts_retry_backoff_seconds)
+        exc = exc_info.exception
+        self.assertEqual(exc.code, "google_tts_text_missing")
+        self.assertEqual(exc.message, "Google TTS input text is missing.")
 
 
 class GoogleProviderClientImageAndHelperTests(unittest.TestCase):
@@ -384,18 +350,30 @@ class GoogleProviderClientImageAndHelperTests(unittest.TestCase):
 
     def test_generate_image_success_path_returns_png_and_marks_negative_prompt_unforwarded(self) -> None:
         provider_client = self._build_client()
-        response = SimpleNamespace(
-            generated_images=[
-                SimpleNamespace(
-                    image=SimpleNamespace(image_bytes=b"png-bytes", mime_type="image/png"),
-                )
-            ]
+        image_response = {
+            "created": 123,
+            "data": [
+                {
+                    "url": "https://cdn.example.com/generated-image.png",
+                }
+            ],
+        }
+        download_response = MagicMock(
+            status_code=200,
+            headers={"content-type": "image/png"},
+            content=b"png-bytes",
         )
-        sdk_client = SimpleNamespace(
-            models=SimpleNamespace(generate_images=MagicMock(return_value=response)),
+        http_client = MagicMock()
+        http_client.request.return_value = MagicMock(
+            status_code=200,
+            json=MagicMock(return_value=image_response),
         )
+        http_client.get.return_value = download_response
+        context_client = MagicMock()
+        context_client.__enter__.return_value = http_client
+        context_client.__exit__.return_value = None
 
-        with patch("app.providers.google.client.genai.Client", return_value=sdk_client):
+        with patch.object(provider_client, "_build_http_client", return_value=context_client):
             result = provider_client.generate_image(
                 prompt="product still",
                 negative_prompt="ignore me",
@@ -405,19 +383,17 @@ class GoogleProviderClientImageAndHelperTests(unittest.TestCase):
                 person_generation="allow_adult",
             )
 
-        sdk_client.models.generate_images.assert_called_once()
-        call_kwargs = sdk_client.models.generate_images.call_args.kwargs
-        self.assertEqual(call_kwargs["model"], "imagen-test")
-        self.assertEqual(call_kwargs["prompt"], "product still")
-        self.assertEqual(
-            call_kwargs["config"].model_dump(exclude_none=True),
-            {
-                "number_of_images": 2,
-                "aspect_ratio": "1:1",
-                "safety_filter_level": "BLOCK_ONLY_HIGH",
-                "person_generation": "ALLOW_ADULT",
+        http_client.request.assert_called_once_with(
+            "POST",
+            "/v1/images/generations",
+            json={
+                "model": "imagen-test",
+                "prompt": "product still",
+                "n": 2,
+                "size": "1024x1024",
             },
         )
+        http_client.get.assert_called_once_with("https://cdn.example.com/generated-image.png")
         self.assertEqual(result.image_bytes, b"png-bytes")
         self.assertEqual(result.content_type, "image/png")
         self.assertEqual(result.provider_payload["request"]["negative_prompt_present"], True)

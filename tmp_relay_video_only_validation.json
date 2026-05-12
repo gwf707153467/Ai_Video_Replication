@@ -1,0 +1,35 @@
+{
+  "relay_base_url": "https://ai.ai666.net",
+  "video_model": "veo_3_1-fast",
+  "video_aspect_ratio": "9:16",
+  "status": "passed",
+  "content_type": "video/mp4",
+  "byte_length": 3663342,
+  "provider_payload": {
+    "model": "veo_3_1-fast",
+    "sdk": "google-genai",
+    "request": {
+      "sample_count": 1,
+      "aspect_ratio": "9:16",
+      "duration_seconds": null,
+      "fps": null,
+      "seed": null,
+      "resolution": null,
+      "person_generation": null,
+      "output_gcs_uri": null,
+      "enhance_prompt": null,
+      "compression_quality": null,
+      "negative_prompt_present": false,
+      "reference_images_count": 0,
+      "poll_interval_seconds": 10.0,
+      "max_polls": 24
+    },
+    "response": {
+      "operation_name": "task_vOwDP3ZUT6h0d1MlJrw7G6lj3HM4pfvE",
+      "operation_type": "dict",
+      "result_type": "dict",
+      "generated_videos_count": 1,
+      "video_uri": "https://midjourney-plus.oss-us-west-1.aliyuncs.com/flow/26348bdd-d596-455f-8629-0adc0674d274.mp4"
+    }
+  }
+}

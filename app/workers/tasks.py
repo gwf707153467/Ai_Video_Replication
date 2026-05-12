@@ -100,10 +100,40 @@ def _first_sequence_id(db, project_id: str):
     return sequence.id if sequence else None
 
 
-def _runtime_asset_object_key(project_id: str, runtime_version: str, job: Job, filename: str) -> str:
+def _resolve_asset_sequence_id(db, project_id: str, job: Job, execution_result: dict | None):
+    provider_payload = execution_result.get("provider_payload") if isinstance(execution_result, dict) else None
+    if isinstance(provider_payload, dict):
+        selection_payload = provider_payload.get("selection")
+        if isinstance(selection_payload, dict):
+            selected_sequence_id = selection_payload.get("sequence_id")
+            if selected_sequence_id:
+                return UUID(str(selected_sequence_id))
+
+    payload = job.payload if isinstance(job.payload, dict) else {}
+    sequence_selector = payload.get("sequence_selector") if isinstance(payload, dict) else None
+    if isinstance(sequence_selector, dict):
+        selected_sequence_id = sequence_selector.get("sequence_id")
+        if selected_sequence_id:
+            return UUID(str(selected_sequence_id))
+
+    selected_sequence_id = payload.get("sequence_id") if isinstance(payload, dict) else None
+    if selected_sequence_id:
+        return UUID(str(selected_sequence_id))
+
+    return _first_sequence_id(db, project_id)
+
+
+def _runtime_asset_object_key(
+    project_id: str,
+    runtime_version: str,
+    job: Job,
+    filename: str,
+    sequence_id: UUID | None = None,
+) -> str:
     return AssetPolicyService.build_runtime_asset_object_key(
         project_id=UUID(project_id),
         runtime_version=runtime_version,
+        sequence_id=sequence_id,
         job_type=job.job_type,
         filename=filename,
     )
@@ -126,6 +156,7 @@ def _register_generated_asset(
     project_id: str,
     runtime_version: str,
     job: Job,
+    execution_result: dict | None,
     asset_type: str,
     asset_role: str,
     filename: str,
@@ -133,9 +164,15 @@ def _register_generated_asset(
     status: str = "registered",
 ) -> Asset:
     project_uuid = UUID(project_id)
-    sequence_id = _first_sequence_id(db, project_id)
+    sequence_id = _resolve_asset_sequence_id(db, project_id, job, execution_result)
     bucket_name = AssetPolicyService.resolve_bucket(asset_type)
-    object_key = _runtime_asset_object_key(project_id, runtime_version, job, filename)
+    object_key = _runtime_asset_object_key(
+        project_id,
+        runtime_version,
+        job,
+        filename,
+        sequence_id=sequence_id,
+    )
     existing_asset = _find_existing_runtime_asset(db, bucket_name=bucket_name, object_key=object_key)
     metadata = {
         "runtime_version": runtime_version,
@@ -290,6 +327,7 @@ def _materialize_generated_asset(
         project_id=project_id,
         runtime_version=runtime_version,
         job=job,
+        execution_result=execution_result,
         asset_type=asset_plan["asset_type"],
         asset_role=asset_plan["asset_role"],
         filename=filename,
@@ -380,6 +418,7 @@ def _materialize_generated_asset(
 
 def _run_job(job_id: str, project_id: str, runtime_version: str, task_name: str, asset_plan: dict | None = None) -> dict:
     db = SessionLocal()
+    execution_result = None
     try:
         job = db.get(Job, UUID(job_id))
         if not job:
@@ -459,6 +498,7 @@ def _run_job(job_id: str, project_id: str, runtime_version: str, task_name: str,
                 project_id=project_id,
                 runtime_version=runtime_version,
                 job=job,
+                execution_result=execution_result,
                 asset_type=asset_plan["asset_type"],
                 asset_role=asset_plan["asset_role"],
                 filename=failed_filename,

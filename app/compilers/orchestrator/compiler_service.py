@@ -58,13 +58,24 @@ class CompilerService:
             bridges_by_sequence[bridge.sequence_id].append(bridge)
 
         runtime_sequences: list[RuntimeSequencePacket] = []
+        target_total_duration_ms = 0
         for sequence in sequences:
+            sequence_spus = spus_by_sequence.get(sequence.id, [])
+            sequence_vbus = vbus_by_sequence.get(sequence.id, [])
+            sequence_bridges = bridges_by_sequence.get(sequence.id, [])
+            primary_spu = next((item for item in sequence_spus if item.asset_role == "primary_visual"), None)
+            target_duration_ms = primary_spu.duration_ms if primary_spu and primary_spu.duration_ms is not None else None
+            if target_duration_ms:
+                target_total_duration_ms += target_duration_ms
+
             runtime_sequences.append(
                 RuntimeSequencePacket(
                     sequence_id=sequence.id,
                     sequence_index=sequence.sequence_index,
                     sequence_type=sequence.sequence_type,
                     persuasive_goal=sequence.persuasive_goal,
+                    target_duration_ms=target_duration_ms,
+                    has_voice=bool(sequence_vbus),
                     spus=[
                         {
                             "spu_id": str(item.id),
@@ -78,7 +89,7 @@ class CompilerService:
                             "visual_constraints": item.visual_constraints,
                             "status": item.status,
                         }
-                        for item in spus_by_sequence.get(sequence.id, [])
+                        for item in sequence_spus
                     ],
                     vbus=[
                         {
@@ -92,7 +103,7 @@ class CompilerService:
                             "tts_params": item.tts_params,
                             "status": item.status,
                         }
-                        for item in vbus_by_sequence.get(sequence.id, [])
+                        for item in sequence_vbus
                     ],
                     bridges=[
                         {
@@ -105,7 +116,7 @@ class CompilerService:
                             "transition_policy": item.transition_policy,
                             "status": item.status,
                         }
-                        for item in bridges_by_sequence.get(sequence.id, [])
+                        for item in sequence_bridges
                     ],
                 )
             )
@@ -118,6 +129,8 @@ class CompilerService:
             visual_track_count=len(spus),
             audio_track_count=len(vbus),
             bridge_count=len(bridges),
+            sequence_count=len(runtime_sequences),
+            target_total_duration_ms=target_total_duration_ms,
             sequences=runtime_sequences,
         )
 
@@ -166,7 +179,8 @@ class CompilerService:
         return request.runtime_version
 
     def _create_and_dispatch_jobs(self, project_id: UUID, runtime_version: str) -> dict:
-        job_types = ["compile", "render_image", "render_video", "render_voice", "merge"]
+        job_types = ["compile", "render_image", "render_video"]
+        primary_sequence_selector = self._resolve_primary_sequence_selector(project_id)
         render_image_payload = self._build_render_image_payload(project_id, runtime_version)
         jobs: list[Job] = []
 
@@ -177,6 +191,8 @@ class CompilerService:
             }
             if job_type == "render_image":
                 payload.update(render_image_payload)
+            if job_type in {"render_image", "render_video"} and primary_sequence_selector:
+                payload["sequence_selector"] = dict(primary_sequence_selector)
 
             job = Job(
                 project_id=project_id,
@@ -222,6 +238,21 @@ class CompilerService:
             "undispatched_job_count": len(dispatched_jobs) - dispatched_job_count,
             "dispatch_status": dispatch_status,
             "jobs": dispatched_jobs,
+        }
+
+    def _resolve_primary_sequence_selector(self, project_id: UUID) -> dict | None:
+        primary_sequence = (
+            self.db.query(Sequence)
+            .filter(Sequence.project_id == project_id)
+            .order_by(Sequence.sequence_index.asc(), Sequence.created_at.asc())
+            .first()
+        )
+        if not primary_sequence:
+            return None
+        return {
+            "sequence_id": str(primary_sequence.id),
+            "sequence_index": primary_sequence.sequence_index,
+            "strategy": "compiler_default_first_sequence",
         }
 
     def _build_render_image_payload(self, project_id: UUID, runtime_version: str) -> dict:

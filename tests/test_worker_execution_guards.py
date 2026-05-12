@@ -129,17 +129,24 @@ class FailHardMergeExecutorTests(unittest.TestCase):
         executor._load_runtime_payload = MagicMock(
             return_value=(SimpleNamespace(runtime_version="runtime-v1"), {"project_id": "project-1"})
         )
+        sequence_id = "11111111-1111-1111-1111-111111111111"
         video_asset = SimpleNamespace(
             id="asset-video-1",
             bucket_name="generated-videos",
-            object_key="projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+            object_key=(
+                f"projects/project-1/runtime/runtime-v1/sequences/{sequence_id}/"
+                "render_video/job-video-1.mp4"
+            ),
             asset_type="generated_video",
             status="materialized",
         )
         audio_asset = SimpleNamespace(
             id="asset-audio-1",
             bucket_name="audio-assets",
-            object_key="projects/project-1/runtime/runtime-v1/render_voice/job-voice-1.wav",
+            object_key=(
+                f"projects/project-1/runtime/runtime-v1/sequences/{sequence_id}/"
+                "render_voice/job-voice-1.wav"
+            ),
             asset_type="audio",
             status="materialized",
             content_type="audio/wav",
@@ -180,11 +187,11 @@ class FailHardMergeExecutorTests(unittest.TestCase):
         )
         artifact_service.get_bytes.assert_any_call(
             "generated-videos",
-            "projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+            f"projects/project-1/runtime/runtime-v1/sequences/{sequence_id}/render_video/job-video-1.mp4",
         )
         artifact_service.get_bytes.assert_any_call(
             "audio-assets",
-            "projects/project-1/runtime/runtime-v1/render_voice/job-voice-1.wav",
+            f"projects/project-1/runtime/runtime-v1/sequences/{sequence_id}/render_voice/job-voice-1.wav",
         )
         executor._mux_video_and_audio.assert_called_once_with(
             video_bytes=b"video-bytes",
@@ -200,7 +207,10 @@ class FailHardMergeExecutorTests(unittest.TestCase):
             {
                 "asset_id": "asset-video-1",
                 "bucket_name": "generated-videos",
-                "object_key": "projects/project-1/runtime/runtime-v1/render_video/job-video-1.mp4",
+                "object_key": (
+                    f"projects/project-1/runtime/runtime-v1/sequences/{sequence_id}/"
+                    "render_video/job-video-1.mp4"
+                ),
                 "asset_type": "generated_video",
                 "status": "materialized",
             },
@@ -210,7 +220,10 @@ class FailHardMergeExecutorTests(unittest.TestCase):
             {
                 "asset_id": "asset-audio-1",
                 "bucket_name": "audio-assets",
-                "object_key": "projects/project-1/runtime/runtime-v1/render_voice/job-voice-1.wav",
+                "object_key": (
+                    f"projects/project-1/runtime/runtime-v1/sequences/{sequence_id}/"
+                    "render_voice/job-voice-1.wav"
+                ),
                 "asset_type": "audio",
                 "status": "materialized",
             },

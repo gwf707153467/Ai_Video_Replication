@@ -5,16 +5,26 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import Response
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from sqlalchemy.orm import Session
 
 from app.compilers.orchestrator.compiler_service import CompilerService
-from app.db.models import Asset, CompiledRuntime, Job, Project, SPU, Sequence, VBU
+from app.db.models import Asset, Bridge, CompiledRuntime, Job, Project, SPU, Sequence, VBU
 from app.db.session import get_db
 from app.schemas.compile import CompileRequest
 from app.services.storage_service import StorageService
 
 router = APIRouter()
+
+
+class StudioSegmentRequest(BaseModel):
+    sequence_index: int | None = Field(default=None, ge=1)
+    sequence_type: str = Field(default="body", min_length=1, max_length=50)
+    persuasive_goal: str | None = None
+    visual_prompt: str = Field(min_length=1)
+    voice_script: str | None = None
+    negative_prompt: str | None = None
+    duration_ms: int = Field(default=8000, ge=1)
 
 
 class StudioGenerateRequest(BaseModel):
@@ -23,10 +33,19 @@ class StudioGenerateRequest(BaseModel):
     target_language: str = "en-US"
     product_name: str = Field(min_length=1, max_length=255)
     reference_note: str | None = None
-    visual_prompt: str = Field(min_length=1)
-    voice_script: str = Field(min_length=1)
+    visual_prompt: str | None = None
+    voice_script: str | None = None
     negative_prompt: str | None = None
     duration_ms: int = 6000
+    segments: list[StudioSegmentRequest] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def validate_segment_inputs(self) -> "StudioGenerateRequest":
+        has_segments = len(self.segments) > 0
+        has_legacy_single = bool((self.visual_prompt or "").strip())
+        if not has_segments and not has_legacy_single:
+            raise ValueError("either segments or legacy visual_prompt is required")
+        return self
 
 
 class StudioGenerateResponse(BaseModel):
@@ -77,11 +96,13 @@ def _first_or_404(db: Session, runtime_id: UUID) -> CompiledRuntime:
     return runtime
 
 
+
 def _default_negative_prompt() -> str:
     return (
         "blurry, warped product shape, fake logos, watermark, captions, text overlay, "
         "low quality, distorted hands"
     )
+
 
 
 def _runtime_jobs(db: Session, runtime: CompiledRuntime) -> list[Job]:
@@ -94,6 +115,7 @@ def _runtime_jobs(db: Session, runtime: CompiledRuntime) -> list[Job]:
         .order_by(Job.created_at.asc())
         .all()
     )
+
 
 
 def _runtime_assets(db: Session, runtime: CompiledRuntime) -> list[Asset]:
@@ -109,6 +131,7 @@ def _runtime_assets(db: Session, runtime: CompiledRuntime) -> list[Asset]:
         if isinstance(asset.asset_metadata, dict)
         and asset.asset_metadata.get("runtime_version") == runtime.runtime_version
     ]
+
 
 
 def _asset_view(asset: Asset) -> StudioAssetView:
@@ -129,6 +152,43 @@ def _asset_view(asset: Asset) -> StudioAssetView:
     )
 
 
+
+def _normalized_segments(payload: StudioGenerateRequest) -> list[StudioSegmentRequest]:
+    if payload.segments:
+        return [
+            StudioSegmentRequest(
+                sequence_index=segment.sequence_index if segment.sequence_index is not None else index,
+                sequence_type=segment.sequence_type.strip() or "body",
+                persuasive_goal=segment.persuasive_goal,
+                visual_prompt=segment.visual_prompt.strip(),
+                voice_script=(segment.voice_script.strip() if segment.voice_script and segment.voice_script.strip() else None),
+                negative_prompt=(
+                    segment.negative_prompt.strip()
+                    if segment.negative_prompt and segment.negative_prompt.strip()
+                    else None
+                ),
+                duration_ms=segment.duration_ms,
+            )
+            for index, segment in enumerate(payload.segments, start=1)
+        ]
+
+    return [
+        StudioSegmentRequest(
+            sequence_index=1,
+            sequence_type="hook",
+            persuasive_goal=f"Replicate a short-form ecommerce video for {payload.product_name}.",
+            visual_prompt=(payload.visual_prompt or "").strip(),
+            voice_script=(payload.voice_script.strip() if payload.voice_script and payload.voice_script.strip() else None),
+            negative_prompt=(
+                payload.negative_prompt.strip()
+                if payload.negative_prompt and payload.negative_prompt.strip()
+                else None
+            ),
+            duration_ms=payload.duration_ms,
+        )
+    ]
+
+
 @router.post("/generate", response_model=StudioGenerateResponse)
 def generate_video(payload: StudioGenerateRequest, db: Session = Depends(get_db)) -> StudioGenerateResponse:
     project = Project(
@@ -140,43 +200,68 @@ def generate_video(payload: StudioGenerateRequest, db: Session = Depends(get_db)
     db.add(project)
     db.flush()
 
-    sequence = Sequence(
-        project_id=project.id,
-        sequence_index=1,
-        sequence_type="hook",
-        persuasive_goal=f"Replicate a short-form ecommerce video for {payload.product_name}.",
-    )
-    db.add(sequence)
-    db.flush()
+    segments = _normalized_segments(payload)
 
-    spu = SPU(
-        project_id=project.id,
-        sequence_id=sequence.id,
-        spu_code="SPU-001",
-        display_name=payload.product_name,
-        asset_role="primary_visual",
-        duration_ms=payload.duration_ms,
-        generation_mode="veo_segment",
-        prompt_text=payload.visual_prompt.strip(),
-        negative_prompt_text=payload.negative_prompt or _default_negative_prompt(),
-        visual_constraints={
-            "platform": "tiktok_9_16",
-            "style": "short_form_ecommerce_replication",
-        },
-    )
-    db.add(spu)
+    for segment in segments:
+        sequence_index = segment.sequence_index or 1
+        sequence = Sequence(
+            project_id=project.id,
+            sequence_index=sequence_index,
+            sequence_type=segment.sequence_type,
+            persuasive_goal=segment.persuasive_goal
+            or f"Replicate segment {sequence_index} for {payload.product_name}.",
+        )
+        db.add(sequence)
+        db.flush()
 
-    vbu = VBU(
-        project_id=project.id,
-        sequence_id=sequence.id,
-        vbu_code="VBU-001",
-        persuasive_role="hook",
-        script_text=payload.voice_script.strip(),
-        language=project.source_language,
-        duration_ms=payload.duration_ms,
-        tts_params={},
-    )
-    db.add(vbu)
+        spu = SPU(
+            project_id=project.id,
+            sequence_id=sequence.id,
+            spu_code=f"SPU-{sequence_index:03d}",
+            display_name=f"{payload.product_name} segment {sequence_index}",
+            asset_role="primary_visual",
+            duration_ms=segment.duration_ms,
+            generation_mode="veo_segment",
+            prompt_text=segment.visual_prompt,
+            negative_prompt_text=segment.negative_prompt or _default_negative_prompt(),
+            visual_constraints={
+                "platform": "tiktok_9_16",
+                "style": "short_form_ecommerce_replication",
+                "sequence_type": segment.sequence_type,
+                "sequence_index": sequence_index,
+            },
+        )
+        db.add(spu)
+        db.flush()
+
+        vbu = None
+        if segment.voice_script:
+            vbu = VBU(
+                project_id=project.id,
+                sequence_id=sequence.id,
+                vbu_code=f"VBU-{sequence_index:03d}",
+                persuasive_role=segment.sequence_type,
+                script_text=segment.voice_script,
+                language=project.source_language,
+                duration_ms=segment.duration_ms,
+                tts_params={},
+            )
+            db.add(vbu)
+            db.flush()
+
+        bridge = Bridge(
+            project_id=project.id,
+            sequence_id=sequence.id,
+            spu_id=spu.id,
+            vbu_id=vbu.id if vbu is not None else None,
+            bridge_code=f"BR-{sequence_index:03d}",
+            bridge_type="sequence_unit_binding",
+            execution_order=sequence_index,
+            transition_policy={},
+            status="draft",
+        )
+        db.add(bridge)
+
     db.flush()
 
     runtime = CompilerService(db).compile_project(
@@ -186,6 +271,9 @@ def generate_video(payload: StudioGenerateRequest, db: Session = Depends(get_db)
             compile_options={
                 "source": "studio_minimal_frontend",
                 "reference_note": payload.reference_note,
+                "studio_mode": "multi_segment" if len(segments) > 1 else "single_segment",
+                "segment_count": len(segments),
+                "target_total_duration_ms": sum(segment.duration_ms for segment in segments),
             },
             auto_version=True,
             dispatch_jobs=True,

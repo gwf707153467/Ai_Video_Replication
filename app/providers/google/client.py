@@ -1,8 +1,12 @@
+from __future__ import annotations
+
+import base64
 from dataclasses import dataclass
 import time
 from typing import Any
+from urllib.parse import quote
 
-from google import genai
+import httpx
 from google.genai import types
 
 
@@ -35,6 +39,8 @@ class GoogleGeneratedVoice:
 
 
 class GoogleProviderClient:
+    relay_base_url = "https://ai.ai666.net"
+
     def __init__(self, api_key: str, video_model: str, image_model: str, tts_model: str) -> None:
         self.api_key = api_key
         self.video_model = video_model
@@ -76,30 +82,36 @@ class GoogleProviderClient:
                 "Google image model is not configured.",
             )
 
-        client = genai.Client(api_key=self.api_key)
-        config_kwargs: dict[str, Any] = {
-            "numberOfImages": sample_count,
+        normalized_prompt = str(prompt or "").strip()
+        request_payload: dict[str, Any] = {
+            "model": self.image_model,
+            "prompt": normalized_prompt or str(prompt or ""),
+            "n": max(1, int(sample_count or 1)),
         }
-        if aspect_ratio:
-            config_kwargs["aspectRatio"] = aspect_ratio
-        if safety_setting:
-            config_kwargs["safetyFilterLevel"] = safety_setting
-        if person_generation:
-            config_kwargs["personGeneration"] = person_generation
+        image_size = self._map_image_size(aspect_ratio)
+        if image_size:
+            request_payload["size"] = image_size
 
         try:
-            response = client.models.generate_images(
-                model=self.image_model,
-                prompt=prompt,
-                config=types.GenerateImagesConfig(**config_kwargs),
-            )
+            with self._build_http_client() as client:
+                response_payload = self._request_json(
+                    client,
+                    "POST",
+                    "/v1/images/generations",
+                    json=request_payload,
+                )
+                image_bytes, content_type, response_summary = self._extract_relay_generated_image(
+                    client,
+                    response_payload,
+                )
+        except GoogleProviderError:
+            raise
         except Exception as exc:
             raise GoogleProviderError(
                 "google_image_generation_failed",
-                f"Google image generation request failed via google-genai SDK: {exc}",
+                f"Google image generation request failed via relay HTTP API: {exc}",
             ) from exc
 
-        image_bytes, content_type, response_summary = self._extract_generated_image(response)
         provider_payload = {
             "model": self.image_model,
             "sdk": "google-genai",
@@ -157,66 +169,70 @@ class GoogleProviderClient:
                 "Google video generation prompt is missing.",
             )
 
-        client = genai.Client(api_key=self.api_key)
-        config_kwargs: dict[str, Any] = {
-            "number_of_videos": sample_count,
-        }
-        if negative_prompt:
-            config_kwargs["negative_prompt"] = negative_prompt
-        if aspect_ratio:
-            config_kwargs["aspect_ratio"] = aspect_ratio
-        if duration_seconds is not None:
-            config_kwargs["duration_seconds"] = duration_seconds
-        if fps is not None:
-            config_kwargs["fps"] = fps
-        if seed is not None:
-            config_kwargs["seed"] = seed
-        if resolution:
-            config_kwargs["resolution"] = resolution
-        if person_generation:
-            config_kwargs["person_generation"] = person_generation
-        if output_gcs_uri:
-            config_kwargs["output_gcs_uri"] = output_gcs_uri
-        if enhance_prompt is not None:
-            config_kwargs["enhance_prompt"] = enhance_prompt
-        if compression_quality:
-            config_kwargs["compression_quality"] = compression_quality
-        if last_frame is not None:
-            config_kwargs["last_frame"] = last_frame
-        if mask is not None:
-            config_kwargs["mask"] = mask
-        if reference_images:
-            config_kwargs["reference_images"] = reference_images
-
         normalized_poll_interval = (
             self.video_poll_interval_seconds
             if poll_interval_seconds is None
             else float(poll_interval_seconds)
         )
         normalized_max_polls = self.video_max_polls if max_polls is None else int(max_polls)
+        reference_image_urls = self._extract_reference_image_urls(reference_images)
+
+        request_payload: dict[str, Any] = {
+            "model": self.video_model,
+            "prompt": normalized_prompt,
+            "sample_count": max(1, int(sample_count or 1)),
+        }
+        if negative_prompt:
+            request_payload["negative_prompt"] = negative_prompt
+        if aspect_ratio:
+            request_payload["aspect_ratio"] = aspect_ratio
+        if duration_seconds is not None:
+            request_payload["duration_seconds"] = int(duration_seconds)
+        if fps is not None:
+            request_payload["fps"] = int(fps)
+        if seed is not None:
+            request_payload["seed"] = int(seed)
+        if resolution:
+            request_payload["resolution"] = resolution
+        if person_generation:
+            request_payload["person_generation"] = person_generation
+        if output_gcs_uri:
+            request_payload["output_gcs_uri"] = output_gcs_uri
+        if enhance_prompt is not None:
+            request_payload["enhance_prompt"] = bool(enhance_prompt)
+        if compression_quality:
+            request_payload["compression_quality"] = compression_quality
+        if last_frame is not None:
+            request_payload["last_frame"] = last_frame
+        if mask is not None:
+            request_payload["mask"] = mask
+        if reference_image_urls:
+            request_payload["images"] = reference_image_urls
 
         try:
-            operation = client.models.generate_videos(
-                model=self.video_model,
-                prompt=normalized_prompt,
-                config=types.GenerateVideosConfig(**config_kwargs),
-            )
-            completed_operation = self._poll_video_operation(
-                client,
-                operation,
-                poll_interval_seconds=normalized_poll_interval,
-                max_polls=normalized_max_polls,
-            )
-            video_bytes, content_type, response_summary = self._extract_generated_video(
-                client,
-                completed_operation,
-            )
+            with self._build_http_client() as client:
+                operation = self._request_json(
+                    client,
+                    "POST",
+                    "/v1/video/create",
+                    json=request_payload,
+                )
+                completed_operation = self._poll_video_operation(
+                    client,
+                    operation,
+                    poll_interval_seconds=normalized_poll_interval,
+                    max_polls=normalized_max_polls,
+                )
+                video_bytes, content_type, response_summary = self._extract_generated_video(
+                    client,
+                    completed_operation,
+                )
         except GoogleProviderError:
             raise
         except Exception as exc:
             raise GoogleProviderError(
                 "google_video_generation_failed",
-                f"Google video generation request failed via google-genai SDK: {exc}",
+                f"Google video generation request failed via relay HTTP API: {exc}",
             ) from exc
 
         provider_payload = {
@@ -254,6 +270,8 @@ class GoogleProviderClient:
         language_code: str | None = None,
         speech_config: Any | None = None,
     ) -> GoogleGeneratedVoice:
+        del voice_name, language_code, speech_config
+
         if not self.api_key:
             raise GoogleProviderError(
                 "google_provider_not_configured",
@@ -271,68 +289,95 @@ class GoogleProviderClient:
                 "Google TTS input text is missing.",
             )
 
-        client = genai.Client(api_key=self.api_key)
-        normalized_speech_config = self._build_speech_config(
-            voice_name=voice_name,
-            language_code=language_code,
-            speech_config=speech_config,
+        raise GoogleProviderError(
+            "google_tts_generation_failed",
+            "Google TTS generation is not supported by the configured relay provider.",
         )
 
-        config_kwargs: dict[str, Any] = {
-            "response_modalities": ["audio"],
-        }
-        if normalized_speech_config is not None:
-            config_kwargs["speech_config"] = normalized_speech_config
+    def _build_http_client(self) -> httpx.Client:
+        return httpx.Client(
+            base_url=self.relay_base_url,
+            headers=self._build_headers(),
+            timeout=self.timeout,
+            follow_redirects=True,
+        )
 
-        response_summary = None
-        attempt_used = 0
-        last_retryable_error: GoogleProviderError | None = None
-        for attempt in range(1, self.tts_max_attempts + 1):
-            attempt_used = attempt
-            try:
-                response = client.models.generate_content(
-                    model=self.tts_model,
-                    contents=normalized_text,
-                    config=types.GenerateContentConfig(**config_kwargs),
-                )
-                audio_bytes, content_type, response_summary = self._extract_generated_voice(response)
-                break
-            except GoogleProviderError as exc:
-                if exc.code != "google_provider_response_invalid" or attempt >= self.tts_max_attempts:
-                    raise
-                last_retryable_error = exc
-                time.sleep(self.tts_retry_backoff_seconds * attempt)
-            except Exception as exc:
-                raise GoogleProviderError(
-                    "google_tts_generation_failed",
-                    f"Google TTS generation request failed via google-genai SDK: {exc}",
-                ) from exc
-        else:  # pragma: no cover - defensive guard
-            raise last_retryable_error or GoogleProviderError(
+    def _build_headers(self) -> dict[str, str]:
+        authorization_value = self.api_key.strip()
+        if authorization_value and not authorization_value.lower().startswith("bearer "):
+            authorization_value = f"Bearer {authorization_value}"
+        return {
+            "Authorization": authorization_value,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+
+    def _request_json(
+        self,
+        client: httpx.Client,
+        method: str,
+        path: str,
+        *,
+        json: dict[str, Any] | None = None,
+    ) -> Any:
+        response = client.request(method, path, json=json)
+        if response.status_code >= 400:
+            raise RuntimeError(
+                f"HTTP {response.status_code} calling {path}: {response.text}"
+            )
+        try:
+            return response.json()
+        except Exception as exc:
+            raise RuntimeError(f"Relay returned non-JSON payload for {path}: {exc}") from exc
+
+    def _extract_relay_generated_image(
+        self,
+        client: httpx.Client,
+        response: Any,
+    ) -> tuple[bytes, str, dict]:
+        legacy_generated_images = self._read_value(response, "generated_images")
+        if isinstance(legacy_generated_images, list):
+            return self._extract_generated_image(response)
+
+        data = self._read_value(response, "data")
+        if not isinstance(data, list) or not data:
+            raise GoogleProviderError(
                 "google_provider_response_invalid",
-                "Google TTS response did not yield usable audio after retries.",
+                "Google image response does not contain generated_images.",
             )
 
-        provider_payload = {
-            "model": self.tts_model,
-            "sdk": "google-genai",
-            "request": {
-                "voice_name": voice_name,
-                "language_code": language_code,
-                "speech_config_present": normalized_speech_config is not None,
-                "speech_config_type": type(normalized_speech_config).__name__
-                if normalized_speech_config is not None
-                else None,
-                "text_length": len(normalized_text),
-                "attempt_count": attempt_used,
-            },
-            "response": response_summary,
+        first_generated = self._coerce_dict(data[0])
+        b64_payload = self._read_value(first_generated, "b64_json")
+        if isinstance(b64_payload, str) and b64_payload.strip():
+            try:
+                image_bytes = base64.b64decode(b64_payload)
+            except Exception as exc:
+                raise GoogleProviderError(
+                    "google_provider_response_invalid",
+                    f"Google image response returned invalid base64 image payload: {exc}",
+                ) from exc
+            if not image_bytes:
+                raise GoogleProviderError(
+                    "google_provider_response_invalid",
+                    "Google image response decoded to empty image bytes.",
+                )
+            content_type = self._infer_image_content_type(
+                self._read_value(first_generated, "url")
+            )
+        else:
+            image_url = self._read_value(first_generated, "url")
+            if not image_url:
+                raise GoogleProviderError(
+                    "google_provider_response_invalid",
+                    "Google image response does not contain generated_images.",
+                )
+            image_bytes, content_type = self._download_binary_url(client, str(image_url))
+
+        response_summary = {
+            "generated_images_count": len(data),
+            "response_type": type(response).__name__,
         }
-        return GoogleGeneratedVoice(
-            audio_bytes=audio_bytes,
-            content_type=content_type,
-            provider_payload=provider_payload,
-        )
+        return image_bytes, content_type, response_summary
 
     def _extract_generated_image(self, response: Any) -> tuple[bytes, str, dict]:
         generated_images = self._read_value(response, "generated_images")
@@ -373,7 +418,7 @@ class GoogleProviderClient:
 
     def _poll_video_operation(
         self,
-        client: genai.Client,
+        client: Any,
         operation: Any,
         *,
         poll_interval_seconds: float,
@@ -386,15 +431,23 @@ class GoogleProviderClient:
             )
 
         current_operation = operation
-        operation_name = self._read_value(current_operation, "name", default="unknown")
+        operation_name = self._read_value(current_operation, "name") or self._read_value(
+            current_operation,
+            "id",
+            default="unknown",
+        )
         effective_max_polls = max(0, max_polls)
         effective_poll_interval = max(0.0, float(poll_interval_seconds))
 
         for poll_index in range(effective_max_polls + 1):
-            if self._read_value(current_operation, "done", default=False):
-                error = self._read_value(current_operation, "error")
+            if self._is_video_operation_done(current_operation):
+                error = self._extract_video_operation_error(current_operation)
                 if error is not None:
-                    error_code = self._read_value(error, "code", default="unknown")
+                    error_code = self._read_value(
+                        error,
+                        "code",
+                        default=self._read_value(current_operation, "code", default="unknown"),
+                    )
                     error_message = self._read_value(error, "message", default=str(error))
                     raise GoogleProviderError(
                         "google_video_generation_failed",
@@ -410,7 +463,7 @@ class GoogleProviderClient:
                 time.sleep(effective_poll_interval)
 
             try:
-                current_operation = client.operations.get(operation=current_operation)
+                current_operation = self._fetch_video_operation(client, current_operation)
             except Exception as exc:
                 raise GoogleProviderError(
                     "google_video_poll_failed",
@@ -424,30 +477,76 @@ class GoogleProviderClient:
             f"poll_interval_seconds={effective_poll_interval}).",
         )
 
-    def _extract_generated_video(self, client: genai.Client, operation: Any) -> tuple[bytes, str, dict]:
+    def _fetch_video_operation(self, client: Any, operation: Any) -> Any:
+        operation_id = self._read_value(operation, "id")
+        if operation_id and hasattr(client, "request"):
+            path = f"/v1/videos/{quote(str(operation_id), safe='')}"
+            return self._request_json(client, "GET", path)
+
+        operations_client = getattr(client, "operations", None)
+        if operations_client is not None and hasattr(operations_client, "get"):
+            return operations_client.get(operation=operation)
+
+        operation_name = self._read_value(operation, "name")
+        if operation_name and hasattr(client, "request"):
+            path = f"/v1/videos/{quote(str(operation_name), safe='')}"
+            return self._request_json(client, "GET", path)
+        raise RuntimeError("video operation id is missing")
+
+    def _extract_generated_video(self, client: Any, operation: Any) -> tuple[bytes, str, dict]:
         result = self._read_value(operation, "result")
-        if result is None:
-            raise GoogleProviderError(
-                "google_provider_response_invalid",
-                "Google video operation completed without a result payload.",
-            )
+        if result is not None:
+            generated_videos = self._read_value(result, "generated_videos")
+            if isinstance(generated_videos, list) and generated_videos:
+                first_generated = generated_videos[0]
+                video = self._read_value(first_generated, "video", default=first_generated)
+                if video is None:
+                    raise GoogleProviderError(
+                        "google_provider_response_invalid",
+                        "Google video response does not contain a video object.",
+                    )
 
-        generated_videos = self._read_value(result, "generated_videos")
-        if not isinstance(generated_videos, list) or not generated_videos:
-            raise GoogleProviderError(
-                "google_provider_response_invalid",
-                "Google video response does not contain generated_videos.",
-            )
+                video_uri = self._read_value(video, "uri")
+                if not video_uri:
+                    raise GoogleProviderError(
+                        "google_provider_response_invalid",
+                        "Google video response does not contain a downloadable video uri.",
+                    )
 
-        first_generated = generated_videos[0]
-        video = self._read_value(first_generated, "video", default=first_generated)
-        if video is None:
-            raise GoogleProviderError(
-                "google_provider_response_invalid",
-                "Google video response does not contain a video object.",
-            )
+                try:
+                    client.files.download(file=video)
+                except Exception as exc:
+                    raise GoogleProviderError(
+                        "google_video_download_failed",
+                        f"Google video download failed for uri={video_uri}: {exc}",
+                    ) from exc
 
-        video_uri = self._read_value(video, "uri")
+                video_bytes = self._read_value(video, "video_bytes")
+                if not isinstance(video_bytes, (bytes, bytearray)):
+                    raise GoogleProviderError(
+                        "google_provider_response_invalid",
+                        "Google video download did not populate video_bytes.",
+                    )
+                video_bytes = bytes(video_bytes)
+                if not video_bytes:
+                    raise GoogleProviderError(
+                        "google_provider_response_invalid",
+                        "Google video download produced empty video bytes.",
+                    )
+
+                content_type = self._read_value(video, "mime_type") or self._infer_video_content_type(video_uri)
+                response_summary = {
+                    "operation_name": self._read_value(operation, "name"),
+                    "operation_type": type(operation).__name__,
+                    "result_type": type(result).__name__,
+                    "generated_videos_count": len(generated_videos),
+                    "video_uri": video_uri,
+                }
+                return video_bytes, str(content_type or "video/mp4"), response_summary
+
+        video_uri = self._resolve_video_download_url(result if result is not None else operation)
+        if not video_uri:
+            video_uri = self._resolve_video_download_url(operation)
         if not video_uri:
             raise GoogleProviderError(
                 "google_provider_response_invalid",
@@ -455,14 +554,13 @@ class GoogleProviderClient:
             )
 
         try:
-            client.files.download(file=video)
+            video_bytes, downloaded_content_type = self._download_binary_url(client, video_uri)
         except Exception as exc:
             raise GoogleProviderError(
                 "google_video_download_failed",
                 f"Google video download failed for uri={video_uri}: {exc}",
             ) from exc
 
-        video_bytes = self._read_value(video, "video_bytes")
         if not isinstance(video_bytes, (bytes, bytearray)):
             raise GoogleProviderError(
                 "google_provider_response_invalid",
@@ -475,15 +573,157 @@ class GoogleProviderClient:
                 "Google video download produced empty video bytes.",
             )
 
-        content_type = self._read_value(video, "mime_type") or self._infer_video_content_type(video_uri)
+        result_payload = self._read_value(operation, "result", default=operation)
         response_summary = {
-            "operation_name": self._read_value(operation, "name"),
+            "operation_name": self._read_value(operation, "name") or self._read_value(operation, "id"),
             "operation_type": type(operation).__name__,
-            "result_type": type(result).__name__,
-            "generated_videos_count": len(generated_videos),
+            "result_type": type(result_payload).__name__,
+            "generated_videos_count": self._count_generated_videos(operation),
             "video_uri": video_uri,
         }
-        return video_bytes, str(content_type or "video/mp4"), response_summary
+        return video_bytes, downloaded_content_type or self._infer_video_content_type(video_uri), response_summary
+
+    def _download_binary_url(self, client: Any, url: str) -> tuple[bytes, str]:
+        response = client.get(url)
+        status_code = getattr(response, "status_code", 200)
+        if status_code >= 400:
+            raise RuntimeError(f"HTTP {status_code}: {getattr(response, 'text', '')}")
+
+        content_type = ""
+        headers = getattr(response, "headers", None)
+        if headers is not None and hasattr(headers, "get"):
+            content_type = str(headers.get("content-type") or "")
+        if content_type.lower().startswith("application/json"):
+            raise RuntimeError(getattr(response, "text", "unexpected JSON download response"))
+
+        content = getattr(response, "content", None)
+        if not isinstance(content, (bytes, bytearray)):
+            raise RuntimeError("download response did not contain bytes")
+        normalized_content = bytes(content)
+        return normalized_content, content_type or self._infer_image_content_type(url)
+
+    def _resolve_video_download_url(self, payload: Any) -> str | None:
+        direct_candidates = [
+            self._read_value(payload, "video_url"),
+            self._read_value(payload, "download_url"),
+            self._read_value(payload, "url"),
+        ]
+        for candidate in direct_candidates:
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+
+        nested_mappings = [
+            self._read_value(payload, "video"),
+            self._read_value(payload, "output"),
+            self._read_value(payload, "result"),
+            self._read_value(payload, "data"),
+            self._read_value(payload, "file"),
+            self._read_value(payload, "assets"),
+        ]
+        for candidate in nested_mappings:
+            resolved = self._resolve_video_download_url_from_candidate(candidate)
+            if resolved:
+                return resolved
+        return None
+
+    def _resolve_video_download_url_from_candidate(self, candidate: Any) -> str | None:
+        if isinstance(candidate, str) and candidate.strip().startswith(("http://", "https://")):
+            return candidate.strip()
+        if isinstance(candidate, list):
+            for item in candidate:
+                resolved = self._resolve_video_download_url_from_candidate(item)
+                if resolved:
+                    return resolved
+            return None
+        if isinstance(candidate, dict):
+            for key in ("url", "uri", "download_url", "video_url"):
+                value = candidate.get(key)
+                if isinstance(value, str) and value.strip().startswith(("http://", "https://")):
+                    return value.strip()
+            for key in ("video", "file", "output", "result", "data", "assets"):
+                resolved = self._resolve_video_download_url_from_candidate(candidate.get(key))
+                if resolved:
+                    return resolved
+            return None
+        if candidate is not None and hasattr(candidate, "__dict__"):
+            return self._resolve_video_download_url_from_candidate(vars(candidate))
+        return None
+
+    def _count_generated_videos(self, payload: Any) -> int:
+        result = self._read_value(payload, "result")
+        generated_videos = self._read_value(result, "generated_videos") if result is not None else None
+        if isinstance(generated_videos, list) and generated_videos:
+            return len(generated_videos)
+
+        for candidate in (
+            self._read_value(payload, "output"),
+            self._read_value(payload, "data"),
+            self._read_value(payload, "assets"),
+        ):
+            if isinstance(candidate, list) and candidate:
+                return len(candidate)
+        return 1
+
+    def _is_video_operation_done(self, operation: Any) -> bool:
+        if bool(self._read_value(operation, "done", default=False)):
+            return True
+        status = str(self._read_value(operation, "status") or "").strip().lower()
+        return status in {"succeeded", "completed", "success", "done", "ready", "failed", "error", "cancelled", "canceled", "rejected", "expired"}
+
+    def _extract_video_operation_error(self, operation: Any) -> Any | None:
+        error = self._read_value(operation, "error")
+        if error is not None:
+            return error
+
+        status = str(self._read_value(operation, "status") or "").strip().lower()
+        if status not in {"failed", "error", "cancelled", "canceled", "rejected", "expired"}:
+            return None
+
+        message = (
+            self._read_value(operation, "message")
+            or self._read_value(operation, "detail")
+            or self._read_value(operation, "last_error")
+            or status
+        )
+        return {
+            "code": self._read_value(operation, "code", default="unknown"),
+            "message": self._read_value(message, "message", default=str(message)),
+        }
+
+    def _extract_reference_image_urls(self, reference_images: list[Any] | None) -> list[str]:
+        urls: list[str] = []
+        for reference_image in reference_images or []:
+            if isinstance(reference_image, str) and reference_image.strip():
+                urls.append(reference_image.strip())
+                continue
+            if isinstance(reference_image, dict):
+                for key in ("url", "uri", "image_url", "source_url"):
+                    value = reference_image.get(key)
+                    if isinstance(value, str) and value.strip():
+                        urls.append(value.strip())
+                        break
+                continue
+            if reference_image is not None:
+                for key in ("url", "uri", "image_url", "source_url"):
+                    value = getattr(reference_image, key, None)
+                    if isinstance(value, str) and value.strip():
+                        urls.append(value.strip())
+                        break
+        return urls
+
+    def _map_image_size(self, aspect_ratio: str | None) -> str | None:
+        normalized = str(aspect_ratio or "").strip()
+        if normalized == "1:1":
+            return "1024x1024"
+        if normalized == "16:9":
+            return "1536x864"
+        if normalized == "9:16":
+            return "864x1536"
+        if normalized == "4:3":
+            return "1152x864"
+        if normalized == "3:4":
+            return "864x1152"
+        return None
 
     def _build_speech_config(
         self,
@@ -622,6 +862,15 @@ class GoogleProviderClient:
         )
 
     @staticmethod
+    def _infer_image_content_type(image_uri: str | None) -> str:
+        normalized_uri = str(image_uri or "").lower()
+        if normalized_uri.endswith(".jpg") or normalized_uri.endswith(".jpeg"):
+            return "image/jpeg"
+        if normalized_uri.endswith(".webp"):
+            return "image/webp"
+        return "image/png"
+
+    @staticmethod
     def _infer_video_content_type(video_uri: str | None) -> str:
         normalized_uri = str(video_uri or "").lower()
         if normalized_uri.endswith(".mov"):
@@ -629,6 +878,16 @@ class GoogleProviderClient:
         if normalized_uri.endswith(".webm"):
             return "video/webm"
         return "video/mp4"
+
+    @staticmethod
+    def _coerce_dict(payload: Any) -> dict[str, Any]:
+        if isinstance(payload, dict):
+            return payload
+        if payload is None:
+            return {}
+        if hasattr(payload, "__dict__"):
+            return vars(payload)
+        return {}
 
     @staticmethod
     def _read_value(payload: Any, key: str, default: Any = None) -> Any:
